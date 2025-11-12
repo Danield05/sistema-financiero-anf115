@@ -1,116 +1,500 @@
-.tag {
-    display: inline-block;
+/* =========================================================
+   SISTEMA FINANCIERO INTEGRAL
+   ========================================================= */
+
+/* === VARIABLES GLOBALES === */
+:root {
+  --color-primary: #EC0000;     /* Rojo Santander */
+  --color-secondary: #1C1C1C;   /* Negro carbón */
+  --color-light: #F4F4F4;       /* Gris claro */
+  --color-gray: #A3A3A3;        /* Gris medio */
+  --color-white: #FFFFFF;       /* Blanco puro */
+  --color-success: #1E9E55;     /* Verde para estados positivos */
+  --color-warning: #FFB800;     /* Amarillo para alertas */
+  --color-error: #D32F2F;       /* Rojo error */
+
+  --font-title: 'Poppins', sans-serif;
+  --font-body: 'Open Sans', sans-serif;
+
+  --shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --transition: all 0.3s ease;
 }
 
-.index-botones{
-    display: flex;
-    column-gap: 1rem;
-    justify-content: flex-start;
-    align-items: center;
+/* === RESETEO GENERAL === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.flex{
-    display: flex;
-    justify-content: center;
-    align-items:flex-start;
+body {
+  background-color: var(--color-light);
+  color: var(--color-secondary);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  font-size: 16px;
 }
 
-.mg_abajo_5{
-    margin-bottom: .5rem;
+/* === CABECERA / NAVBAR === */
+header {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-soft);
 }
 
-.mg_abajo_15{
-    margin-bottom: 1.5rem;
+header .logo {
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
-.alerta{
-    width: 100%;
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
 }
 
-/* Custom navbar styles for financial theme */
+nav a {
+  color: var(--color-white);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* === BOTONES === */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: var(--transition);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.btn-primary:hover {
+  background-color: #b80000;
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+}
+
+.btn-secondary:hover {
+  background-color: #333333;
+}
+
+/* === TARJETAS === */
+.card {
+  background-color: var(--color-white);
+  border-radius: 12px;
+  box-shadow: var(--shadow-soft);
+  padding: 1.5rem;
+  transition: var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+/* === TABLAS === */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--color-white);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  margin-top: 1rem;
+}
+
+table thead {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+table th,
+table td {
+  padding: 0.9rem 1rem;
+  text-align: left;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: var(--color-light);
+}
+
+table tbody tr:hover {
+  background-color: #ffeaea;
+}
+
+/* === FORMULARIOS === */
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--color-gray);
+  border-radius: 6px;
+  outline: none;
+  font-family: var(--font-body);
+  transition: var(--transition);
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(236, 0, 0, 0.2);
+}
+
+/* === PIE DE PÁGINA === */
+footer {
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+}
+
+/* === UTILIDADES === */
+.text-center { text-align: center; }
+.mt-1 { margin-top: 1rem; }
+.mt-2 { margin-top: 2rem; }
+.mb-1 { margin-bottom: 1rem; }
+.mb-2 { margin-bottom: 2rem; }
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  nav ul {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .card {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Custom navbar styles for Santander banking theme */
 .navbar-bg {
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #000000 100%) !important;
+    background: var(--color-primary) !important;
 }
 
 .main-navbar {
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #000000 100%) !important;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    background: var(--color-primary) !important;
+    box-shadow: var(--shadow-soft);
 }
 
 .navbar-nav .nav-link {
-    color: #ffffff !important;
+    color: var(--color-white) !important;
 }
 
 .navbar-nav .nav-link:hover {
-    color: #fd7e14 !important;
+    color: #ffeaea !important;
 }
 
 .dropdown-menu {
-    background-color: #2a5298;
-    border: 1px solid #1e3c72;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-primary);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 
 .dropdown-item {
-    color: #ffffff !important;
+    color: var(--color-secondary) !important;
 }
 
 .dropdown-item:hover {
-    background-color: #1e3c72;
-    color: #fd7e14 !important;
+    background-color: var(--color-primary);
+    color: var(--color-white) !important;
 }
 
 .dropdown-title {
-    color: #fd7e14;
+    color: var(--color-primary);
     font-weight: bold;
+}
+
+/* === SIDEBAR / MENÚ LATERAL === */
+.main-sidebar {
+    background-color: var(--color-secondary) !important;
+    color: var(--color-white) !important;
+}
+
+#sidebar-wrapper {
+    background-color: var(--color-secondary) !important;
+}
+
+.sidebar-menu li a {
+    color: var(--color-white) !important;
+    transition: var(--transition);
+}
+
+.sidebar-menu li a:hover {
+    background-color: var(--color-primary) !important;
+    color: var(--color-white) !important;
+}
+
+.sidebar-brand {
+    background-color: var(--color-primary) !important;
+    color: var(--color-white) !important;
+}
+
+.sidebar-menu {
+    background-color: var(--color-secondary) !important;
+}
+
+/* === CONTENIDO PRINCIPAL === */
+.main-content {
+    background-color: var(--color-light);
+}
+
+/* === PIE DE PÁGINA === */
+.main-footer {
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    border-top: 3px solid var(--color-primary);
+}
+
+/* === CARDS Y COMPONENTES === */
+.card {
+    border: none;
+    box-shadow: var(--shadow-soft);
+}
+
+.card-header {
+    background-color: var(--color-white);
+    border-bottom: 2px solid var(--color-primary);
+    color: var(--color-secondary);
+}
+
+/* === BOTONES BOOTSTRAP === */
+.btn-primary {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.btn-primary:hover {
+    background-color: #b80000;
+    border-color: #b80000;
+}
+
+.btn-success {
+    background-color: var(--color-success);
+    border-color: var(--color-success);
+}
+
+.btn-warning {
+    background-color: var(--color-warning);
+    border-color: var(--color-warning);
+}
+
+.btn-danger {
+    background-color: var(--color-error);
+    border-color: var(--color-error);
+}
+
+/* === TABLAS === */
+.table thead th {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: none;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(236, 0, 0, 0.05);
+}
+
+/* === FORMULARIOS === */
+.form-control:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 0.2rem rgba(236, 0, 0, 0.25);
+}
+
+/* === ALERTAS === */
+.alert-success {
+    background-color: rgba(30, 158, 85, 0.1);
+    border-color: var(--color-success);
+    color: var(--color-success);
+}
+
+.alert-warning {
+    background-color: rgba(255, 184, 0, 0.1);
+    border-color: var(--color-warning);
+    color: #856404;
+}
+
+.alert-danger {
+    background-color: rgba(211, 47, 47, 0.1);
+    border-color: var(--color-error);
+    color: var(--color-error);
+}
+
+/* === ELEMENTOS COLAPSABLES Y ACORDEONES === */
+.collapse, .collapsing {
+    background-color: var(--color-white);
+}
+
+.card-header .btn-link {
+    color: var(--color-secondary);
+    text-decoration: none;
+}
+
+.card-header .btn-link:hover {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.card-header .btn-link:focus {
+    box-shadow: none;
+    color: var(--color-primary);
+}
+
+/* === BOTONES DE ACCIÓN === */
+.btn-link {
+    color: var(--color-primary);
+}
+
+.btn-link:hover {
+    color: var(--color-secondary);
+    text-decoration: underline;
+}
+
+/* === ELEMENTOS EXPANDIBLES === */
+[data-toggle="collapse"] {
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+[data-toggle="collapse"]:hover {
+    color: var(--color-primary) !important;
+}
+
+/* === ICONOS DE EXPANSIÓN === */
+.fa-chevron-down, .fa-chevron-up, .fa-angle-down, .fa-angle-up {
+    transition: var(--transition);
+}
+
+.collapsed .fa-chevron-down::before {
+    content: "\f078"; /* chevron-right */
+}
+
+.fa-chevron-down::before {
+    content: "\f077"; /* chevron-down */
+}
+
+/* === CONTROLES DE FORMS === */
+.custom-control-input:checked ~ .custom-control-label::before {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.custom-control-input:focus ~ .custom-control-label::before {
+    box-shadow: 0 0 0 1px var(--color-white), 0 0 0 0.2rem rgba(236, 0, 0, 0.25);
+}
+
+/* === BADGES Y ETIQUETAS === */
+.badge-primary {
+    background-color: var(--color-primary);
+}
+
+.badge-secondary {
+    background-color: var(--color-secondary);
+}
+
+.badge-success {
+    background-color: var(--color-success);
+}
+
+.badge-warning {
+    background-color: var(--color-warning);
+}
+
+.badge-danger {
+    background-color: var(--color-error);
+}
+
+/* === LIST GROUP === */
+.list-group-item {
+    border-color: var(--color-gray);
+}
+
+.list-group-item:hover {
+    background-color: rgba(236, 0, 0, 0.05);
+}
+
+.list-group-item.active {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
 }
 
 /* Footer styles */
 .main-footer {
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #000000 100%) !important;
-    color: #ffffff !important;
-    border-top: 3px solid #dc3545;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%) !important;
+    color: var(--color-white) !important;
+    border-top: 3px solid var(--color-primary);
 }
 
 .footer-left {
-    color: #ffffff !important;
+    color: var(--color-white) !important;
 }
 
 /* Body and main wrapper styles */
 body {
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #000000 100%) !important;
+    background: var(--color-light) !important;
 }
 
 .main-wrapper {
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #000000 100%) !important;
+    background: var(--color-light) !important;
 }
 
 /* Sidebar styles */
 .main-sidebar {
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #000000 100%) !important;
-    color: #ffffff !important;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%) !important;
+    color: var(--color-white) !important;
 }
 
 .sidebar-menu .nav-link {
-    color: #ffffff !important;
+    color: var(--color-white) !important;
     border-radius: 20px;
     transition: all 0.3s ease;
 }
 
 .sidebar-menu .nav-link:hover {
-    background-color: rgba(253, 126, 20, 0.2) !important;
-    color: #fd7e14 !important;
+    background-color: rgba(236, 0, 0, 0.2) !important;
+    color: var(--color-white) !important;
     transform: translateX(5px);
 }
 
 .sidebar-menu .nav-link i {
-    color: #dc3545;
+    color: var(--color-primary);
 }
 
 .sidebar-brand {
-    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #000000 100%) !important;
-    border-bottom: 2px solid #dc3545;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%) !important;
+    border-bottom: 2px solid var(--color-primary);
 }
 
 .esfera {
-    background-color: #dc3545 !important;
+    background-color: var(--color-primary) !important;
+}
+
+/* Logo de monedas en amarillo */
+.app-header-logo, .fas.fa-coins {
+    color: var(--color-warning) !important;
 }
