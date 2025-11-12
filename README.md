@@ -171,10 +171,14 @@ php artisan serve
 
 ## 🌐 Acceso al Sistema
 
-- **URL Principal**: `http://localhost/sistema-financiero-anf115/public/`
-- **Página de Bienvenida**: `http://localhost/sistema-financiero-anf115/public/`
-- **Login**: `http://localhost/sistema-financiero-anf115/public/login`
-- **Registro**: `http://localhost/sistema-financiero-anf115/public/register`
+Después de la instalación exitosa, accede al sistema desde tu navegador:
+
+- **URL Principal**: `http://localhost/sistema-financiero-anf115/`
+- **Página de Bienvenida**: `http://localhost/sistema-financiero-anf115/`
+- **Login**: `http://localhost/sistema-financiero-anf115/login`
+- **Registro**: `http://localhost/sistema-financiero-anf115/register`
+
+> **Nota**: Gracias al archivo `.htaccess` incluido, puedes acceder sin `/public` en la URL.
 
 ### 📱 Páginas Disponibles
 
