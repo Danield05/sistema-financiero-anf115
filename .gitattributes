@@ -1,0 +1,25 @@
+* text=auto
+
+# Language classification for GitHub statistics
+*.php linguist-language=PHP
+*.blade.php linguist-language=PHP
+
+# Include custom frontend assets in statistics
+resources/css/*.css linguist-language=CSS
+resources/js/*.js linguist-language=JavaScript
+
+# Mark vendor/compiled assets as vendored (not counted)
+public/css/*.css linguist-vendored
+public/js/*.js linguist-vendored
+node_modules/** linguist-vendored
+vendor/** linguist-vendored
+
+# Documentation and config files
+*.md linguist-language=Markdown
+.env* linguist-language=Shell
+*.json linguist-language=JSON
+*.lock linguist-detectable=false
+
+# Git and system files
+.git* linguist-detectable=false
+CHANGELOG.md export-ignore
