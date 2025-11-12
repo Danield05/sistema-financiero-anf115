@@ -6,10 +6,7 @@
                 <h5 class="modal-title">Change Password</h5>
                 <button type="button" aria-label="Close" class="close outline-none" data-dismiss="modal">×</button>
             </div>
-            <form method="POST" id='changePasswordForm'>
-                <div class="alert alert-info">
-                    Note: This is just UI. you need to develop Backend for update
-                </div>
+            <form method="POST" id='changePasswordForm' action="{{ route('change.password') }}">
                 <div class="modal-body">
                     @if ($errors->any())
                         <div class="alert alert-danger">

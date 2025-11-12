@@ -5,59 +5,137 @@ Periodo
 @endsection
 
 @section('content')
-    <section class="section">
-        <div class="section-header">
-            <h3 class="page__heading">Periodo</h3>
-        </div>
+    <section class="section" style="margin-top: 20px;">
         <div class="section-body">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-header">
+                            <h4 class="card-title">
+                                <i class="fas fa-calendar-alt text-primary"></i> Gestión de Períodos
+                            </h4>
+                        </div>
+                        <div class="card-body" style="min-height: 400px;">
                             @include('notificador_validacion')
                             <div class="row">
                                 @if ($bandera != null)
                                     <div class="alert alert-danger alerta" role="alert">
                                         {{$bandera}}
-                                    </div>   
+                                    </div>
                                 @endif
                             </div>
-                            @if ($periodos->count() > 0)
-                                {!! Form::open(['route'=>'periodo.guardar', 'method'=>'get']) !!}
-                                {!! Form::submit('Nuevo periodo', [
-                                    'class' => 'btn btn-warning mb-4'
-                                ]) !!}
-                                {!! Form::close() !!}
-                            @else
-                                <a class="btn btn-warning mb-4" data-toggle="modal" data-target="#nuevoPeriodoModal">Nueva periodo</a>
-                            @endif
-                            <table class="table table-striped-columns">
-                                <thead>
-                                    <th>Año</th>
-                                    <th>Acciones</th>
-                                </thead>
-                                <tbody>
-                                    @foreach ($periodos as $periodo)
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    @if ($periodos->count() > 0)
+                                        {!! Form::open(['route'=>'periodo.guardar', 'method'=>'get']) !!}
+                                        {!! Form::submit('Nuevo Periodo', [
+                                            'class' => 'btn btn-success'
+                                        ]) !!}
+                                        {!! Form::close() !!}
+                                    @else
+                                        <button class="btn btn-success" data-toggle="modal" data-target="#nuevoPeriodoModal">
+                                            <i class="fas fa-plus"></i> Nuevo Periodo
+                                        </button>
+                                    @endif
+                                </div>
+                                <div class="input-group" style="width: 300px;">
+                                    <input type="text" class="form-control" id="search-input" placeholder="Buscar períodos...">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover" id="periodos-table">
+                                    <thead class="thead-dark">
                                         <tr>
-                                            <td> {{$periodo->anio}} </td>
-                                            <td class="index-botones">
-                                                {!! Form::open(['method'=>'DELETE', 'route' => ['periodo.destroy', $periodo->id]]) !!}
-                                                {!! Form::submit('Borrar', ['class'=>'btn btn-danger']) !!}
-                                                {!! Form::close() !!}
-
-                                                <a class="btn btn-info" href="/balance_general/crear/{{$periodo->id}}">Balance general</a>
-                                                <a class="btn btn-success" href="/estado_de_resultado/{{$periodo->id}}">Estado resultado</a>
-                                            </td>
+                                            <th>Año</th>
+                                            <th>Acciones</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($periodos as $periodo)
+                                            <tr>
+                                                <td><strong>{{$periodo->anio}}</strong></td>
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <a class="btn btn-sm btn-outline-info" href="/balance_general/crear/{{$periodo->id}}" title="Crear balance general">
+                                                            <i class="fas fa-balance-scale"></i> Balance
+                                                        </a>
+                                                        <a class="btn btn-sm btn-outline-success" href="/estado_de_resultado/{{$periodo->id}}" title="Ver estado de resultado">
+                                                            <i class="fas fa-chart-line"></i> Estado
+                                                        </a>
+                                                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="confirmDelete({{$periodo->id}})" title="Eliminar período">
+                                                            <i class="fas fa-trash"></i> Eliminar
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+@endsection
+
+@section('scripts')
+<script>
+    $(document).ready(function() {
+        $('#periodos-table').DataTable({
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "zeroRecords": "No se encontraron resultados",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Último",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            },
+            "pageLength": 10,
+            "responsive": true,
+            "searching": false,
+            "order": [[0, 'desc']]
+        });
+
+        // Custom search functionality
+        $('#search-input').on('keyup', function() {
+            $('#periodos-table').DataTable().search($(this).val()).draw();
+        });
+    });
+
+    function confirmDelete(id) {
+        if (confirm('¿Está seguro de que desea eliminar este período?')) {
+            // Create and submit form
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/periodo/' + id;
+
+            var methodField = document.createElement('input');
+            methodField.type = 'hidden';
+            methodField.name = '_method';
+            methodField.value = 'DELETE';
+            form.appendChild(methodField);
+
+            var csrfField = document.createElement('input');
+            csrfField.type = 'hidden';
+            csrfField.name = '_token';
+            csrfField.value = '{{ csrf_token() }}';
+            form.appendChild(csrfField);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+</script>
 @endsection
 
 @include('vistas.recursos.nuevo_periodo')

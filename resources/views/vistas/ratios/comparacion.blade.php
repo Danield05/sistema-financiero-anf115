@@ -5,29 +5,26 @@ Comparacion de Ratios
 @endsection
 
 @section('content')
-    <section class="section">
-        <div class="section-header" style="display:grid;grid-template-columns: repeat(2, 1fr);text-align:center;padding:5px 10px;">
-            <div style="padding: 0px 0px 10px 10px">            
-                <a href="{{ route('ratios.index') }}" class="ag-courses-item_link"style=" border-radius: 28px;">
-                    <div class="ag-courses-item_bg"></div>
-                    <div class="ag-courses-item_title">Ratios de la empresa</div>
-                </a>
-            </div>
-            <div style="padding: 0px 0px 10px 10px">
-            <a href=" {{route('ratios.comparacion')}}" class="ag-courses-item_link"style=" background-color:#212e37;border-radius: 28px;">
-                    <div class="ag-courses-item_bg"></div>
-                    <div class="ag-courses-item_title">Comparación de ratios</div>
-                </a>
-            </div>
-        </div>
+    <section class="section" style="margin-top: 20px;">
         <div class="section-body">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">
+                                <i class="fas fa-balance-scale text-primary"></i> Comparación de Ratios - Sector {{$sector->nombre}}
+                            </h4>
+                        </div>
                         <div class="card-body">
-                            <h3 class="text-center">Comparacion de ratios del sector {{$sector->nombre}}</h3>
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i> <strong>Indicadores de Comparación:</strong><br>
+                                <span class="badge badge-success">Verde</span> = Valores superiores al promedio del sector (mejor)<br>
+                                <span class="badge badge-danger">Rojo</span> = Valores inferiores al promedio del sector (peor)<br>
+                                <span class="badge badge-secondary">Gris</span> = Promedio del sector de referencia
+                            </div>
 
-                            <table class="table">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover" style="color: black;">
                                 <thead>
                                     <th>Empresa</th>
                                     @foreach ($comparaciones as $comparacion)
@@ -164,7 +161,13 @@ Comparacion de Ratios
 
                                 </tbody>
                             </table>
+                            </div>
 
+                            <div class="d-flex justify-content-center flex-wrap mt-4">
+                                <a href="{{ route('ratios.index') }}" class="btn btn-primary btn-sm mx-2">
+                                    <i class="fas fa-chart-pie"></i> Ratios de la Empresa
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

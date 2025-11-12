@@ -7,9 +7,6 @@
                 <button type="button" aria-label="Close" class="close outline-none" data-dismiss="modal">×</button>
             </div>
             <form method="POST" id="editProfileForm" enctype="multipart/form-data">
-                <div class="alert alert-info">
-                    Note: This is just UI. you need to develop Backend for update
-                </div>
                 <div class="modal-body">
                     <div class="alert alert-danger d-none" id="editProfileValidationErrorsBox"></div>
                     <input type="hidden" name="user_id" id="pfUserId">

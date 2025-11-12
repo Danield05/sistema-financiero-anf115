@@ -7,120 +7,122 @@ Ratios
 
 
 @section('content')
-    <section class="section" style="margin-top: 100px">
-        
+    <section class="section" style="margin-top: 20px">
         <div class="section-body">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="card" style="">
-                        <div class="card-body" >
-                            <h3 class="text-center">Ratios empresa {{\Illuminate\Support\Facades\Auth::user()->empresa->nombre}}</h3>
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">
+                                <i class="fas fa-chart-pie text-primary"></i> Ratios Financieros - {{\Illuminate\Support\Facades\Auth::user()->empresa->nombre}}
+                            </h4>
+                        </div>
+                        <div class="card-body">
 
-                            <div class="flex">
-                                <div class="contenedor_a col-xs-6 col-sm-6 col-md-6">
-                                    <br>
-                                    <h4 class="mg_abajo_5">Razones financieras</h4>
-                                    <table class="table">
-                                        <thead>
-                                            <th></th>
-                                            <th>Razon circulante</th>
-                                            <th>Prueba acida</th>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($razones_financieras as $razon)                                        
-                                            <tr>
-                                                <th>{{$razon['anio']}}</th>
-                                                <th>{{$razon['razon_circulante']}}</th>
-                                                <th>{{$razon['prueba_acida']}}</th>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-        
-                                    <br>
-                                    <h4 class="mg_abajo_5">Razones eficiencia</h4>
-                                    <table class="table">
-                                        <thead>
-                                            <th></th>
-                                            <th>Rotacion de inventario</th>
-                                            <th>Cuentas por cobrar</th>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($razones_eficiencia as $razon)                                        
-                                            <tr>
-                                                <th>{{$razon['anio']}}</th>
-                                                <th>{{$razon['rotacion_inventario']}}</th>
-                                                <th>{{$razon['rotacion_cuentas_por_cobrar']}}</th>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <h5 class="text-primary"><i class="fas fa-balance-scale"></i> Razones Financieras</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Año</th>
+                                                    <th>Razón Circulante</th>
+                                                    <th>Prueba Ácida</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($razones_financieras as $razon)
+                                                <tr>
+                                                    <td><strong>{{$razon['anio']}}</strong></td>
+                                                    <td>{{$razon['razon_circulante']}}</td>
+                                                    <td>{{$razon['prueba_acida']}}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <h5 class="text-success mt-4"><i class="fas fa-cogs"></i> Razones de Eficiencia</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Año</th>
+                                                    <th>Rotación de Inventario</th>
+                                                    <th>Cuentas por Cobrar</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($razones_eficiencia as $razon)
+                                                <tr>
+                                                    <td><strong>{{$razon['anio']}}</strong></td>
+                                                    <td>{{$razon['rotacion_inventario']}}</td>
+                                                    <td>{{$razon['rotacion_cuentas_por_cobrar']}}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-    
-                                <div class="contenedor_d col-xs-6 col-sm-6 col-md-6">
-                                    <br>
-                                    <h4 class="mg_abajo_5">Razones endeudamiento</h4>
-                                    <table class="table">
-                                        <thead>
-                                            <th></th>
-                                            <th>Grado de endeudamiento</th>
-                                            <th>Cuentas por cobrar</th>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($razones_endeudamiento as $razon)                                        
-                                            <tr>
-                                                <th>{{$razon['anio']}}</th>
-                                                <th>{{$razon['grado_endeudamiento']}}</th>
-                                                <th>{{$razon['razon_endeudamiento_patrimonial']}}</th>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-        
-                                    <br>
-                                    <h4 class="mg_abajo_5">Razones de rentabilidad</h4>
-                                    <table class="table">
-                                        <thead>
-                                            <th></th>
-                                            <th>Rentabilidad neta del patrimonio</th>
-                                            <th>Rentabilidad de activo</th>
-                                            <th>Rentabilidad sobre ventas</th>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($razones_rentabilidad as $razon)                                        
-                                            <tr>
-                                                <th>{{$razon['anio']}}</th>
-                                                <th>{{$razon['rentabilidad_neta_del_patrimonio']}}</th>
-                                                <th>{{$razon['rentabilidad_del_activos']}}</th>
-                                                <th>{{$razon['rentabilidad_sobre_ventas']}}</th>
-                                            </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+
+                                <div class="col-md-6 mb-4">
+                                    <h5 class="text-warning"><i class="fas fa-credit-card"></i> Razones de Endeudamiento</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Año</th>
+                                                    <th>Grado de Endeudamiento</th>
+                                                    <th>Razón Endeudamiento Patrimonial</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($razones_endeudamiento as $razon)
+                                                <tr>
+                                                    <td><strong>{{$razon['anio']}}</strong></td>
+                                                    <td>{{$razon['grado_endeudamiento']}}</td>
+                                                    <td>{{$razon['razon_endeudamiento_patrimonial']}}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <h5 class="text-danger mt-4"><i class="fas fa-dollar-sign"></i> Razones de Rentabilidad</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-hover">
+                                            <thead class="thead-dark">
+                                                <tr>
+                                                    <th>Año</th>
+                                                    <th>Rentabilidad Neta del Patrimonio</th>
+                                                    <th>Rentabilidad del Activo</th>
+                                                    <th>Rentabilidad sobre Ventas</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($razones_rentabilidad as $razon)
+                                                <tr>
+                                                    <td><strong>{{$razon['anio']}}</strong></td>
+                                                    <td>{{$razon['rentabilidad_neta_del_patrimonio']}}</td>
+                                                    <td>{{$razon['rentabilidad_del_activos']}}</td>
+                                                    <td>{{$razon['rentabilidad_sobre_ventas']}}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
+                            </div>
+
+                            <div class="d-flex justify-content-center flex-wrap mt-4">
+                                <a href="{{route('ratios.comparacion')}}" class="btn btn-info btn-sm mx-2">
+                                    <i class="fas fa-balance-scale"></i> Comparación de Ratios
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="section-header " style="border:0px;display:grid;grid-template-columns: repeat(2, 1fr);text-align:center;padding:5px 10px;">
-           
-        
-      
-
-            <div style="padding: 0px 0px 10px 10px">
-                <a href="{{ route('ratios.index') }}" class="ag-courses-item_link"style=" background-color:#212e37;border-radius: 28px;">
-                    <div class="ag-courses-item_bg"></div>
-                    <div class="ag-courses-item_title">Ratios de la empresa</div>
-                </a>
-            </div>
-
-            <div style="padding: 0px 0px 10px 10px">
-                <a href=" {{route('ratios.comparacion')}}" class="ag-courses-item_link"style=" border-radius: 28px;">
-                    <div class="ag-courses-item_bg"></div>
-                    <div class="ag-courses-item_title">Comparación de ratios</div>
-                </a>
             </div>
         </div>
     </section>

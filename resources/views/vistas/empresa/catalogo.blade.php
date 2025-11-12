@@ -5,32 +5,17 @@ Catalogo de cuentas
 @endsection
 
 @section('content')
-    <section class="section">
-        <div class="section-header" style="display:grid;grid-template-columns: repeat(3, 1fr);text-align:center;padding:5px 10px;">
-            <div style="padding: 0px 0px 10px 10px">
-                <a href="{{ route('catalogo.index') }}" class="ag-courses-item_link"style=" background-color:#212e37;border-radius: 28px;">
-                    <div class="ag-courses-item_bg"></div>
-                    <div class="ag-courses-item_title">Catalogo de cuentas</div>
-                </a>
-            </div>
-            <div style="padding: 0px 0px 10px 10px">                
-                <a href="{{route('vinculacion.index')}}" class="ag-courses-item_link"style=" border-radius: 28px;">
-                    <div class="ag-courses-item_bg"></div>
-                    <div class="ag-courses-item_title">Relacionar cuentas</div>
-                </a>
-            </div>
-            <div style="padding: 0px 0px 10px 10px">                
-                <a href="{{ route('graficos.index') }}" class="ag-courses-item_link"style=" border-radius: 28px;">
-                    <div class="ag-courses-item_bg"></div>
-                    <div class="ag-courses-item_title">Gráficas</div>
-                </a>
-            </div>
-        </div>
+    <section class="section" style="margin-top: 20px;">
         <div class="section-body">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-header">
+                            <h4 class="card-title">
+                                <i class="fas fa-list text-primary"></i> Catálogo de Cuentas
+                            </h4>
+                        </div>
+                        <div class="card-body" style="min-height: 400px;">
 
                             @include('notificador_validacion')
                             @if($errors->any())
@@ -39,54 +24,74 @@ Catalogo de cuentas
 
 
                             @if($confirmar == 0)
-                            <a class="btn btn-warning mg_abajo_15" id="cuenta" data-toggle="modal" data-target="#nuevaCuentaModal">Nueva cuenta</a>
-                            <a class="btn btn-warning mg_abajo_15" data-toggle="modal" data-target="#nuevaCuentaExcelModal">Catalogo Excel</a>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <button class="btn btn-success" id="cuenta" data-toggle="modal" data-target="#nuevaCuentaModal">
+                                        <i class="fas fa-plus"></i> Nueva Cuenta
+                                    </button>
+                                    <button class="btn btn-info ml-2" data-toggle="modal" data-target="#nuevaCuentaExcelModal">
+                                        <i class="fas fa-file-excel"></i> Importar Excel
+                                    </button>
+                                </div>
+                                <div class="input-group" style="width: 300px;">
+                                    <input type="text" class="form-control" id="search-input" placeholder="Buscar cuentas...">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                    </div>
+                                </div>
+                            </div>
                             @else
                             @endif
 
-                            <table class="table table-striped-columns">
-                                <thead>
-                                    <th>Codigo</th>
-                                    <th>Nombre</th>
-                                    <th>Padre</th>
-                                    <th>Tipo</th>
-                                    @if($confirmar == 0)
-                                    <th>Acciones</th>
-                                    @else
-                                    @endif
-                                </thead>
-                                <tbody>
-                                    @foreach ($cuentas as $cuenta)
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover" id="catalogo-table">
+                                    <thead class="thead-dark">
                                         <tr>
-                                            <td> {{$cuenta->codigo}} </td>
-                                            <td> {{$cuenta->nombre}} </td>
-                                            <td> {{$cuenta->padre}} </td>
-                                            <td> 
-                                                @if ($cuenta->tipo == 0)
-                                                Deudora
-                                                @elseif($cuenta->tipo == 1)
-                                                Acreedora
-                                                @elseif($cuenta ->tipo == 2)
-                                                Patrimonio
-                                                @else
-                                                Resultado
-                                                @endif 
-                                            </td>
+                                            <th>Código</th>
+                                            <th>Nombre</th>
+                                            <th>Padre</th>
+                                            <th>Tipo</th>
                                             @if($confirmar == 0)
-                                            <td class="index-botones">
-
-                                                <a class="btn btn-info" data-toggle="modal" data-target="#editarCuentaModal{{$cuenta->id}}">Editar</a>
-
-                                                {!! Form::open(['method'=>'DELETE', 'route' => ['catalogo.destroy', $cuenta->id]]) !!}
-                                                {!! Form::submit('Borrar', ['class'=>'btn btn-danger']) !!}
-                                                {!! Form::close() !!}
-                                            </td>
+                                            <th>Acciones</th>
                                             @else
-                                           @endif 
+                                            @endif
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($cuentas as $cuenta)
+                                            <tr>
+                                                <td><code>{{$cuenta->codigo}}</code></td>
+                                                <td><strong>{{$cuenta->nombre}}</strong></td>
+                                                <td>{{$cuenta->padre ?: 'N/A'}}</td>
+                                                <td>
+                                                    @if ($cuenta->tipo == 0)
+                                                        <span class="badge badge-primary">Deudora</span>
+                                                    @elseif($cuenta->tipo == 1)
+                                                        <span class="badge badge-success">Acreedora</span>
+                                                    @elseif($cuenta->tipo == 2)
+                                                        <span class="badge badge-warning">Patrimonio</span>
+                                                    @else
+                                                        <span class="badge badge-info">Resultado</span>
+                                                    @endif
+                                                </td>
+                                                @if($confirmar == 0)
+                                                <td>
+                                                    <div class="btn-group" role="group">
+                                                        <a class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#editarCuentaModal{{$cuenta->id}}" title="Editar cuenta">
+                                                            <i class="fas fa-edit"></i> Editar
+                                                        </a>
+                                                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="confirmDelete({{$cuenta->id}})" title="Eliminar cuenta">
+                                                            <i class="fas fa-trash"></i> Eliminar
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                                @else
+                                                @endif
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                         <!-- hola -->
                         <div class="card-body">
@@ -98,6 +103,18 @@ Catalogo de cuentas
                                     </form>
                                 @endif
                             @endif
+                            <div class="d-flex justify-content-center flex-wrap mt-3">
+                                <div class="mx-2 mb-2">
+                                    <a href="{{route('vinculacion.index')}}" class="btn btn-success btn-sm">
+                                        <i class="fas fa-link"></i> Relacionar Cuentas
+                                    </a>
+                                </div>
+                                <div class="mx-2 mb-2">
+                                    <a href="{{ route('graficos.index') }}" class="btn btn-info btn-sm">
+                                        <i class="fas fa-chart-bar"></i> Gráficas
+                                    </a>
+                                </div>
+                            </div>
                         <div>
                     </div>
                 </div>
@@ -109,9 +126,57 @@ Catalogo de cuentas
 @include('vistas.empresa.nueva_cuenta')
 
 @section('scripts')
-{{-- <script >
-    $('#excel').click(function(){
-        $('#nuevaCuentaExcelModal').modal('show');
-    })
-</script>--}}
+<script>
+    $(document).ready(function() {
+        // Initialize DataTable
+        $('#catalogo-table').DataTable({
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "zeroRecords": "No se encontraron resultados",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "No hay registros disponibles",
+                "infoFiltered": "(filtrado de _MAX_ registros totales)",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Último",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                }
+            },
+            "pageLength": 10,
+            "responsive": true,
+            "order": [[0, 'asc']],
+            "searching": false // Disable DataTable search
+        });
+
+        // Custom search functionality
+        $('#search-input').on('keyup', function() {
+            $('#catalogo-table').DataTable().search($(this).val()).draw();
+        });
+    });
+
+    function confirmDelete(id) {
+        if (confirm('¿Está seguro de que desea eliminar esta cuenta?')) {
+            // Create and submit form
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '{{ url("catalogo") }}/' + id;
+
+            var methodField = document.createElement('input');
+            methodField.type = 'hidden';
+            methodField.name = '_method';
+            methodField.value = 'DELETE';
+            form.appendChild(methodField);
+
+            var csrfField = document.createElement('input');
+            csrfField.type = 'hidden';
+            csrfField.name = '_token';
+            csrfField.value = '{{ csrf_token() }}';
+            form.appendChild(csrfField);
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+</script>
 @endsection

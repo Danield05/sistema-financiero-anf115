@@ -5,61 +5,65 @@ Análisis horizontal
 @endsection
 
 @section('content')
-    <section class="section">
-        <div class="section-header" style="display:grid;grid-template-columns: repeat(2, 1fr);text-align:center;padding:5px 10px;">
-            <div style="padding: 0px 0px 10px 10px">            
-                <a href="{{ route('horizontal.index') }}" class="ag-courses-item_link"style="background-color:#212e37; border-radius: 28px;">
-                    <div class="ag-courses-item_bg"></div>
-                    <div class="ag-courses-item_title">Análisis horizontal</div>
-                </a>
-            </div>
-            <div style="padding: 0px 0px 10px 10px">                
-                <a href="{{route('vertical.index')}}" class="ag-courses-item_link"style=" border-radius: 28px;">
-                    <div class="ag-courses-item_bg"></div>
-                    <div class="ag-courses-item_title">Análisis vertical</div>
-                </a>
-            </div>
-        </div>
+    <section class="section" style="margin-top: 20px;">
         <div class="section-body">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">
+                                <i class="fas fa-chart-line text-primary"></i> Análisis Horizontal
+                            </h4>
+                        </div>
                         <div class="card-body">
-                            <h3 class="text-center">Seleccione los periodos</h3>
-                            <br>
+                            <div class="d-flex justify-content-center mb-4">
+                                <a href="{{route('vertical.index')}}" class="btn btn-success btn-sm mx-2">
+                                    <i class="fas fa-chart-bar"></i> Análisis Vertical
+                                </a>
+                            </div>
 
                             {!! Form::open([
                                 'route'=>'horizontal',
                                 'method' => 'POST'
                                 ]) !!}
 
-                            <div class="flex">
-                                <div class="contenedor_a col-xs-6 col-sm-6 col-md-6">
-                                    <h4 class="mg_abajo_15">Selecciona el periodo 01</h4>
-                                    {!! Form::select('periodo_1', $cuentas, null, [
-                                        'class'=>'form-control'
-                                    ]) !!}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="periodo_1" class="form-label">
+                                            <i class="fas fa-calendar"></i> Selecciona el período 01
+                                        </label>
+                                        {!! Form::select('periodo_1', $cuentas, null, [
+                                            'class'=>'form-control',
+                                            'id'=>'periodo_1'
+                                        ]) !!}
+                                    </div>
                                 </div>
-    
-                                <div class="contenedor_d col-xs-6 col-sm-6 col-md-6">
-                                    <h4 class="mg_abajo_15">Selecciona el periodo 02</h4>
-                                    {!! Form::select('periodo_2', $cuentas, null, [
-                                        'class'=>'form-control'
-                                    ]) !!}
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="periodo_2" class="form-label">
+                                            <i class="fas fa-calendar"></i> Selecciona el período 02
+                                        </label>
+                                        {!! Form::select('periodo_2', $cuentas, null, [
+                                            'class'=>'form-control',
+                                            'id'=>'periodo_2'
+                                        ]) !!}
+                                    </div>
                                 </div>
                             </div>
 
-                            <br>
-                            <br>
-                            @if ($cuentas->count() > 1)
-                            {!! Form::submit('Calcular', [
-                                'class' => 'btn btn-primary'
-                            ]) !!}
-                            @else
-                                <div class="alert alert-danger" role="alert">
-                                    Primero debe ingresar periodos!
-                                </div>                             
-                            @endif
+                            <div class="text-center mt-4">
+                                @if ($cuentas->count() > 1)
+                                {!! Form::submit('Calcular Análisis', [
+                                    'class' => 'btn btn-primary btn-lg'
+                                ]) !!}
+                                @else
+                                    <div class="alert alert-warning" role="alert">
+                                        <i class="fas fa-info-circle"></i> Primero debe ingresar períodos para realizar el análisis.
+                                    </div>
+                                @endif
+                            </div>
                             {!! Form::close() !!}
 
                         </div>

@@ -88,6 +88,7 @@ Route::get('/grafico_de_cuenta/{id}', [\App\Http\Controllers\CuentaController::c
 Route::group(['middleware'=>['auth']], function(){
     Route::resource('roles', RolController::class);
     Route::resource('usuarios', UsuarioController::class);
+    Route::post('/change-password', [UsuarioController::class, 'changePassword'])->name('change.password');
     Route::resource('empresa', EmpresaController::class);
     Route::resource('catalogo', CuentaController::class);
     Route::resource('cuenta_sistema', CuentaSistemaController::class);

@@ -5,6 +5,14 @@
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
+    <style>
+        body {
+            background: linear-gradient(135deg, #302f2f 0%, #302f2f 100%) !important;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -12,7 +20,7 @@
         <div class="container-fluid">
             <div class="row min-vh-100">
                 <!-- Left Side - Branding -->
-                <div class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center text-white p-5" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #000000 100%);">
+                <div class="col-lg-6 d-none d-lg-flex align-items-center justify-content-center text-white p-5" style="background: linear-gradient(135deg, #EC0000 0%, #b80000 100%);">
                     <div class="branding-content text-center">
                         <div class="mb-4">
                             <i class="fas fa-coins fa-6x text-warning"></i>
@@ -38,7 +46,7 @@
                 </div>
 
                 <!-- Right Side - Login Form -->
-                <div class="col-lg-6 d-flex align-items-center justify-content-center p-5" style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);">
+                <div class="col-lg-6 d-flex align-items-center justify-content-center p-5" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);">
                     <div class="login-form-container w-100" style="max-width: 400px;">
                         <div class="text-center mb-4">
                             <div class="mb-3">

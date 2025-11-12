@@ -45,6 +45,19 @@ Inicio
             </div>
         </div>
 
+        @if(auth()->user()->hasRole('Contador'))
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="card stat-card border-0 shadow-sm h-100">
+                <div class="card-body text-center p-4">
+                    <div class="stat-icon mb-3">
+                        <i class="fas fa-calendar-alt text-info fa-2x"></i>
+                    </div>
+                    <h3 class="stat-number text-info mb-1">{{ \App\Models\Periodo::count() }}</h3>
+                    <p class="stat-label mb-0 text-muted">Períodos Activos</p>
+                </div>
+            </div>
+        </div>
+        @else
         <div class="col-lg-3 col-md-6 mb-4">
             <div class="card stat-card border-0 shadow-sm h-100">
                 <div class="card-body text-center p-4">
@@ -56,6 +69,7 @@ Inicio
                 </div>
             </div>
         </div>
+        @endif
 
         <div class="col-lg-3 col-md-6 mb-4">
             <div class="card stat-card border-0 shadow-sm h-100">

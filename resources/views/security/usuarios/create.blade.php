@@ -6,79 +6,105 @@ Crear usuario
 
 
 @section('content')
-    <section class="section">
-        <div class="section-header">
-            <h3 class="page__heading">Crear usuarios</h3>
-        </div>
+    <section class="section" style="margin-top: 20px;">
         <div class="section-body">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">
+                                <i class="fas fa-user-plus text-primary"></i> Crear Nuevo Usuario
+                            </h4>
+                        </div>
                         <div class="card-body">
-                            
                             @include('notificador_validacion')
 
                             {!! Form::open(array('route'=>'usuarios.store', 'method'=>'POST')) !!}
                             <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="name">Nombre</label>
+                                        <label for="name">
+                                            <i class="fas fa-user"></i> Nombre Completo
+                                        </label>
                                         {!! Form::text('name', null, [
-                                            'class'=>'form-control'
+                                            'class'=>'form-control',
+                                            'placeholder'=>'Ingrese el nombre completo',
+                                            'required'=>'required'
                                         ]) !!}
                                     </div>
                                 </div>
 
-                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="email">E-mail</label>
+                                        <label for="email">
+                                            <i class="fas fa-envelope"></i> Correo Electrónico
+                                        </label>
                                         {!! Form::email('email', null, [
-                                            'class'=>'form-control'
+                                            'class'=>'form-control',
+                                            'placeholder'=>'correo@ejemplo.com',
+                                            'required'=>'required'
                                         ]) !!}
                                     </div>
                                 </div>
 
-                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="password">Contraseña</label>
+                                        <label for="password">
+                                            <i class="fas fa-lock"></i> Contraseña
+                                        </label>
                                         {!! Form::password('password', [
-                                            'class'=>'form-control'
+                                            'class'=>'form-control',
+                                            'placeholder'=>'Mínimo 8 caracteres',
+                                            'required'=>'required'
                                         ]) !!}
                                     </div>
                                 </div>
 
-                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="confirm-password">Confirmar Contraseña</label>
+                                        <label for="confirm-password">
+                                            <i class="fas fa-lock"></i> Confirmar Contraseña
+                                        </label>
                                         {!! Form::password('confirm-password', [
-                                            'class'=>'form-control'
+                                            'class'=>'form-control',
+                                            'placeholder'=>'Repita la contraseña',
+                                            'required'=>'required'
                                         ]) !!}
                                     </div>
                                 </div>
 
-                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="roles">Roles</label>
+                                        <label for="roles">
+                                            <i class="fas fa-user-tag"></i> Rol
+                                        </label>
                                         {!! Form::select('roles', $roles, null, [
-                                            'class' => 'form-control'
+                                            'class' => 'form-control',
+                                            'required'=>'required'
                                         ]) !!}
                                     </div>
                                 </div>
 
-                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="empresa_id">Empresa</label>
+                                        <label for="empresa_id">
+                                            <i class="fas fa-building"></i> Empresa
+                                        </label>
                                         {!! Form::select('empresa_id', $empresas, null, [
-                                            'class' => 'form-control'
+                                            'class' => 'form-control',
+                                            'required'=>'required'
                                         ]) !!}
                                     </div>
                                 </div>
 
-                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <div class="form-group">
-                                        {!! Form::submit('Guardar', [
-                                            'class'=>'btn btn-success'
+                                <div class="col-12">
+                                    <div class="form-group text-center">
+                                        {!! Form::submit('Crear Usuario', [
+                                            'class'=>'btn btn-success btn-lg'
                                         ]) !!}
+                                        <a href="{{ route('usuarios.index') }}" class="btn btn-secondary btn-lg ml-2">
+                                            <i class="fas fa-arrow-left"></i> Cancelar
+                                        </a>
                                     </div>
                                 </div>
 

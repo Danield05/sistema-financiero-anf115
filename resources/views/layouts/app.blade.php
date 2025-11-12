@@ -15,8 +15,9 @@
     <link rel="stylesheet" href="{{ asset('assets/css/iziToast.min.css') }}">
     <link href="{{ asset('assets/css/sweetalert.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
-
-@yield('page_css')
+    <link href="{{ asset('assets/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css"/>
+    
+    @yield('page_css')
 <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('web/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('web/css/components.css')}}">
@@ -25,6 +26,16 @@
     @yield('css')
     <link rel="stylesheet" href=" {{asset('css/custom.css')}} ">
     <style>
+        .mini span {
+            display: none !important;
+        }
+        .mini .main-sidebar {
+            width: 50px !important;
+            transition: width 0.3s ease;
+        }
+        .main-sidebar {
+            transition: width 0.3s ease;
+        }
         .main-sidebar .ag-courses-item_title span {
             color: white !important;
         }
@@ -35,7 +46,7 @@
 <body >
 
 <div id="app">
-    <div class="main-wrapper main-wrapper-1" style="background-color: var(--color-light)">
+    <div class="main-wrapper main-wrapper-1" style="background-color: var(--color-light); width: 100%;">
         <div class="navbar-bg"></div>
         <nav class="navbar navbar-expand-lg main-navbar">
             @include('layouts.header')
@@ -70,11 +81,12 @@
 <script src="{{ asset('assets/js/iziToast.min.js') }}"></script>
 <script src="{{ asset('assets/js/select2.min.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.nicescroll.js') }}"></script>
+<script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
 
 <!-- Template JS File -->
 <script src="{{ asset('web/js/stisla.js') }}"></script>
 <script src="{{ asset('web/js/scripts.js') }}"></script>
-<script src="{{ mix('assets/js/profile.js') }}"></script>
+<script src="{{ asset('assets/js/profile.js') }}"></script>
 <script src="{{ mix('assets/js/custom/custom.js') }}"></script>
 @yield('page_js')
 @yield('scripts')
@@ -93,6 +105,28 @@
             }
         };
     }(jQuery));
+
+    // Toggle sidebar
+    $('[data-toggle="sidebar"]').click(function(e) {
+        e.preventDefault();
+        $('.main-sidebar').toggleClass('mini');
+    });
+
+    // Update navbar clock
+    function updateNavbarTime() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const timeString = `${hours}:${minutes}:${seconds}`;
+        const timeDisplay = document.getElementById('time-display');
+        if (timeDisplay) {
+            timeDisplay.textContent = timeString;
+        }
+    }
+
+    updateNavbarTime();
+    setInterval(updateNavbarTime, 1000); // Update every second
 
 </script>
 </html>

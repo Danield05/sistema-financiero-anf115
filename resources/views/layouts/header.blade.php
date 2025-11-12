@@ -6,6 +6,11 @@
         <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars" style="color:#FFFFFF"></i></a></li>
     </ul>
 </form>
+<div class="navbar-nav mx-auto">
+    <span class="nav-link text-white" id="navbar-time">
+        <i class="fas fa-clock"></i> <span id="time-display"></span>
+    </span>
+</div>
 <ul class="navbar-nav navbar-right">
 
     @if(\Illuminate\Support\Facades\Auth::user())

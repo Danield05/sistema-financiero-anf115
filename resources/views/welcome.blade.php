@@ -88,7 +88,7 @@ Bienvenido
                             </div>
                             <h5 class="card-title font-weight-bold mb-1">Hugo Alejandro</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Garcia Alfaro</h6>
-                            <span class="badge badge-danger px-3 py-2">GD15026</span>
+                            <span class="badge badge-danger px-3 py-2">GB15026</span>
                         </div>
                     </div>
                 </div>

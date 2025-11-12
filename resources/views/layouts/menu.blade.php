@@ -96,6 +96,7 @@
         @endcan
 
         @can('ver-usuario')
+        @if(!auth()->user()->hasRole('Contador'))
         <a  href=" {{route('usuarios.index')}}" class="ag-courses-item_link nav-link" style="border-radius:20px" title="Administrar usuarios del sistema">
             <div class="esfera"></div>
             <div class="ag-courses-item_title" style="font-size:15px">
@@ -103,8 +104,10 @@
                 <span>Usuarios</span>
             </div>
         </a>
+        @endif
         @endcan
         @can('ver-rol')
+        @if(!auth()->user()->hasRole('Contador'))
         <a  href=" {{route('roles.index')}} " class="ag-courses-item_link nav-link" style="border-radius:20px" title="Gestionar roles y permisos">
             <div class="esfera"></div>
             <div class="ag-courses-item_title" style="font-size:15px">
@@ -112,6 +115,7 @@
                 <span>Roles</span>
             </div>
         </a>
+        @endif
         @endcan
     @else
     <a  href="{{ route('login') }}" class="ag-courses-item_link nav-link" style="border-radius:20px">

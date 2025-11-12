@@ -111,7 +111,8 @@ class UsuarioController extends Controller
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'same:confirm-password',
             'roles' => 'required',
-            'empresa_id' => 'required'
+            'empresa_id' => 'required',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
         $input = $request->except('_token', '_method');
@@ -122,10 +123,30 @@ class UsuarioController extends Controller
         }
 
         $user = User::find($id);
+
+        // Handle photo upload
+        if ($request->hasFile('photo')) {
+            $photo = $request->file('photo');
+            $filename = time() . '.' . $photo->getClientOriginalExtension();
+            $photo->move(public_path('img/profile'), $filename);
+            $input['photo'] = $filename;
+
+            // Delete old photo if exists
+            if ($user->photo && file_exists(public_path('img/profile/' . $user->photo))) {
+                unlink(public_path('img/profile/' . $user->photo));
+            }
+        }
+
         $user->update($input);
         DB::table('model_has_roles')->where('model_id', $id)->delete();
 
         $user->assignRole($request->input('roles'));
+
+        // If it's an AJAX request (profile edit), return JSON
+        if ($request->ajax()) {
+            return response()->json(['success' => true, 'message' => 'Perfil actualizado correctamente']);
+        }
+
         return redirect()->route('usuarios.index');
     }
 
@@ -139,5 +160,24 @@ class UsuarioController extends Controller
     {
         User::find($id)->delete();
         return redirect()->route('usuarios.index');
+    }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'password_current' => 'required',
+            'password' => 'required|min:8|confirmed',
+        ]);
+
+        $user = auth()->user();
+
+        if (!Hash::check($request->password_current, $user->password)) {
+            return response()->json(['success' => false, 'message' => 'La contraseña actual es incorrecta']);
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return response()->json(['success' => true, 'message' => 'Contraseña cambiada correctamente']);
     }
 }
