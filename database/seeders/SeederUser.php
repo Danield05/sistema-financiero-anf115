@@ -17,60 +17,69 @@ class SeederUser extends Seeder
      */
     public function run()
     {
-        $usuario = User::create(
-            [
-                'name' => 'admin',
-                'email' => 'admin@admin.com',
-                'password' => bcrypt('admin'),
-                'empresa_id' => 1
-            ],
-        );
+        // Crear usuario Administrador
+        $adminUser = User::create([
+            'name' => 'Administrador General',
+            'email' => 'admin@sifin.com',
+            'password' => bcrypt('admin123'),
+            'empresa_id' => 1
+        ]);
 
-        $usu = [
+        // Crear usuario Contador
+        $contadorUser = User::create([
+            'name' => 'María González',
+            'email' => 'contador@sifin.com',
+            'password' => bcrypt('contador123'),
+            'empresa_id' => 1
+        ]);
+
+        // Crear usuarios de prueba adicionales
+        $testUsers = [
             [
-                'name' => 'Gerson Israel Alvarado Escobar',
-                'email' => 'gerson.alvarado@econoscope.com',
-                'password' => bcrypt('AE17004'),
+                'name' => 'Juan Pérez',
+                'email' => 'juan.perez@sifin.com',
+                'password' => bcrypt('user123'),
                 'empresa_id' => 1
             ],
             [
-                'name' => 'Álvaro Daniel García Guevara',
-                'email' => 'alvaro.garcia@econoscope.com',
-                'password' => bcrypt('GG20013'),
+                'name' => 'Ana López',
+                'email' => 'ana.lopez@sifin.com',
+                'password' => bcrypt('user123'),
                 'empresa_id' => 2
-            ],
-            [
-                'name' => 'Carlos Eduardo Rafaelano Santos',
-                'email' => 'carlos.rafaelano@econoscope.com',
-                'password' => bcrypt('RS20002'),
-                'empresa_id' => 3
-            ],
-            [
-                'name' => 'Kevin Anthony Rogel Hernández',
-                'email' => 'kevin.rogel@econoscope.com',
-                'password' => bcrypt('RH20049'),
-                'empresa_id' => 4
-            ],
-            [
-                'name' => 'Carlos Alonso Vásquez Rodríguez',
-                'email' => 'carlos.vasquez@econoscope.com',
-                'password' => bcrypt('VR16021'),
-                'empresa_id' => 5
             ],
         ];
 
-        DB::table('users')->insert($usu);
+        foreach ($testUsers as $userData) {
+            User::create($userData);
+        }
 
-        // Creo el Rol  administrador 
-        $rol = Role::create(['name' => 'Administrador']);
+        // Crear roles
+        $adminRole = Role::create(['name' => 'Administrador']);
+        $contadorRole = Role::create(['name' => 'Contador']);
 
-        // Se le dan todos los permisos pertienentes 
-        $permisos = Permission::pluck('id', 'id')->all();
+        // Obtener todos los permisos disponibles
+        $allPermissions = Permission::pluck('id')->all();
 
-        //se sincroniza el permiso al rol
-        $rol->syncPermissions($permisos);
+        // Definir permisos para cada rol
+        $adminPermissions = $allPermissions; // Administrador tiene todos los permisos
 
-        // Se asigna el rol 
-        $usuario->assignRole([$rol->id]);
+        $contadorPermissions = Permission::whereIn('name', [
+            'ver-empresa',
+            'crear-empresa',
+            'editar-empresa',
+            'ver-usuario',
+            'crear-usuario',
+            'editar-usuario',
+            // Contadores pueden ver pero no modificar roles
+            'ver-rol'
+        ])->pluck('id')->all();
+
+        // Asignar permisos a roles
+        $adminRole->syncPermissions($adminPermissions);
+        $contadorRole->syncPermissions($contadorPermissions);
+
+        // Asignar roles a usuarios
+        $adminUser->assignRole([$adminRole->id]);
+        $contadorUser->assignRole([$contadorRole->id]);
     }
 }
