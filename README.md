@@ -144,12 +144,21 @@ npm run dev
 
 ### 6. Configuración de Base de Datos
 
+**Opción A: Usar Migraciones (Recomendado)**
 ```bash
 # Ejecuta las migraciones
 php artisan migrate
 
 # Ejecuta los seeders (opcional)
 php artisan db:seed
+```
+
+**Opción B: Importar archivo SQL**
+```bash
+# Importa el archivo SQL incluido en el repositorio
+# En phpMyAdmin: Importar > seleccionar sistema_financiero_anf115.sql
+# O desde línea de comandos:
+mysql -u root -p sistema_financiero_anf115 < sistema_financiero_anf115.sql
 ```
 
 ### 7. Inicio del Servidor
