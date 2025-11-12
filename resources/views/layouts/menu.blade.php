@@ -12,18 +12,19 @@
     height: 128px;
     width: 128px;
     background-color: #EC0000;
-  
+
     z-index: 1;
     position: absolute;
     top: -75px;
     right: 180px;
-  
+
     border-radius: 50%;
-  
+
     -webkit-transition: all .5s ease;
     -o-transition: all .5s ease;
     transition: all .5s ease;
-  }
+   }
+
 
 </style>
 
@@ -31,23 +32,16 @@
 
     @if (Route::has('login'))
     @auth
-    <a href="{{ url('/home') }}" class="ag-courses-item_link nav-link" style="border-radius:20px">
-                <div class="esfera"></div>
-                <div class="ag-courses-item_title" style="font-size:15px">
-                    <i class=" fas fa-home"  ></i>
-                    <span>Inicio</span>
-                </div>
-            </a>
+    <a href="{{ url('/home') }}" class="ag-courses-item_link nav-link" style="border-radius:20px" title="Ir a la página de inicio">
+                 <div class="esfera"></div>
+                 <div class="ag-courses-item_title" style="font-size:15px">
+                     <i class=" fas fa-home"  ></i>
+                     <span>Inicio</span>
+                 </div>
+             </a>
 
-            <a  href="/" class="ag-courses-item_link nav-link" style="border-radius:20px">
-            <div class="esfera"></div>
-            <div class="ag-courses-item_title" style="font-size:15px">
-                <i class="fas fa-tree"  ></i>
-                <span>Bienvenido</span>
-            </div>
-        </a>
 
-        <a  href="{{ route('catalogo.index') }}" class="ag-courses-item_link nav-link"style="border-radius:20px" >
+       <a  href="{{ route('catalogo.index') }}" class="ag-courses-item_link nav-link"style="border-radius:20px" title="Gestionar el catálogo de cuentas contables">
             <div class="esfera"></div>
             <div class="ag-courses-item_title" style="font-size:15px">
                 <i class="fas fa-stream" ></i>
@@ -55,7 +49,7 @@
             </div>
         </a>
         
-        <a  href="{{ route('periodo.index') }}" class="ag-courses-item_link nav-link" style="border-radius:20px">
+        <a  href="{{ route('periodo.index') }}" class="ag-courses-item_link nav-link" style="border-radius:20px" title="Administrar los períodos contables">
             <div class="esfera"></div>
             <div class="ag-courses-item_title" style="font-size:15px">
                 <i class="fas fa-folder-open"  ></i>
@@ -63,7 +57,7 @@
             </div>
         </a>
 
-        <a  href="{{ route('horizontal.index') }}" class="ag-courses-item_link nav-link" style="border-radius:20px">
+        <a  href="{{ route('horizontal.index') }}" class="ag-courses-item_link nav-link" style="border-radius:20px" title="Realizar análisis financiero horizontal y vertical">
             <div class="esfera"></div>
             <div class="ag-courses-item_title" style="font-size:15px">
                 <i class="fas fa-search-dollar" ></i>
@@ -71,7 +65,7 @@
             </div>
         </a>
 
-        <a  href="{{ route('ratios.index') }}" class="ag-courses-item_link nav-link" style="border-radius:20px">
+        <a  href="{{ route('ratios.index') }}" class="ag-courses-item_link nav-link" style="border-radius:20px" title="Calcular y analizar ratios financieros">
             <div class="esfera"></div>
             <div class="ag-courses-item_title" style="font-size:15px">
                 <i class="fas fa-chart-bar"  ></i>
@@ -102,7 +96,7 @@
         @endcan
 
         @can('ver-usuario')
-        <a  href=" {{route('usuarios.index')}}" class="ag-courses-item_link nav-link" style="border-radius:20px">
+        <a  href=" {{route('usuarios.index')}}" class="ag-courses-item_link nav-link" style="border-radius:20px" title="Administrar usuarios del sistema">
             <div class="esfera"></div>
             <div class="ag-courses-item_title" style="font-size:15px">
                 <i class=" fas fa-user" ></i>
@@ -111,7 +105,7 @@
         </a>
         @endcan
         @can('ver-rol')
-        <a  href=" {{route('roles.index')}} " class="ag-courses-item_link nav-link" style="border-radius:20px">
+        <a  href=" {{route('roles.index')}} " class="ag-courses-item_link nav-link" style="border-radius:20px" title="Gestionar roles y permisos">
             <div class="esfera"></div>
             <div class="ag-courses-item_title" style="font-size:15px">
                 <i class="fas fa-globe"  ></i>

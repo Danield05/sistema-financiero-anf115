@@ -15,13 +15,13 @@ Inicio
                             <div class="col-lg-8">
                                 <h2 class="mb-2">
                                     <i class="fas fa-chart-line mr-2"></i>
-                                    ¡Bienvenido a EconoScope, {{ Auth::user()->name }}!
+                                    ¡Bienvenido a SIFIN, {{ Auth::user()->name }}!
                                 </h2>
-                                <p class="mb-0 opacity-75">Sistema integral de análisis financiero empresarial</p>
+                                <p class="mb-0 opacity-75">Sistema Integral Financero</p>
                             </div>
                             <div class="col-lg-4 text-center">
                                 <div class="welcome-icon">
-                                    <i class="fas fa-building fa-4x opacity-50"></i>
+                                    <i class="fas fa-building fa-5x" style="color: white;"></i>
                                 </div>
                             </div>
                         </div>
@@ -186,7 +186,7 @@ Inicio
                     </h5>
                 </div>
                 <div class="card-body">
-                    <div class="system-info">
+                    <div class="system-info" style="color: black;">
                         <div class="info-item mb-3">
                             <strong>Versión:</strong> SIFIN v1.0
                         </div>
@@ -200,11 +200,11 @@ Inicio
                             @endforeach
                         </div>
                         <div class="info-item mb-3">
-                            <strong>Último acceso:</strong> {{ Auth::user()->updated_at->format('d/m/Y H:i') }}
+                            <strong>Hora actual:</strong> <span id="current-time"></span>
                         </div>
                         <hr>
                         <div class="text-center">
-                            <small class="text-muted">Sistema desarrollado por el equipo de EconoScope</small>
+                            <small class="text-muted">Sistema desarrollado por el equipo de SIFIN</small>
                         </div>
                     </div>
                 </div>
@@ -261,4 +261,24 @@ Inicio
     opacity: 0.5;
 }
 </style>
+@endsection
+
+@section('scripts')
+<script>
+function updateTime() {
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const year = now.getFullYear();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const timeString = `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+    document.getElementById('current-time').textContent = timeString;
+}
+
+// Update time immediately and then every second
+updateTime();
+setInterval(updateTime, 1000);
+</script>
 @endsection

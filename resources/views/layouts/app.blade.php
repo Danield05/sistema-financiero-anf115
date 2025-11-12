@@ -24,6 +24,11 @@
 
     @yield('css')
     <link rel="stylesheet" href=" {{asset('css/custom.css')}} ">
+    <style>
+        .main-sidebar .ag-courses-item_title span {
+            color: white !important;
+        }
+    </style>
     @yield('js')
 </head>
 
@@ -88,5 +93,6 @@
             }
         };
     }(jQuery));
+
 </script>
 </html>
