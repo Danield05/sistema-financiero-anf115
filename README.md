@@ -161,7 +161,20 @@ php artisan db:seed
 mysql -u root -p sistema_financiero_anf115 < sistema_financiero_anf115.sql
 ```
 
-### 7. Inicio del Servidor
+### 7. Ejecutar Seeders (Datos de Prueba)
+
+```bash
+# Ejecutar todos los seeders para datos de prueba
+php artisan db:seed
+
+# O ejecutar seeders individuales
+php artisan db:seed --class=SeederSector
+php artisan db:seed --class=SeederEmpresa
+php artisan db:seed --class=SeederTablaPermisos
+php artisan db:seed --class=SeederUser
+```
+
+### 8. Inicio del Servidor
 
 ```bash
 # Inicia XAMPP (Apache y MySQL)
@@ -179,6 +192,45 @@ Después de la instalación exitosa, accede al sistema desde tu navegador:
 - **Registro**: `http://localhost/sistema-financiero-anf115/register`
 
 > **Nota**: Gracias al archivo `.htaccess` incluido, puedes acceder sin `/public` en la URL.
+
+## 👥 Cuentas de Usuario para Pruebas
+
+Después de ejecutar los seeders, el sistema incluye las siguientes cuentas de prueba:
+
+### 🔑 **Cuenta Administrador**
+- **Email:** `admin@sifin.com`
+- **Contraseña:** `admin123`
+- **Rol:** Administrador (acceso completo al sistema)
+- **Permisos:** Todos los permisos disponibles
+
+### 💼 **Cuenta Contador**
+- **Email:** `contador@sifin.com`
+- **Contraseña:** `contador123`
+- **Rol:** Contador (acceso limitado)
+- **Permisos:** Gestión de empresas, usuarios (lectura/escritura), roles (solo lectura)
+
+### 👤 **Cuentas de Usuario Regulares**
+- **Juan Pérez:** `juan.perez@sifin.com` / `user123`
+- **Ana López:** `ana.lopez@sifin.com` / `user123`
+
+### 📋 **Roles del Sistema**
+
+| Rol | Descripción | Permisos |
+|-----|-------------|----------|
+| **Administrador** | Control total del sistema | Todos los permisos |
+| **Contador** | Gestión financiera y contable | Empresas, usuarios, roles (limitado) |
+
+## 🏢 Empresas de Prueba
+
+Los seeders crean las siguientes empresas de ejemplo:
+
+| Empresa | Sector | NIT/NRC | Estado |
+|---------|--------|---------|--------|
+| **Temporal** | General | 00000000 | Base para pruebas |
+| **CENTA** | Agrícola | 12345678 | Lista para uso |
+| **Agrinter** | Agrícola | 12345678 | Lista para uso |
+| **Villavar** | Agrícola | 12345678 | Lista para uso |
+| **El surco** | Agrícola | 12345678 | Lista para uso |
 
 ### 📱 Páginas Disponibles
 
