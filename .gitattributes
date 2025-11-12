@@ -3,10 +3,14 @@
 # Language classification for GitHub statistics
 *.php linguist-language=PHP
 *.blade.php linguist-language=PHP
+*.blade.php linguist-detectable=true
 
 # Include custom frontend assets in statistics
 resources/css/*.css linguist-language=CSS
 resources/js/*.js linguist-language=JavaScript
+
+# Ensure Blade templates are treated as PHP
+resources/views/**/*.blade.php linguist-language=PHP
 
 # Mark vendor/compiled assets as vendored (not counted)
 public/css/*.css linguist-vendored
