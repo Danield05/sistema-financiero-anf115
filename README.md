@@ -115,7 +115,7 @@ Después de copiar `.env.example` a `.env`, configura los siguientes valores seg
 APP_NAME="Sistema Financiero ANF115"                    # Nombre de tu aplicación
 APP_ENV=local                                           # Entorno (local/production)
 APP_DEBUG=true                                          # Activar debug en desarrollo
-APP_URL=http://localhost/sistema-financiero-anf115/public  # URL completa de la app
+APP_URL=http://localhost/sistema-financiero-anf115/public  # URL completa incluyendo /public
 
 # === CONFIGURACIÓN DE BASE DE DATOS ===
 DB_CONNECTION=mysql                                    # Tipo de base de datos
