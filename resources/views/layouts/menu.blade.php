@@ -11,7 +11,7 @@
     .esfera {
     height: 128px;
     width: 128px;
-    background-color: #0D6E6E;
+    background-color: #EC0000;
   
     z-index: 1;
     position: absolute;

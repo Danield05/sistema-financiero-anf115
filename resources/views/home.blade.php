@@ -9,7 +9,7 @@ Inicio
     <div class="welcome-section mb-4">
         <div class="row">
             <div class="col-12">
-                <div class="card welcome-card border-0 shadow-sm" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white;">
+                <div class="card welcome-card border-0 shadow-sm" style="background: linear-gradient(135deg, #EC0000 0%, #b80000 100%); color: white;">
                     <div class="card-body p-4">
                         <div class="row align-items-center">
                             <div class="col-lg-8">
@@ -107,7 +107,7 @@ Inicio
                             </a>
                         </div>
                         <div class="col-lg-3 col-md-6 mb-3">
-                            <a href="{{ route('balance.index') }}" class="btn btn-outline-warning btn-block p-3 h-100 d-flex flex-column align-items-center">
+                            <a href="{{ route('balance_general.index') }}" class="btn btn-outline-warning btn-block p-3 h-100 d-flex flex-column align-items-center">
                                 <i class="fas fa-balance-scale fa-2x mb-2"></i>
                                 <span>Balances Generales</span>
                             </a>

@@ -6,7 +6,7 @@ Bienvenido
 
 @section('content')
     <!-- Hero Section -->
-    <div class="hero-section text-white py-5" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #000000 100%); min-height: 60vh;">
+    <div class="hero-section text-white py-5" style="background: linear-gradient(135deg, #EC0000 0%, #b80000 100%); min-height: 60vh;">
         <div class="container text-center">
             <div class="row align-items-center">
                 <div class="col-lg-8 mx-auto">
