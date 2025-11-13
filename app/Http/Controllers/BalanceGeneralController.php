@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\balance_general;
+use App\Models\BalanceGeneral;
 use App\Models\cuenta;
 use App\Models\cuenta_periodo;
 use Illuminate\Http\Request;
@@ -26,35 +26,35 @@ class BalanceGeneralController extends Controller
      */
     public function create()
     {
-        return view('vistas.analisis.balance_general');
+        return view('vistas.analisis.BalanceGeneral');
     }
 
     public function crear($periodo_id)
     {
         $empresa_id = \Illuminate\Support\Facades\Auth::user()->empresa->id;
-        $cuentas = cuenta::all()->where('empresa_id',$empresa_id);
-        $cuenta_p = cuenta_periodo::all()->where('periodo_id',$periodo_id);
+        $cuentas = cuenta::where('empresa_id',$empresa_id)->get();
+        $cuenta_p = cuenta_periodo::where('periodo_id',$periodo_id)->get();
 
-        $cuentas_as = cuenta::all()->where('empresa_id',$empresa_id)->where('tipo','1');
-        $cuentas_ds = cuenta::all()->where('empresa_id',$empresa_id)->where('tipo','0');
-        $cuentas_pas = cuenta::all()->where('empresa_id',$empresa_id)->where('tipo','2');
+        $cuentas_as = cuenta::where('empresa_id',$empresa_id)->where('tipo','1')->get();
+        $cuentas_ds = cuenta::where('empresa_id',$empresa_id)->where('tipo','0')->get();
+        $cuentas_pas = cuenta::where('empresa_id',$empresa_id)->where('tipo','2')->get();
 
         $cuentas_a = [];
         $cuentas_d = [];
         $cuentas_pa = [];
 
         foreach($cuentas_as as $cuenta_ass){
-            if(cuenta_periodo::all()->where('cuenta_id',$cuenta_ass->id)->where('periodo_id',$periodo_id)->count() == 0){
+            if(cuenta_periodo::where('cuenta_id',$cuenta_ass->id)->where('periodo_id',$periodo_id)->count() == 0){
                 array_push($cuentas_a, $cuenta_ass);
             }
         }
         foreach($cuentas_ds as $cuenta_dss){
-            if(cuenta_periodo::all()->where('cuenta_id',$cuenta_dss->id)->where('periodo_id',$periodo_id)->count() == 0){
+            if(cuenta_periodo::where('cuenta_id',$cuenta_dss->id)->where('periodo_id',$periodo_id)->count() == 0){
                 array_push($cuentas_d, $cuenta_dss);
             }
         }
         foreach($cuentas_pas as $cuenta_pass){
-            if(cuenta_periodo::all()->where('cuenta_id',$cuenta_pass->id)->where('periodo_id',$periodo_id)->count() == 0){
+            if(cuenta_periodo::where('cuenta_id',$cuenta_pass->id)->where('periodo_id',$periodo_id)->count() == 0){
                 array_push($cuentas_pa, $cuenta_pass);
             }
         }
@@ -78,7 +78,7 @@ class BalanceGeneralController extends Controller
         $pasivo_patrimonio = $deudora + $patrimonio;
 
         // return response()->json($cuenta_p);
-        return view('vistas.analisis.balance_general',compact('periodo_id', 'cuentas_a', 'cuentas_d', 'cuenta_p', 'cuentas_pa', 'deudora', 'acredora', 'patrimonio', 'pasivo_patrimonio'));
+        return view('vistas.analisis.BalanceGeneral',compact('periodo_id', 'cuentas_a', 'cuentas_d', 'cuenta_p', 'cuentas_pa', 'deudora', 'acredora', 'patrimonio', 'pasivo_patrimonio'));
     }
 
     /**
@@ -99,34 +99,24 @@ class BalanceGeneralController extends Controller
         $input = $request->except('_token');
         $empresa_id = \Illuminate\Support\Facades\Auth::user()->empresa->id;
 
-        $consulta = balance_general::all()->where('empresa_id',$empresa_id)->where('periodo_id', $request->get('periodo_id'))->first();
+        $consulta = BalanceGeneral::where('empresa_id',$empresa_id)->where('periodo_id', $request->get('periodo_id'))->first();
 
         if($consulta == null){
-            balance_general::create($input);
-
-            return back();
-            // return redirect()->route('periodo.index');
-        }
-
-        if($consulta->count() > 0){
-            
+            BalanceGeneral::create($input);
+        } else {
             $consulta->update($input);
-            return back();
-            
-            // return redirect()->route('periodo.index');
-
-            // return response()->json($consulta[0]->id);
-            // balance_general::destroy($consulta->id);
         }
+
+        return back();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\balance_general  $balance_general
+     * @param  \App\Models\BalanceGeneral  $BalanceGeneral
      * @return \Illuminate\Http\Response
      */
-    public function show(balance_general $balance_general)
+    public function show(BalanceGeneral $BalanceGeneral)
     {
         //
     }
@@ -134,10 +124,10 @@ class BalanceGeneralController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\balance_general  $balance_general
+     * @param  \App\Models\BalanceGeneral  $BalanceGeneral
      * @return \Illuminate\Http\Response
      */
-    public function edit(balance_general $balance_general)
+    public function edit(BalanceGeneral $BalanceGeneral)
     {
         //
     }
@@ -146,10 +136,10 @@ class BalanceGeneralController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\balance_general  $balance_general
+     * @param  \App\Models\BalanceGeneral  $BalanceGeneral
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, balance_general $balance_general)
+    public function update(Request $request, BalanceGeneral $BalanceGeneral)
     {
         //
     }
@@ -157,10 +147,10 @@ class BalanceGeneralController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\balance_general  $balance_general
+     * @param  \App\Models\BalanceGeneral  $BalanceGeneral
      * @return \Illuminate\Http\Response
      */
-    public function destroy(balance_general $balance_general)
+    public function destroy(BalanceGeneral $BalanceGeneral)
     {
         //
     }
