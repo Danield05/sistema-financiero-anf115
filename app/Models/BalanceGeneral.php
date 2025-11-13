@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class balance_general extends Model
+class BalanceGeneral extends Model
 {
     use HasFactory;
     public $timestamps = false;

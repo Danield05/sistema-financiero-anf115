@@ -8,7 +8,12 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EstadoResultadoController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\GeneralRController;
+use App\Http\Controllers\InventarioController;
+use App\Http\Controllers\PlanillaSueldoController;
+use App\Http\Controllers\PresupuestoController;
+use App\Http\Controllers\ProyeccionController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 //Agregamos controladores
 use App\Http\Controllers\HomeController;
@@ -17,7 +22,7 @@ use App\Http\Controllers\RolController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\VinculacionController;
-use App\Models\balance_general;
+use App\Models\BalanceGeneral;
 use App\Models\cuenta_sistema;
 use App\Models\vinculacion;
 use Spatie\Permission\Contracts\Role;
@@ -98,4 +103,11 @@ Route::group(['middleware'=>['auth']], function(){
     Route::resource('balance_general', BalanceGeneralController::class);
     Route::resource('cuenta_periodo', CuentaPeriodoController::class);
     Route::resource('estado', EstadoResultadoController::class);
+    Route::resource('inventario', InventarioController::class);
+    Route::get('inventario-peps', [InventarioController::class, 'peps'])->name('inventario.peps');
+    Route::get('inventario-ueps', [InventarioController::class, 'ueps'])->name('inventario.ueps');
+    Route::get('inventario-costo-promedio', [InventarioController::class, 'costoPromedio'])->name('inventario.costo_promedio');
+    Route::resource('presupuestos', PresupuestoController::class);
+    Route::resource('planillas', PlanillaSueldoController::class);
+    Route::get('proyecciones', [ProyeccionController::class, 'index'])->name('proyecciones.index');
 });

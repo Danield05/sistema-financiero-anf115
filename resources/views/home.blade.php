@@ -77,7 +77,7 @@ Inicio
                     <div class="stat-icon mb-3">
                         <i class="fas fa-chart-bar text-warning fa-2x"></i>
                     </div>
-                    <h3 class="stat-number text-warning mb-1">{{ \App\Models\balance_general::count() }}</h3>
+                    <h3 class="stat-number text-warning mb-1">{{ \App\Models\BalanceGeneral::count() }}</h3>
                     <p class="stat-label mb-0 text-muted">Balances Generados</p>
                 </div>
             </div>

@@ -73,6 +73,43 @@
             </div>
         </a>
 
+        <li class="nav-item dropdown">
+            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
+                <i class="fas fa-boxes"></i>
+                <span>Inventario</span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="nav-link" href="{{ route('inventario.index') }}">Vista General</a></li>
+                <li><a class="nav-link" href="{{ route('inventario.peps') }}">PEPS</a></li>
+                <li><a class="nav-link" href="{{ route('inventario.ueps') }}">UEPS</a></li>
+                <li><a class="nav-link" href="{{ route('inventario.costo_promedio') }}">Costo Promedio</a></li>
+            </ul>
+        </li>
+
+        <a  href="{{ route('presupuestos.index') }}" class="ag-courses-item_link nav-link" style="border-radius:20px" title="Gestionar presupuestos">
+            <div class="esfera"></div>
+            <div class="ag-courses-item_title" style="font-size:15px">
+                <i class="fas fa-calculator"  ></i>
+                <span>Presupuestos</span>
+            </div>
+        </a>
+
+        <a  href="{{ route('planillas.index') }}" class="ag-courses-item_link nav-link" style="border-radius:20px" title="Gestionar planillas de sueldos">
+            <div class="esfera"></div>
+            <div class="ag-courses-item_title" style="font-size:15px">
+                <i class="fas fa-money-check"  ></i>
+                <span>Planillas</span>
+            </div>
+        </a>
+
+        <a  href="{{ route('proyecciones.index') }}" class="ag-courses-item_link nav-link" style="border-radius:20px" title="Ver proyecciones financieras">
+            <div class="esfera"></div>
+            <div class="ag-courses-item_title" style="font-size:15px">
+                <i class="fas fa-chart-line"  ></i>
+                <span>Proyecciones</span>
+            </div>
+        </a>
+
         {{-- ! Fase de prueba
             <a  href="{{ route('sector.index') }}" class="ag-courses-item_link nav-link"style="border-radius:20px" >
             <div class="esfera"></div>
