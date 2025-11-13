@@ -4,6 +4,7 @@ use App\Http\Controllers\BalanceGeneralController;
 use App\Http\Controllers\CuentaController;
 use App\Http\Controllers\CuentaPeriodoController;
 use App\Http\Controllers\CuentaSistemaController;
+use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EstadoResultadoController;
 use App\Http\Controllers\GeneralController;
@@ -103,6 +104,7 @@ Route::group(['middleware'=>['auth']], function(){
     Route::resource('balance_general', BalanceGeneralController::class);
     Route::resource('cuenta_periodo', CuentaPeriodoController::class);
     Route::resource('estado', EstadoResultadoController::class);
+    Route::resource('empleados', EmpleadoController::class);
     Route::resource('inventario', InventarioController::class);
     Route::get('inventario-peps', [InventarioController::class, 'peps'])->name('inventario.peps');
     Route::get('inventario-ueps', [InventarioController::class, 'ueps'])->name('inventario.ueps');

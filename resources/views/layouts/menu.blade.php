@@ -73,18 +73,13 @@
             </div>
         </a>
 
-        <li class="nav-item dropdown">
-            <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
-                <i class="fas fa-boxes"></i>
+        <a  href="{{ route('inventario.index') }}" class="ag-courses-item_link nav-link" style="border-radius:20px" title="Gestionar inventario">
+            <div class="esfera"></div>
+            <div class="ag-courses-item_title" style="font-size:15px">
+                <i class="fas fa-boxes"  ></i>
                 <span>Inventario</span>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a class="nav-link" href="{{ route('inventario.index') }}">Vista General</a></li>
-                <li><a class="nav-link" href="{{ route('inventario.peps') }}">PEPS</a></li>
-                <li><a class="nav-link" href="{{ route('inventario.ueps') }}">UEPS</a></li>
-                <li><a class="nav-link" href="{{ route('inventario.costo_promedio') }}">Costo Promedio</a></li>
-            </ul>
-        </li>
+            </div>
+        </a>
 
         <a  href="{{ route('presupuestos.index') }}" class="ag-courses-item_link nav-link" style="border-radius:20px" title="Gestionar presupuestos">
             <div class="esfera"></div>
@@ -101,6 +96,16 @@
                 <span>Planillas</span>
             </div>
         </a>
+
+        @can('ver-empleado')
+        <a  href="{{ route('empleados.index') }}" class="ag-courses-item_link nav-link" style="border-radius:20px" title="Gestionar empleados">
+            <div class="esfera"></div>
+            <div class="ag-courses-item_title" style="font-size:15px">
+                <i class="fas fa-users"  ></i>
+                <span>Empleados</span>
+            </div>
+        </a>
+        @endcan
 
         <a  href="{{ route('proyecciones.index') }}" class="ag-courses-item_link nav-link" style="border-radius:20px" title="Ver proyecciones financieras">
             <div class="esfera"></div>

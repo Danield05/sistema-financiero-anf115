@@ -25,6 +25,12 @@ Gestión de Presupuestos
                                         <i class="fas fa-plus"></i> Crear Presupuesto
                                     </a>
                                 </div>
+                                <div class="input-group" style="width: 300px;">
+                                    <input type="text" class="form-control" id="search-input" placeholder="Buscar presupuestos...">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="table-responsive">
@@ -103,6 +109,12 @@ Gestión de Presupuestos
             },
             "pageLength": 10,
             "responsive": true,
+            "searching": false // Disable DataTable search
+        });
+
+        // Custom search functionality
+        $('#search-input').on('keyup', function() {
+            $('#presupuestos-table').DataTable().search($(this).val()).draw();
         });
     });
 

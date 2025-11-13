@@ -109,6 +109,7 @@ Inventario Costo Promedio
             },
             "pageLength": 10,
             "responsive": true,
+            "searching": false,
         });
 
         // Custom search functionality

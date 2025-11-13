@@ -42,24 +42,51 @@ class PlanillaSueldoController extends Controller
     {
         $request->validate([
             'empleado_id' => 'required|exists:empleados,id',
-            'periodo' => 'required|string',
+            'fecha_inicio' => 'required|date',
+            'fecha_fin' => 'required|date',
+            'dias_laborados' => 'required|integer|min:0|max:31',
+            'dias_faltados_con_permiso' => 'nullable|integer|min:0|max:31',
+            'dias_faltados_sin_permiso' => 'nullable|integer|min:0|max:31',
         ]);
 
         $empleado = Empleado::find($request->empleado_id);
-        $salario_base = $empleado->salario_base;
+        $salario_base_mensual = $empleado->salario_base;
 
+        // Calcular días totales del período
+        $fecha_inicio = \Carbon\Carbon::parse($request->fecha_inicio);
+        $fecha_fin = \Carbon\Carbon::parse($request->fecha_fin);
+        $dias_totales_periodo = $fecha_inicio->diffInDays($fecha_fin) + 1;
+
+        // Calcular salario base prorrateado por días trabajados
+        $dias_faltados_sin_permiso = $request->dias_faltados_sin_permiso ?? 0;
+        $dias_efectivos_trabajados = $request->dias_laborados - $dias_faltados_sin_permiso;
+
+        // Salario diario
+        $salario_diario = $salario_base_mensual / 30; // Asumiendo mes de 30 días
+
+        // Salario base prorrateado
+        $salario_base = $salario_diario * $dias_efectivos_trabajados;
+
+        // Calcular deducciones sobre el salario prorrateado
         $afp = PlanillaSueldo::calcularAFP($salario_base);
         $iss = PlanillaSueldo::calcularISSS($salario_base);
         $renta = PlanillaSueldo::calcularRenta($salario_base);
-        $aguinaldo = PlanillaSueldo::calcularAguinaldo($salario_base);
-        $vacaciones = PlanillaSueldo::calcularVacaciones($salario_base);
+
+        // Aguinaldo y vacaciones prorrateados
+        $aguinaldo = PlanillaSueldo::calcularAguinaldo($salario_base, $dias_totales_periodo / 30);
+        $vacaciones = PlanillaSueldo::calcularVacaciones($salario_base, ($dias_totales_periodo / 30) * (15/12)); // 15 días de vacaciones al año
 
         $total_deducciones = $afp + $iss + $renta;
         $sueldo_neto = $salario_base - $total_deducciones + $aguinaldo + $vacaciones;
 
         PlanillaSueldo::create([
             'empleado_id' => $request->empleado_id,
-            'periodo' => $request->periodo,
+            'periodo' => $fecha_inicio->format('Y-m'),
+            'fecha_inicio' => $request->fecha_inicio,
+            'fecha_fin' => $request->fecha_fin,
+            'dias_laborados' => $request->dias_laborados,
+            'dias_faltados_con_permiso' => $request->dias_faltados_con_permiso ?? 0,
+            'dias_faltados_sin_permiso' => $request->dias_faltados_sin_permiso ?? 0,
             'salario_base' => $salario_base,
             'afp_empleado' => $afp,
             'iss_empleado' => $iss,

@@ -109,6 +109,7 @@ Inventario PEPS - Primero en Entrar, Primero en Salir
             },
             "pageLength": 10,
             "responsive": true,
+            "searching": false,
         });
 
         // Custom search functionality

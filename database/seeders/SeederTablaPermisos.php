@@ -31,11 +31,16 @@ class SeederTablaPermisos extends Seeder
             'ver-empresa',
             'crear-empresa',
             'editar-empresa',
-            'borrar-empresa'
+            'borrar-empresa',
+            //Empleados
+            'ver-empleado',
+            'crear-empleado',
+            'editar-empleado',
+            'borrar-empleado'
         ];
 
         foreach($permisos as $permiso){
-            Permission::create(['name'=>$permiso]);
+            Permission::firstOrCreate(['name' => $permiso]);
         }
     }
 }

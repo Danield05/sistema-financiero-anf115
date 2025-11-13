@@ -25,6 +25,12 @@ Planillas de Sueldos
                                         <i class="fas fa-plus"></i> Generar Planilla
                                     </a>
                                 </div>
+                                <div class="input-group" style="width: 300px;">
+                                    <input type="text" class="form-control" id="search-input" placeholder="Buscar planillas...">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fas fa-search"></i></span>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="table-responsive">
@@ -33,6 +39,11 @@ Planillas de Sueldos
                                         <tr>
                                             <th>Empleado</th>
                                             <th>Período</th>
+                                            <th>Fecha Inicio</th>
+                                            <th>Fecha Fin</th>
+                                            <th>Días Laborados</th>
+                                            <th>Faltas c/Permiso</th>
+                                            <th>Faltas s/Permiso</th>
                                             <th>Salario Base</th>
                                             <th>AFP</th>
                                             <th>ISSS</th>
@@ -49,6 +60,11 @@ Planillas de Sueldos
                                             <tr>
                                                 <td>{{ $planilla->empleado->nombre }} {{ $planilla->empleado->apellido }}</td>
                                                 <td>{{ $planilla->periodo }}</td>
+                                                <td>{{ $planilla->fecha_inicio ? \Carbon\Carbon::parse($planilla->fecha_inicio)->format('d/m/Y') : 'N/A' }}</td>
+                                                <td>{{ $planilla->fecha_fin ? \Carbon\Carbon::parse($planilla->fecha_fin)->format('d/m/Y') : 'N/A' }}</td>
+                                                <td>{{ $planilla->dias_laborados }}</td>
+                                                <td>{{ $planilla->dias_faltados_con_permiso }}</td>
+                                                <td>{{ $planilla->dias_faltados_sin_permiso }}</td>
                                                 <td>${{ number_format($planilla->salario_base, 2) }}</td>
                                                 <td>${{ number_format($planilla->afp_empleado, 2) }}</td>
                                                 <td>${{ number_format($planilla->iss_empleado, 2) }}</td>
@@ -99,6 +115,12 @@ Planillas de Sueldos
             },
             "pageLength": 10,
             "responsive": true,
+            "searching": false // Disable DataTable search
+        });
+
+        // Custom search functionality
+        $('#search-input').on('keyup', function() {
+            $('#planillas-table').DataTable().search($(this).val()).draw();
         });
     });
 

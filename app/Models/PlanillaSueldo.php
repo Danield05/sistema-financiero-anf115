@@ -12,6 +12,11 @@ class PlanillaSueldo extends Model
     protected $fillable = [
         'empleado_id',
         'periodo',
+        'fecha_inicio',
+        'fecha_fin',
+        'dias_laborados',
+        'dias_faltados_con_permiso',
+        'dias_faltados_sin_permiso',
         'salario_base',
         'afp_empleado',
         'iss_empleado',
