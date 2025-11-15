@@ -84,30 +84,37 @@ class VinculacionController extends Controller
     }
 
     public function guardar(Request $request){
-        // * Validacion de cuenta a cuenta id
-        $empresa_id = \Illuminate\Support\Facades\Auth::user()->empresa->id;
-        $cuenta = cuenta::all()->where('empresa_id','=', $empresa_id)->where('nombre','=', request('cuenta'))->first();
+        try {
+            // * Validacion de cuenta a cuenta id
+            $empresa_id = \Illuminate\Support\Facades\Auth::user()->empresa->id;
+            $cuenta = cuenta::all()->where('empresa_id','=', $empresa_id)->where('nombre','=', request('cuenta'))->first();
 
-        $cuenta_id = $cuenta->id;
-
-        $vinculaciones = vinculacion::all();
-
-        // * Ingresamos los datos
-        $input['cuenta_sistema_id'] = request('cuenta_sistema_id');
-        $input['cuenta_id'] = $cuenta_id;
-        $input['empresa_id'] = $empresa_id;
-
-        foreach($vinculaciones as $vinculacion){
-            if($vinculacion->empresa_id == $empresa_id && $vinculacion->cuenta_sistema_id == request('cuenta_sistema_id') ){
-                // return response()->json($vinculacion);
-                $vinculacion->update($input);
-                return;
-                // return redirect()->route('vinculacion.index');
+            if (!$cuenta) {
+                return response()->json(['error' => 'Cuenta no encontrada'], 404);
             }
+
+            $cuenta_id = $cuenta->id;
+
+            $vinculaciones = vinculacion::all();
+
+            // * Ingresamos los datos
+            $input['cuenta_sistema_id'] = request('cuenta_sistema_id');
+            $input['cuenta_id'] = $cuenta_id;
+            $input['empresa_id'] = $empresa_id;
+
+            foreach($vinculaciones as $vinculacion){
+                if($vinculacion->empresa_id == $empresa_id && $vinculacion->cuenta_sistema_id == request('cuenta_sistema_id') ){
+                    $vinculacion->update($input);
+                    return response()->json(['success' => true, 'message' => 'Vinculación actualizada']);
+                }
+            }
+
+            vinculacion::create($input);
+            return response()->json(['success' => true, 'message' => 'Vinculación creada']);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al guardar vinculación: ' . $e->getMessage()], 500);
         }
-
-        vinculacion::create($input);
-
     }
 
     /**
