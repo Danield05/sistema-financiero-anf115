@@ -71,16 +71,15 @@ class VinculacionController extends Controller
         
         foreach($vinculaciones as $vinculacion){
             if($vinculacion->empresa_id == $empresa_id && $vinculacion->cuenta_sistema_id == $request->get('cuenta_sistema_id') ){
-                // return response()->json($vinculacion);
                 $vinculacion->update($input);
-                return redirect()->route('vinculacion.index');
+                return redirect()->route('vinculacion.index')->with('success', 'Vinculación actualizada correctamente.');
             }
         }
-        
+
         vinculacion::create($input);
 
-        // * Redirigimos
-        return redirect()->route('vinculacion.index');
+        // * Redirigimos con mensaje de éxito
+        return redirect()->route('vinculacion.index')->with('success', 'Vinculación creada correctamente.');
     }
 
     public function guardar(Request $request){

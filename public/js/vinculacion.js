@@ -5,6 +5,14 @@ function guardar(){
     let successCount = 0;
     let errorCount = 0;
 
+    // Mostrar indicador de carga
+    iziToast.info({
+        title: 'Guardando...',
+        message: 'Procesando vinculaciones, por favor espere.',
+        timeout: false,
+        close: false
+    });
+
     cuentas.forEach((cuenta) => {
         if(cuenta.value != ''){
             let promise = fetch(`/vinculacion/guardar?cuenta=${encodeURIComponent(cuenta.value)}&cuenta_sistema_id=${cuenta.getAttribute('sistema')}`)
@@ -28,16 +36,29 @@ function guardar(){
     });
 
     Promise.all(promises).then(() => {
+        // Ocultar indicador de carga
+        iziToast.hide({}, document.querySelector('.iziToast'));
+
         // Mostrar resultado
         if (errorCount === 0) {
-            alert(`¡Éxito! Se guardaron ${successCount} vinculaciones correctamente.`);
+            iziToast.success({
+                title: '¡Éxito!',
+                message: `Se guardaron ${successCount} vinculaciones correctamente.`,
+                position: 'topRight',
+                timeout: 3000
+            });
         } else {
-            alert(`Se guardaron ${successCount} vinculaciones, pero hubo ${errorCount} errores. Revisa la consola para más detalles.`);
+            iziToast.warning({
+                title: 'Advertencia',
+                message: `Se guardaron ${successCount} vinculaciones, pero hubo ${errorCount} errores. Revisa la consola para más detalles.`,
+                position: 'topRight',
+                timeout: 5000
+            });
         }
 
-        // Recargar página después de un breve delay
+        // Recargar página después de mostrar el mensaje
         setTimeout(() => {
             location.reload();
-        }, 1000);
+        }, 2000);
     });
 }

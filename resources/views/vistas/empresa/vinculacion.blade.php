@@ -30,8 +30,17 @@ Vinculacion de cuentas
                             </h4>
                         </div>
                         <div class="card-body">
-                            
+
                             @include('notificador_validacion')
+
+                            @if(session('success'))
+                                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                    <i class="fas fa-check-circle"></i> {{ session('success') }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
 
                             <div class="table-responsive">
                                 <table class="table table-striped" id="vinculacion-table" style="color: black;">
