@@ -102,6 +102,8 @@ class VinculacionController extends Controller
                 $cuenta_sistema_id = $data['cuenta_sistema_id'];
                 $cuenta_nombre = $data['cuenta'];
 
+                Log::info('Procesando vinculacion', ['cuenta_sistema_id' => $cuenta_sistema_id, 'cuenta_nombre' => $cuenta_nombre, 'empresa_id' => $empresa_id]);
+
                 if (empty($cuenta_nombre)) {
                     // Si no hay cuenta, saltar o eliminar vinculación existente
                     $existing = vinculacion::where('empresa_id', $empresa_id)
@@ -119,6 +121,7 @@ class VinculacionController extends Controller
                     ->first();
 
                 if (!$cuenta) {
+                    Log::error("Cuenta no encontrada", ['cuenta_nombre' => $cuenta_nombre, 'empresa_id' => $empresa_id]);
                     $errors[] = "Cuenta '{$cuenta_nombre}' no encontrada";
                     continue;
                 }
