@@ -14,6 +14,7 @@ class Inventario extends Model
         'cantidad',
         'costo_unitario',
         'metodo',
+        'tipo_movimiento',
         'fecha',
         'empresa_id'
     ];

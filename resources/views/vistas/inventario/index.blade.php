@@ -22,7 +22,7 @@ Gestión de Inventario
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <div>
                                     <a href="{{ route('inventario.create') }}" class="btn btn-success">
-                                        <i class="fas fa-plus"></i> Agregar Producto
+                                        <i class="fas fa-plus"></i> Agregar Inventario
                                     </a>
                                     <div class="btn-group ml-2">
                                         <button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -50,14 +50,13 @@ Gestión de Inventario
                             </div>
 
                             <div class="table-responsive">
-                                <table class="table table-striped table-hover" id="inventario-table">
+                                <table class="table table-striped table-hover" id="inventario-table" style="color: black;">
                                     <thead class="thead-dark">
                                         <tr>
-                                            <th>Producto</th>
-                                            <th>Cantidad</th>
-                                            <th>Costo Unitario</th>
+                                            <th>Nombre del Inventario</th>
                                             <th>Método</th>
-                                            <th>Fecha</th>
+                                            <th>Fecha Inicio</th>
+                                            <th>Fecha Fin</th>
                                             <th>Valor Total</th>
                                             <th>Acciones</th>
                                         </tr>
@@ -66,8 +65,6 @@ Gestión de Inventario
                                         @foreach ($inventarios as $inventario)
                                             <tr>
                                                 <td><strong>{{ $inventario->producto }}</strong></td>
-                                                <td>{{ $inventario->cantidad }}</td>
-                                                <td>${{ number_format($inventario->costo_unitario, 2) }}</td>
                                                 <td>
                                                     @if ($inventario->metodo == 'PEPS')
                                                         <span class="badge badge-primary">PEPS</span>
@@ -77,10 +74,14 @@ Gestión de Inventario
                                                         <span class="badge badge-info">Costo Promedio</span>
                                                     @endif
                                                 </td>
-                                                <td>{{ \Carbon\Carbon::parse($inventario->fecha)->format('d/m/Y') }}</td>
-                                                <td>${{ number_format($inventario->cantidad * $inventario->costo_unitario, 2) }}</td>
+                                                <td>{{ $inventario->fecha_inicio ? \Carbon\Carbon::parse($inventario->fecha_inicio)->format('d/m/Y') : 'N/A' }}</td>
+                                                <td>{{ $inventario->fecha_fin ? \Carbon\Carbon::parse($inventario->fecha_fin)->format('d/m/Y') : 'N/A' }}</td>
+                                                <td>${{ number_format($inventario->valor_total ?? 0, 2) }}</td>
                                                 <td>
                                                     <div class="btn-group" role="group">
+                                                        <a href="{{ route('inventario.show', $inventario->id) }}" class="btn btn-sm btn-outline-info" title="Ver">
+                                                            <i class="fas fa-eye"></i> Ver
+                                                        </a>
                                                         <a href="{{ route('inventario.edit', $inventario->id) }}" class="btn btn-sm btn-outline-primary" title="Editar">
                                                             <i class="fas fa-edit"></i> Editar
                                                         </a>

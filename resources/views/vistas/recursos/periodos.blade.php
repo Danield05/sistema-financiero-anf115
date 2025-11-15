@@ -26,17 +26,9 @@ Periodo
                             </div>
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <div>
-                                    @if ($periodos->count() > 0)
-                                        {!! Form::open(['route'=>'periodo.guardar', 'method'=>'get']) !!}
-                                        {!! Form::submit('Nuevo Periodo', [
-                                            'class' => 'btn btn-success'
-                                        ]) !!}
-                                        {!! Form::close() !!}
-                                    @else
-                                        <button class="btn btn-success" data-toggle="modal" data-target="#nuevoPeriodoModal">
-                                            <i class="fas fa-plus"></i> Nuevo Periodo
-                                        </button>
-                                    @endif
+                                   <button class="btn btn-success" data-toggle="modal" data-target="#nuevoPeriodoModal">
+                                       <i class="fas fa-plus"></i> Nuevo Periodo
+                                   </button>
                                 </div>
                                 <div class="input-group" style="width: 300px;">
                                     <input type="text" class="form-control" id="search-input" placeholder="Buscar períodos...">
@@ -46,7 +38,7 @@ Periodo
                                 </div>
                             </div>
                             <div class="table-responsive">
-                                <table class="table table-striped table-hover" id="periodos-table">
+                                <table class="table table-striped" id="periodos-table">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>Año</th>
@@ -56,7 +48,7 @@ Periodo
                                     <tbody>
                                         @foreach ($periodos as $periodo)
                                             <tr>
-                                                <td><strong>{{$periodo->anio}}</strong></td>
+                                                <td><strong style="color: black;">{{$periodo->anio}}</strong></td>
                                                 <td>
                                                     <div class="btn-group" role="group">
                                                         <a class="btn btn-sm btn-outline-info" href="/balance_general/crear/{{$periodo->id}}" title="Crear balance general">
@@ -65,9 +57,13 @@ Periodo
                                                         <a class="btn btn-sm btn-outline-success" href="/estado_de_resultado/{{$periodo->id}}" title="Ver estado de resultado">
                                                             <i class="fas fa-chart-line"></i> Estado
                                                         </a>
-                                                        <button type="button" class="btn btn-sm btn-outline-danger" onclick="confirmDelete({{$periodo->id}})" title="Eliminar período">
-                                                            <i class="fas fa-trash"></i> Eliminar
-                                                        </button>
+                                                        <form action="{{ url('periodo', $periodo->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('¿Está seguro de que desea eliminar este período?')">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar período">
+                                                                <i class="fas fa-trash"></i> Eliminar
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </td>
                                             </tr>

@@ -18,8 +18,21 @@ Catalogo de cuentas
                         <div class="card-body" style="min-height: 400px;">
 
                             @include('notificador_validacion')
+                            @if(session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                            @endif
                             @if($errors->any())
                             <h5 style="color:red">Errores encontrados en el archivo excel. Verifique los datos del archivo.</h5>
+                            @endif
+                            @if(session('import_errors'))
+                            <div style="color:red;">
+                                <h5>Errores durante la importación del Excel:</h5>
+                                <ul>
+                                    @foreach(session('import_errors') as $error)
+                                    <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
                             @endif
 
 
@@ -44,7 +57,7 @@ Catalogo de cuentas
                             @endif
 
                             <div class="table-responsive">
-                                <table class="table table-striped table-hover" id="catalogo-table">
+                                <table class="table table-striped" id="catalogo-table">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>Código</th>
@@ -61,8 +74,8 @@ Catalogo de cuentas
                                         @foreach ($cuentas as $cuenta)
                                             <tr>
                                                 <td><code>{{$cuenta->codigo}}</code></td>
-                                                <td><strong>{{$cuenta->nombre}}</strong></td>
-                                                <td>{{$cuenta->padre ?: 'N/A'}}</td>
+                                                <td><strong style="color: black;">{{$cuenta->nombre}}</strong></td>
+                                                <td><strong style="color: black;">{{$cuenta->padre ?: 'N/A'}}</strong></td>
                                                 <td>
                                                     @if ($cuenta->tipo == 0)
                                                         <span class="badge badge-primary">Deudora</span>

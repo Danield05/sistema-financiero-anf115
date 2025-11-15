@@ -16,7 +16,10 @@ class BalanceGeneralController extends Controller
      */
     public function index()
     {
-        //
+        $empresa_id = \Illuminate\Support\Facades\Auth::user()->empresa->id;
+        $periodos = \App\Models\periodo::where('empresa_id', $empresa_id)->get();
+        $bandera = null;
+        return view('vistas.recursos.periodos', compact('periodos', 'bandera'));
     }
 
     /**
@@ -26,7 +29,7 @@ class BalanceGeneralController extends Controller
      */
     public function create()
     {
-        return view('vistas.analisis.BalanceGeneral');
+        return view('vistas.analisis.balance_general');
     }
 
     public function crear($periodo_id)
@@ -78,7 +81,7 @@ class BalanceGeneralController extends Controller
         $pasivo_patrimonio = $deudora + $patrimonio;
 
         // return response()->json($cuenta_p);
-        return view('vistas.analisis.BalanceGeneral',compact('periodo_id', 'cuentas_a', 'cuentas_d', 'cuenta_p', 'cuentas_pa', 'deudora', 'acredora', 'patrimonio', 'pasivo_patrimonio'));
+        return view('vistas.analisis.balance_general',compact('periodo_id', 'cuentas_a', 'cuentas_d', 'cuenta_p', 'cuentas_pa', 'deudora', 'acredora', 'patrimonio', 'pasivo_patrimonio'));
     }
 
     /**

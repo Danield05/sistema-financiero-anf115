@@ -52,7 +52,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // * Periodo
 Route::get('/periodo_guardar', [PeriodoController::class, 'guardar'])->name('periodo.guardar');
 
-Route::get('/balance_general/crear/{periodo_id}', [BalanceGeneralController::class, 'crear']);
 
 // * Vinculacion
 Route::get('vinculacion/guardar', [VinculacionController::class, 'guardar'])->name('vinculacion.guardar');
@@ -77,12 +76,13 @@ Route::post('carga/excel',[CuentaController::class,'cargarExcel'])->name('upload
 Route::post('catalogo/confirmar',[CuentaController::class,'confirmarCatalogo'])->name('catalogo.confirmar');
 
 
+// * Balance general crear
+Route::get('/balance_general/crear/{periodo_id}', [BalanceGeneralController::class, 'crear'])->middleware('auth');
+
 // * Ratios
 Route::get('/ratios', [GeneralRController::class, 'ratios_empresa'])->name('ratios.index');
 Route::get('/ratios/comparacion', [GeneralRController::class, 'comparacion'])->name('ratios.comparacion');
 
-// * Estado de resultado
-Route::get('/estado_de_resultado/{periodo_id}', [EstadoResultadoController::class, 'crear'])->name('estado.crear');
 
 // * Prueba
 // Route::get('/prueba', [GeneralRController::class, 'ratios_empresa']);
@@ -101,9 +101,9 @@ Route::group(['middleware'=>['auth']], function(){
     Route::resource('vinculacion', VinculacionController::class);
     Route::resource('periodo',PeriodoController::class);
     Route::resource('sector', SectorController::class);
-    Route::resource('balance_general', BalanceGeneralController::class);
     Route::resource('cuenta_periodo', CuentaPeriodoController::class);
     Route::resource('estado', EstadoResultadoController::class);
+    Route::get('/estado_de_resultado/{periodo_id}', [EstadoResultadoController::class, 'crear'])->name('estado.crear');
     Route::resource('empleados', EmpleadoController::class);
     Route::resource('inventario', InventarioController::class);
     Route::get('inventario-peps', [InventarioController::class, 'peps'])->name('inventario.peps');
@@ -111,5 +111,6 @@ Route::group(['middleware'=>['auth']], function(){
     Route::get('inventario-costo-promedio', [InventarioController::class, 'costoPromedio'])->name('inventario.costo_promedio');
     Route::resource('presupuestos', PresupuestoController::class);
     Route::resource('planillas', PlanillaSueldoController::class);
+    Route::resource('balance_general', BalanceGeneralController::class);
     Route::get('proyecciones', [ProyeccionController::class, 'index'])->name('proyecciones.index');
 });

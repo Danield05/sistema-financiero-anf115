@@ -51,6 +51,8 @@
 <!-- Template JS File -->
 <script src="{{ asset('web/js/stisla.js') }}"></script>
 <script src="{{ asset('web/js/scripts.js') }}"></script>
+
+@yield('scripts')
 <!-- Page Specific JS File -->
 </body>
 </html>

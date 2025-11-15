@@ -14,6 +14,7 @@ class InventarioController extends Controller
      */
     public function index()
     {
+        // Mostrar todos los contenedores de inventario
         $inventarios = Inventario::where('empresa_id', auth()->user()->empresa->id)->get();
         return view('vistas.inventario.index', compact('inventarios'));
     }
@@ -49,7 +50,15 @@ class InventarioController extends Controller
      */
     public function create()
     {
-        return view('vistas.inventario.create');
+        $metodo = request('metodo');
+        $inventario_id = request('inventario_id');
+
+        if ($inventario_id) {
+            $inventario = Inventario::findOrFail($inventario_id);
+            return view('vistas.inventario.create', compact('metodo', 'inventario'));
+        }
+
+        return view('vistas.inventario.create', compact('metodo'));
     }
 
     /**
@@ -60,24 +69,23 @@ class InventarioController extends Controller
      */
     public function store(Request $request)
     {
+        // Solo crear contenedores de inventario
         $request->validate([
             'producto' => 'required|string',
-            'cantidad' => 'required|integer|min:1',
-            'costo_unitario' => 'required|numeric|min:0',
             'metodo' => 'required|in:PEPS,UEPS,costo_promedio',
-            'fecha' => 'required|date',
+            'fecha_inicio' => 'required|date',
+            'fecha_fin' => 'required|date|after:fecha_inicio',
         ]);
 
         Inventario::create([
             'producto' => $request->producto,
-            'cantidad' => $request->cantidad,
-            'costo_unitario' => $request->costo_unitario,
             'metodo' => $request->metodo,
-            'fecha' => $request->fecha,
+            'fecha_inicio' => $request->fecha_inicio,
+            'fecha_fin' => $request->fecha_fin,
             'empresa_id' => auth()->user()->empresa->id,
         ]);
 
-        return redirect()->route('inventario.index')->with('success', 'Producto agregado al inventario.');
+        return redirect()->route('inventario.index')->with('success', 'Inventario creado correctamente.');
     }
 
     /**
@@ -89,7 +97,11 @@ class InventarioController extends Controller
     public function show($id)
     {
         $inventario = Inventario::findOrFail($id);
-        return view('vistas.inventario.show', compact('inventario'));
+
+        // Por ahora, no hay movimientos separados, solo mostramos el contenedor
+        $movimientos = collect(); // Colección vacía
+
+        return view('vistas.inventario.show', compact('inventario', 'movimientos'));
     }
 
     /**
@@ -101,7 +113,11 @@ class InventarioController extends Controller
     public function edit($id)
     {
         $inventario = Inventario::findOrFail($id);
-        return view('vistas.inventario.edit', compact('inventario'));
+        $movimientos = Inventario::where('producto', $inventario->producto)
+                                ->where('empresa_id', auth()->user()->empresa->id)
+                                ->orderBy('fecha', 'desc')
+                                ->get();
+        return view('vistas.inventario.edit', compact('inventario', 'movimientos'));
     }
 
     /**
@@ -117,6 +133,7 @@ class InventarioController extends Controller
             'producto' => 'required|string',
             'cantidad' => 'required|integer|min:1',
             'costo_unitario' => 'required|numeric|min:0',
+            'tipo_movimiento' => 'required|in:entrada,salida',
             'metodo' => 'required|in:PEPS,UEPS,costo_promedio',
             'fecha' => 'required|date',
         ]);
@@ -124,7 +141,7 @@ class InventarioController extends Controller
         $inventario = Inventario::findOrFail($id);
         $inventario->update($request->all());
 
-        return redirect()->route('inventario.index')->with('success', 'Producto actualizado correctamente.');
+        return redirect()->route('inventario.index')->with('success', 'Movimiento de inventario actualizado correctamente.');
     }
 
     /**

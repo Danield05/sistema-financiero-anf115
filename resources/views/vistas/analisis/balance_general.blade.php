@@ -18,6 +18,12 @@ Crear balance general
                             
                             @include('notificador_validacion')
 
+                            @if(empty($cuentas_a) && empty($cuentas_d) && empty($cuentas_pa))
+                                <div class="alert alert-warning">
+                                    No hay cuentas disponibles para este periodo. Asegúrate de tener cuentas importadas con tipos correctos (Acreedora, Deudora, Patrimonio).
+                                </div>
+                            @endif
+
                             {{-- @foreach ($cuenta_p as $cuentap)
                                 {{$cuentap->cuenta}}
                             @endforeach --}}

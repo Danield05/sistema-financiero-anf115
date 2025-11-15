@@ -34,7 +34,7 @@ Vinculacion de cuentas
                             @include('notificador_validacion')
 
                             <div class="table-responsive">
-                                <table class="table table-striped table-hover" id="vinculacion-table">
+                                <table class="table table-striped" id="vinculacion-table" style="color: black;">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>Nombre</th>
@@ -74,7 +74,7 @@ Vinculacion de cuentas
 
                                     {!! Form::open() !!}
                                     <tr>
-                                        <td>
+                                        <td style="color: black;">
                                             {{$cuenta_sistema->nombre}}
                                             {!! Form::hidden('cuenta_sistema_id', $cuenta_sistema->id, []) !!}
                                             {!! Form::hidden('empresa_id', \Illuminate\Support\Facades\Auth::user()->empresa->id, []) !!}
@@ -93,16 +93,16 @@ Vinculacion de cuentas
                                             {{-- <input autocomplete="off" sistema="{{$cuenta_sistema->id}}" id="buscador{{$cuenta_sistema->id}}" class="form-control econoscope_cuenta" name="cuenta" placeholder="Digite la cuenta a vincular con {{$cuenta_sistema->nombre}}" onclick="ejecutarBuscador({{$cuentasa}},'nombre' ,'buscador{{$cuenta_sistema->id}}')" value="{{$cuenta_nombre}}">
                                             @else
                                             <input autocomplete="off" sistema="{{$cuenta_sistema->id}}" id="buscador{{$cuenta_sistema->id}}" class="form-control econoscope_cuenta" name="cuenta" placeholder="Digite la cuenta a vincular con {{$cuenta_sistema->nombre}}" onclick="ejecutarBuscador({{$cuentasa}},'nombre' ,'buscador{{$cuenta_sistema->id}}')"> --}}
-                                            <input autocomplete="off" sistema="{{$cuenta_sistema->id}}" id="buscador{{$cuenta_sistema->id}}" class="form-control econoscope_cuenta" name="cuenta" placeholder="Digite la cuenta a vincular con {{$cuenta_sistema->nombre}}" onclick="ejecutarBuscador({{$cuentasa}},'nombre' ,'buscador{{$cuenta_sistema->id}}')" value="{{$cuenta_nombre}}" onchange="actualizarCodigo({{$cuentasa}},'buscador{{$cuenta_sistema->id}}')">
+                                            <input autocomplete="off" sistema="{{$cuenta_sistema->id}}" id="buscador{{$cuenta_sistema->id}}" class="form-control econoscope_cuenta" name="cuenta" placeholder="Digite la cuenta a vincular con {{$cuenta_sistema->nombre}}" onclick="ejecutarBuscador({{$cuentasa}},'nombre' ,'buscador{{$cuenta_sistema->id}}')" value="{{$cuenta_nombre}}" onchange="actualizarCodigo({{$cuentasa}},'buscador{{$cuenta_sistema->id}}')" style="color: black !important;">
                                             </td>
                                             <td>
-                                                <label class="form-control" id="codigo_cuenta_empresa{{$cuenta_sistema->id}}">{{$cuenta_codigo}}</label>
+                                                <label class="form-control" id="codigo_cuenta_empresa{{$cuenta_sistema->id}}" style="color: black !important;">{{$cuenta_codigo}}</label>
                                             </td>
                                             @else
-                                            <input autocomplete="off" sistema="{{$cuenta_sistema->id}}" id="buscador{{$cuenta_sistema->id}}"class="form-control econoscope_cuenta" name="cuenta" placeholder="Digite la cuenta a vincular con {{$cuenta_sistema->nombre}}" onclick="ejecutarBuscador({{$cuentasa}},'nombre' ,'buscador{{$cuenta_sistema->id}}')" onchange="actualizarCodigo({{$cuentasa}},'buscador{{$cuenta_sistema->id}}','codigo_cuenta_empresa{{$cuenta_sistema->id}}')">
+                                            <input autocomplete="off" sistema="{{$cuenta_sistema->id}}" id="buscador{{$cuenta_sistema->id}}"class="form-control econoscope_cuenta" name="cuenta" placeholder="Digite la cuenta a vincular con {{$cuenta_sistema->nombre}}" onclick="ejecutarBuscador({{$cuentasa}},'nombre' ,'buscador{{$cuenta_sistema->id}}')" onchange="actualizarCodigo({{$cuentasa}},'buscador{{$cuenta_sistema->id}}','codigo_cuenta_empresa{{$cuenta_sistema->id}}')" style="color: black !important;">
                                             </td>
                                             <td>
-                                                <label class="form-control" id="codigo_cuenta_empresa{{$cuenta_sistema->id}}"></label>
+                                                <label class="form-control" id="codigo_cuenta_empresa{{$cuenta_sistema->id}}" style="color: black !important;"></label>
                                             </td>
                                             @endif
 

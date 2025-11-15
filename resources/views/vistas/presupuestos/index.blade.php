@@ -34,7 +34,7 @@ Gestión de Presupuestos
                             </div>
 
                             <div class="table-responsive">
-                                <table class="table table-striped table-hover" id="presupuestos-table">
+                                <table class="table table-striped" id="presupuestos-table">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>Tipo</th>

@@ -89,8 +89,8 @@
                             <div class="form-group mb-4">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text bg-light border-0">
-                                            <i class="fas fa-lock text-primary"></i>
+                                        <span class="input-group-text bg-light border-0" id="togglePassword" style="cursor: pointer; border-radius: 0.375rem 0 0 0.375rem;">
+                                            <i class="fas fa-lock text-primary" id="lockIcon"></i>
                                         </span>
                                     </div>
                                     <input type="password" class="form-control form-control-lg border-left-0"
@@ -137,4 +137,24 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+<script>
+    $(document).ready(function() {
+        $('#togglePassword').on('click', function(e) {
+            e.preventDefault();
+            const passwordField = $('#password');
+            const lockIcon = $('#lockIcon');
+
+            if (passwordField.attr('type') === 'password') {
+                passwordField.attr('type', 'text');
+                lockIcon.removeClass('fa-lock').addClass('fa-unlock');
+            } else {
+                passwordField.attr('type', 'password');
+                lockIcon.removeClass('fa-unlock').addClass('fa-lock');
+            }
+        });
+    });
+</script>
 @endsection

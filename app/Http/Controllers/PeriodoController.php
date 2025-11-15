@@ -98,12 +98,13 @@ class PeriodoController extends Controller
      * @param  \App\Models\periodo  $periodo
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(periodo $periodo)
     {
         $empresa_id = \Illuminate\Support\Facades\Auth::user()->empresa->id;
         $anios = periodo::all()->where('empresa_id', $empresa_id);
         $anio_max = 0;
 
+        /** @var periodo $anio */
         foreach($anios as $anio){
             if($anio->anio > $anio_max){
                 $anio_max = $anio->anio;
@@ -111,8 +112,8 @@ class PeriodoController extends Controller
         }
 
         // return response()->json($anio_max);
-        if($anio_max == periodo::find($id)->anio){
-            periodo::find($id)->delete();
+        if($anio_max == $periodo->anio){
+            $periodo->delete();
             return redirect()->route('periodo.index');
         }
 

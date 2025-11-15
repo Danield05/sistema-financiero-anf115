@@ -17,7 +17,7 @@ Graficos de cuentas
                         </div>
                         <div class="card-body" style="min-height: 400px;">
                             <div class="table-responsive">
-                                <table class="table table-striped table-hover" id="graficos-table">
+                                <table class="table table-striped" id="graficos-table">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>Código</th>
@@ -29,7 +29,7 @@ Graficos de cuentas
                                         @foreach ($cuentas as $cuenta)
                                             <tr>
                                                 <td><code>{{$cuenta->codigo}}</code></td>
-                                                <td><strong>{{$cuenta->nombre}}</strong></td>
+                                                <td><strong style="color: black;">{{$cuenta->nombre}}</strong></td>
                                                 <td>
                                                     <a href="{{ route('graficoDeCuenta', $cuenta->id) }}" class="btn btn-info btn-sm">
                                                         <i class="fas fa-chart-bar"></i> Ver Gráfico

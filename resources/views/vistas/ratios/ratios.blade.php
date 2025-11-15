@@ -23,7 +23,7 @@ Ratios
                                 <div class="col-md-6 mb-4">
                                     <h5 class="text-primary"><i class="fas fa-balance-scale"></i> Razones Financieras</h5>
                                     <div class="table-responsive">
-                                        <table class="table table-striped table-hover">
+                                        <table class="table table-striped" style="color: black;">
                                             <thead class="thead-dark">
                                                 <tr>
                                                     <th>Año</th>
@@ -45,7 +45,7 @@ Ratios
 
                                     <h5 class="text-success mt-4"><i class="fas fa-cogs"></i> Razones de Eficiencia</h5>
                                     <div class="table-responsive">
-                                        <table class="table table-striped table-hover">
+                                        <table class="table table-striped" style="color: black;">
                                             <thead class="thead-dark">
                                                 <tr>
                                                     <th>Año</th>
@@ -56,7 +56,7 @@ Ratios
                                             <tbody>
                                                 @foreach ($razones_eficiencia as $razon)
                                                 <tr>
-                                                    <td><strong>{{$razon['anio']}}</strong></td>
+                                                    <td><strong style="color: black !important;">{{$razon['anio']}}</strong></td>
                                                     <td>{{$razon['rotacion_inventario']}}</td>
                                                     <td>{{$razon['rotacion_cuentas_por_cobrar']}}</td>
                                                 </tr>
@@ -69,7 +69,7 @@ Ratios
                                 <div class="col-md-6 mb-4">
                                     <h5 class="text-warning"><i class="fas fa-credit-card"></i> Razones de Endeudamiento</h5>
                                     <div class="table-responsive">
-                                        <table class="table table-striped table-hover">
+                                        <table class="table table-striped" style="color: black !important;">
                                             <thead class="thead-dark">
                                                 <tr>
                                                     <th>Año</th>
@@ -91,7 +91,7 @@ Ratios
 
                                     <h5 class="text-danger mt-4"><i class="fas fa-dollar-sign"></i> Razones de Rentabilidad</h5>
                                     <div class="table-responsive">
-                                        <table class="table table-striped table-hover">
+                                        <table class="table table-striped" style="color: black;">
                                             <thead class="thead-dark">
                                                 <tr>
                                                     <th>Año</th>

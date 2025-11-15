@@ -34,7 +34,7 @@ Planillas de Sueldos
                             </div>
 
                             <div class="table-responsive">
-                                <table class="table table-striped table-hover" id="planillas-table">
+                                <table class="table table-striped table-hover" id="planillas-table" style="color: black;">
                                     <thead class="thead-dark">
                                         <tr>
                                             <th>Empleado</th>

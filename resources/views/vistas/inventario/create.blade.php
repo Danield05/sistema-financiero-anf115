@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Agregar Producto al Inventario
+Agregar Inventario
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@ Agregar Producto al Inventario
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">
-                                <i class="fas fa-plus-circle text-primary"></i> Agregar Nuevo Producto
+                                <i class="fas fa-plus-circle text-primary"></i> Agregar Inventario
                             </h4>
                         </div>
                         <div class="card-body">
@@ -21,53 +21,18 @@ Agregar Producto al Inventario
 
                             {!! Form::open(['route' => 'inventario.store', 'method' => 'POST']) !!}
 
+                            <!-- Formulario para crear nuevo contenedor de inventario -->
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-6">
                                     <div class="form-group">
-                                        {!! Form::label('producto', 'Producto') !!}
+                                        {!! Form::label('producto', 'Nombre del Inventario') !!}
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-box"></i></span>
                                             </div>
                                             {!! Form::text('producto', null, [
                                                 'class' => 'form-control',
-                                                'placeholder' => 'Nombre del producto',
-                                                'required' => 'required'
-                                            ]) !!}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-xs-12 col-sm-12 col-md-6">
-                                    <div class="form-group">
-                                        {!! Form::label('cantidad', 'Cantidad') !!}
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
-                                            </div>
-                                            {!! Form::number('cantidad', null, [
-                                                'class' => 'form-control',
-                                                'min' => '1',
-                                                'step' => '1',
-                                                'required' => 'required'
-                                            ]) !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-12 col-md-6">
-                                    <div class="form-group">
-                                        {!! Form::label('costo_unitario', 'Costo Unitario') !!}
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
-                                            </div>
-                                            {!! Form::number('costo_unitario', null, [
-                                                'class' => 'form-control',
-                                                'min' => '0',
-                                                'step' => '0.01',
+                                                'placeholder' => 'Nombre del inventario',
                                                 'required' => 'required'
                                             ]) !!}
                                         </div>
@@ -85,7 +50,7 @@ Agregar Producto al Inventario
                                                 'PEPS' => 'PEPS (Primero en Entrar, Primero en Salir)',
                                                 'UEPS' => 'UEPS (Último en Entrar, Primero en Salir)',
                                                 'costo_promedio' => 'Costo Promedio'
-                                            ], null, [
+                                            ], $metodo ?? null, [
                                                 'class' => 'form-control',
                                                 'required' => 'required'
                                             ]) !!}
@@ -94,15 +59,16 @@ Agregar Producto al Inventario
                                 </div>
                             </div>
 
+                            <!-- Campos para contenedor -->
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-6">
                                     <div class="form-group">
-                                        {!! Form::label('fecha', 'Fecha') !!}
+                                        {!! Form::label('fecha_inicio', 'Fecha de Inicio') !!}
                                         <div class="input-group">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                                             </div>
-                                            {!! Form::date('fecha', null, [
+                                            {!! Form::date('fecha_inicio', null, [
                                                 'class' => 'form-control',
                                                 'required' => 'required'
                                             ]) !!}
@@ -112,12 +78,15 @@ Agregar Producto al Inventario
 
                                 <div class="col-xs-12 col-sm-12 col-md-6">
                                     <div class="form-group">
-                                        <label for="total_cost">Costo Total Estimado</label>
+                                        {!! Form::label('fecha_fin', 'Fecha de Fin') !!}
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fas fa-calculator"></i></span>
+                                                <span class="input-group-text"><i class="fas fa-calendar-check"></i></span>
                                             </div>
-                                            <input type="text" class="form-control" id="total_cost" readonly value="$0.00">
+                                            {!! Form::date('fecha_fin', null, [
+                                                'class' => 'form-control',
+                                                'required' => 'required'
+                                            ]) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -126,7 +95,7 @@ Agregar Producto al Inventario
                             <div class="row">
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <button type="submit" class="btn btn-primary">
-                                        <i class="fas fa-save"></i> Guardar Producto
+                                        <i class="fas fa-save"></i> Guardar Inventario
                                     </button>
                                     <a href="{{ route('inventario.index') }}" class="btn btn-secondary ml-2">
                                         <i class="fas fa-times"></i> Cancelar

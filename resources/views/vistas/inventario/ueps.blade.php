@@ -26,8 +26,8 @@ Inventario UEPS - Último en Entrar, Primero en Salir
 
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <div>
-                                    <a href="{{ route('inventario.create') }}" class="btn btn-success">
-                                        <i class="fas fa-plus"></i> Agregar Producto UEPS
+                                    <a href="{{ route('inventario.create') }}?metodo=UEPS" class="btn btn-success">
+                                        <i class="fas fa-plus"></i> Agregar Inventario UEPS
                                     </a>
                                 </div>
                                 <div class="input-group" style="width: 300px;">
@@ -39,13 +39,12 @@ Inventario UEPS - Último en Entrar, Primero en Salir
                             </div>
 
                             <div class="table-responsive">
-                                <table class="table table-striped table-hover" id="inventario-table">
+                                <table class="table table-striped table-hover" id="inventario-table" style="color: black;">
                                     <thead class="thead-dark">
                                         <tr>
-                                            <th>Producto</th>
-                                            <th>Cantidad</th>
-                                            <th>Costo Unitario</th>
-                                            <th>Fecha</th>
+                                            <th>Nombre del Inventario</th>
+                                            <th>Fecha Inicio</th>
+                                            <th>Fecha Fin</th>
                                             <th>Valor Total</th>
                                             <th>Acciones</th>
                                         </tr>
@@ -54,10 +53,9 @@ Inventario UEPS - Último en Entrar, Primero en Salir
                                         @foreach ($inventarios as $inventario)
                                             <tr>
                                                 <td><strong>{{ $inventario->producto }}</strong></td>
-                                                <td>{{ $inventario->cantidad }}</td>
-                                                <td>${{ number_format($inventario->costo_unitario, 2) }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($inventario->fecha)->format('d/m/Y') }}</td>
-                                                <td>${{ number_format($inventario->cantidad * $inventario->costo_unitario, 2) }}</td>
+                                                <td>{{ $inventario->fecha_inicio ? \Carbon\Carbon::parse($inventario->fecha_inicio)->format('d/m/Y') : 'N/A' }}</td>
+                                                <td>{{ $inventario->fecha_fin ? \Carbon\Carbon::parse($inventario->fecha_fin)->format('d/m/Y') : 'N/A' }}</td>
+                                                <td>${{ number_format($inventario->valor_total ?? 0, 2) }}</td>
                                                 <td>
                                                     <div class="btn-group" role="group">
                                                         <a href="{{ route('inventario.edit', $inventario->id) }}" class="btn btn-sm btn-outline-primary" title="Editar">

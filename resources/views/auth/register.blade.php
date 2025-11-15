@@ -106,8 +106,8 @@
                                     <div class="form-group mb-4">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text bg-light border-0">
-                                                    <i class="fas fa-lock text-primary"></i>
+                                                <span class="input-group-text bg-light border-0" id="togglePassword" style="cursor: pointer;">
+                                                    <i class="fas fa-lock text-primary" id="lockIcon"></i>
                                                 </span>
                                             </div>
                                             <input type="password" class="form-control form-control-lg border-left-0"
@@ -122,8 +122,8 @@
                                     <div class="form-group mb-4">
                                         <div class="input-group">
                                             <div class="input-group-prepend">
-                                                <span class="input-group-text bg-light border-0">
-                                                    <i class="fas fa-lock text-primary"></i>
+                                                <span class="input-group-text bg-light border-0" id="togglePasswordConfirm" style="cursor: pointer;">
+                                                    <i class="fas fa-lock text-primary" id="lockIconConfirm"></i>
                                                 </span>
                                             </div>
                                             <input type="password" class="form-control form-control-lg border-left-0"
@@ -158,4 +158,40 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+<script>
+    $(document).ready(function() {
+        // Toggle for password field
+        $('#togglePassword').on('click', function(e) {
+            e.preventDefault();
+            const passwordField = $('#password');
+            const lockIcon = $('#lockIcon');
+
+            if (passwordField.attr('type') === 'password') {
+                passwordField.attr('type', 'text');
+                lockIcon.removeClass('fa-lock').addClass('fa-unlock');
+            } else {
+                passwordField.attr('type', 'password');
+                lockIcon.removeClass('fa-unlock').addClass('fa-lock');
+            }
+        });
+
+        // Toggle for password confirmation field
+        $('#togglePasswordConfirm').on('click', function(e) {
+            e.preventDefault();
+            const passwordConfirmField = $('#password_confirmation');
+            const lockIconConfirm = $('#lockIconConfirm');
+
+            if (passwordConfirmField.attr('type') === 'password') {
+                passwordConfirmField.attr('type', 'text');
+                lockIconConfirm.removeClass('fa-lock').addClass('fa-unlock');
+            } else {
+                passwordConfirmField.attr('type', 'password');
+                lockIconConfirm.removeClass('fa-unlock').addClass('fa-lock');
+            }
+        });
+    });
+</script>
 @endsection

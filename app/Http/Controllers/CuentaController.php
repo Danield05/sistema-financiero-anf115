@@ -124,13 +124,16 @@ class CuentaController extends Controller
 
     public function descargarExcel(Request $request){
         // $idUsuarioLogeado=auth()->user()->id;
-        $nombre_descarga= "Plantilla.xlsx";
+        $nombre_descarga= "Plantilla con Valores Catalogo de Cuentas.xlsx";
         $ruta='plantillasExcel/Plantilla.xlsx';
         return Storage::download($ruta,$nombre_descarga);
     }
 
     public function cargarExcel(Request $request){
         Excel::import(new CuentasImport, $request->file('archivo'));
+        if (!session('import_errors')) {
+            session()->flash('success', 'Cuentas importadas exitosamente.');
+        }
         return back();
     }
 
@@ -157,21 +160,20 @@ class CuentaController extends Controller
         // $this->validate($request, [
         //     'cuenta' =>'required',
         // ]);
-        // $cuentasPeriodo=cuenta_periodo::all()->where();
         $cuenta=cuenta::find($id);
-        $cuentasPeriodo=cuenta_periodo::all()->where('cuenta_id',$id);
+        $cuentasPeriodo=cuenta_periodo::where('cuenta_id',$id)->get();
         $puntos=[];
         foreach($cuentasPeriodo as $cuentaPeriodo){
-            $puntos[]=round($cuentaPeriodo->total);
+            $puntos[]=round($cuentaPeriodo->total ?? 0);
         }
-        if(sizeof($puntos)==0){
-            $sinRegistros = True;
-            return view('vistas.empresa.graficoDeCuenta',compact('cuenta','sinRegistros'));
+        if(empty($puntos)){
+            $sinRegistros = true;
+            return view('vistas.empresa.graficoDeCuenta', compact('cuenta','sinRegistros'));
         }
         else{
-            $sinRegistros = False;
+            $sinRegistros = false;
             $periodoInicial=periodo::find($cuentasPeriodo->first()->periodo_id);
-            return view('vistas.empresa.graficoDeCuenta',compact('cuenta','cuentasPeriodo','periodoInicial','sinRegistros'),['puntos'=>json_encode($puntos)]);
+            return view('vistas.empresa.graficoDeCuenta', compact('cuenta','cuentasPeriodo','periodoInicial','sinRegistros'))->with('puntos', json_encode($puntos));
         }
     }
 }
