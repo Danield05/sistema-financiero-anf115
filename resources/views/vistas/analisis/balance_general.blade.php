@@ -32,7 +32,7 @@ Crear balance general
                                 @if ($pasivo_patrimonio != $acredora)
                                     <div class="alert alert-warning alerta" role="alert">
                                         Su total de activos no coincide con sus total de patrimonios y pasivos, revise los datos!
-                                    </div>   
+                                    </div>
                                 @endif
                             </div>
 
@@ -112,7 +112,7 @@ Crear balance general
                                     </div>
                                 </div>
                                 {{-- ! fin acreedor --}}
-    
+
                                 <div class="contenedor_d col-xs-6 col-sm-6 col-md-6">
                                     <h4 class="mg_abajo_15">Deudor</h4>
                                     @foreach ($cuentas_d as $cuenta)
@@ -282,7 +282,7 @@ Crear balance general
 
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6">
-                                    {!! Form::open(array('route'=>'balance_general.store', $periodo_id, 'method'=>'POST')) !!}
+                                    {!! Form::open(['route'=>'balance_general.store', 'method'=>'POST']) !!}
                                     {!! Form::hidden('periodo_id', $periodo_id, []) !!}
                                     {!! Form::hidden('activo', $acredora, []) !!}
                                     {!! Form::hidden('pasivo', $deudora, []) !!}
@@ -311,16 +311,16 @@ Crear balance general
 @endsection
 
 {{-- <div class="form-group">
-    {!! Form::open(['route'=>'cuenta_periodo.store','method'=>'POST']) !!}
-    {!! Form::hidden('cuenta', $cuenta->id, []) !!}
-    {!! Form::hidden('periodo_id', $periodo_id, []) !!}
-    <label for="total">{{$cuenta->nombre}}</label>
-    {!! Form::number('total', null, [
-        'class' => 'form-control',
-        'min' => '0',
-        ]) !!}
-    {!! Form::submit('Registrar', [
-        'class'=>'btn btn-success'
-        ]) !!}
-    {!! Form::close() !!}
+   {!! Form::open(['route'=>'cuenta_periodo.store','method'=>'POST']) !!}
+   {!! Form::hidden('cuenta', $cuenta->id, []) !!}
+   {!! Form::hidden('periodo_id', $periodo_id, []) !!}
+   <label for="total">{{$cuenta->nombre}}</label>
+   {!! Form::number('total', null, [
+       'class' => 'form-control',
+       'min' => '0',
+       ]) !!}
+   {!! Form::submit('Registrar', [
+       'class'=>'btn btn-success'
+       ]) !!}
+   {!! Form::close() !!}
 </div> --}}
