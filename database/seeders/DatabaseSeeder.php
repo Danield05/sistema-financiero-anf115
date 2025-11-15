@@ -23,5 +23,9 @@ class DatabaseSeeder extends Seeder
         $this->call([CuentaSistemaSeeder::class]);
         $this->call([SeederEmpleados::class]);
         $this->call([SeederPlanillas::class]);
+        $this->call([SeederPeriodos::class]);
+        $this->call([SeederCuentas::class]);
+        $this->call([SeederVinculaciones::class]);
+        $this->call([SeederPresupuestos::class]);
     }
 }
