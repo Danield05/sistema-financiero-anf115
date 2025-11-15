@@ -102,7 +102,7 @@ Route::group(['middleware'=>['auth']], function(){
     Route::resource('sector', SectorController::class);
     Route::resource('cuenta_periodo', CuentaPeriodoController::class);
     Route::resource('estado', EstadoResultadoController::class);
-    Route::get('/estado_de_resultado/{periodo_id}', [EstadoResultadoController::class, 'crear'])->name('estado.crear');
+    Route::get('estado_de_resultado/{periodo_id}', [EstadoResultadoController::class, 'crear'])->name('estado.crear');
     Route::resource('empleados', EmpleadoController::class);
     Route::resource('presupuestos', PresupuestoController::class);
     Route::resource('planillas', PlanillaSueldoController::class);
