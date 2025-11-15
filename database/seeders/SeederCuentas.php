@@ -14,55 +14,50 @@ class SeederCuentas extends Seeder
      */
     public function run()
     {
-        $cuentas = [
-            // Empresa 1 - Temporal
-            ['empresa_id' => 1, 'codigo' => '1.01.01', 'nombre' => 'Caja', 'tipo' => 1, 'padre' => null],
-            ['empresa_id' => 1, 'codigo' => '1.01.02', 'nombre' => 'Bancos', 'tipo' => 1, 'padre' => null],
-            ['empresa_id' => 1, 'codigo' => '1.02.01', 'nombre' => 'Cuentas por cobrar', 'tipo' => 1, 'padre' => null],
-            ['empresa_id' => 1, 'codigo' => '2.01.01', 'nombre' => 'Cuentas por pagar', 'tipo' => 0, 'padre' => null],
-            ['empresa_id' => 1, 'codigo' => '3.01.01', 'nombre' => 'Capital social', 'tipo' => 0, 'padre' => null],
-            ['empresa_id' => 1, 'codigo' => '4.01.01', 'nombre' => 'Ventas', 'tipo' => 0, 'padre' => null],
-            ['empresa_id' => 1, 'codigo' => '5.01.01', 'nombre' => 'Costos de ventas', 'tipo' => 1, 'padre' => null],
+        // Función helper para crear cuentas por empresa
+        $crearCatalogoEmpresa = function($empresaId) {
+            return [
+                // ACTIVO
+                ['empresa_id' => $empresaId, 'codigo' => '1', 'nombre' => 'ACTIVO', 'tipo' => 1, 'padre' => null],
+                ['empresa_id' => $empresaId, 'codigo' => '1.1', 'nombre' => 'ACTIVO CORRIENTE', 'tipo' => 1, 'padre' => '1'],
+                ['empresa_id' => $empresaId, 'codigo' => '1.1.1', 'nombre' => 'DISPONIBLE', 'tipo' => 1, 'padre' => '1.1'],
+                ['empresa_id' => $empresaId, 'codigo' => '1.1.1.01', 'nombre' => 'Caja', 'tipo' => 1, 'padre' => '1.1.1'],
+                ['empresa_id' => $empresaId, 'codigo' => '1.1.1.02', 'nombre' => 'Bancos', 'tipo' => 1, 'padre' => '1.1.1'],
+                ['empresa_id' => $empresaId, 'codigo' => '1.1.2', 'nombre' => 'CUENTAS POR COBRAR', 'tipo' => 1, 'padre' => '1.1'],
+                ['empresa_id' => $empresaId, 'codigo' => '1.1.2.01', 'nombre' => 'Cuentas por cobrar', 'tipo' => 1, 'padre' => '1.1.2'],
+                ['empresa_id' => $empresaId, 'codigo' => '1.1.3', 'nombre' => 'INVENTARIOS', 'tipo' => 1, 'padre' => '1.1'],
+                ['empresa_id' => $empresaId, 'codigo' => '1.1.3.01', 'nombre' => 'Inventario', 'tipo' => 1, 'padre' => '1.1.3'],
 
-            // Empresa 2 - CENTA
-            ['empresa_id' => 2, 'codigo' => '1.01.01', 'nombre' => 'Caja', 'tipo' => 1, 'padre' => null],
-            ['empresa_id' => 2, 'codigo' => '1.01.02', 'nombre' => 'Bancos', 'tipo' => 1, 'padre' => null],
-            ['empresa_id' => 2, 'codigo' => '1.02.01', 'nombre' => 'Cuentas por cobrar', 'tipo' => 1, 'padre' => null],
-            ['empresa_id' => 2, 'codigo' => '1.03.01', 'nombre' => 'Inventario', 'tipo' => 1, 'padre' => null],
-            ['empresa_id' => 2, 'codigo' => '2.01.01', 'nombre' => 'Cuentas por pagar', 'tipo' => 0, 'padre' => null],
-            ['empresa_id' => 2, 'codigo' => '3.01.01', 'nombre' => 'Capital social', 'tipo' => 0, 'padre' => null],
-            ['empresa_id' => 2, 'codigo' => '4.01.01', 'nombre' => 'Ventas', 'tipo' => 0, 'padre' => null],
-            ['empresa_id' => 2, 'codigo' => '5.01.01', 'nombre' => 'Costos de ventas', 'tipo' => 1, 'padre' => null],
+                // PASIVO
+                ['empresa_id' => $empresaId, 'codigo' => '2', 'nombre' => 'PASIVO', 'tipo' => 0, 'padre' => null],
+                ['empresa_id' => $empresaId, 'codigo' => '2.1', 'nombre' => 'PASIVO CORRIENTE', 'tipo' => 0, 'padre' => '2'],
+                ['empresa_id' => $empresaId, 'codigo' => '2.1.1', 'nombre' => 'CUENTAS POR PAGAR', 'tipo' => 0, 'padre' => '2.1'],
+                ['empresa_id' => $empresaId, 'codigo' => '2.1.1.01', 'nombre' => 'Cuentas por pagar', 'tipo' => 0, 'padre' => '2.1.1'],
 
-            // Empresa 3 - Agrinter
-            ['empresa_id' => 3, 'codigo' => '1.01.01', 'nombre' => 'Caja', 'tipo' => 1, 'padre' => null],
-            ['empresa_id' => 3, 'codigo' => '1.01.02', 'nombre' => 'Bancos', 'tipo' => 1, 'padre' => null],
-            ['empresa_id' => 3, 'codigo' => '1.02.01', 'nombre' => 'Cuentas por cobrar', 'tipo' => 1, 'padre' => null],
-            ['empresa_id' => 3, 'codigo' => '1.03.01', 'nombre' => 'Inventario', 'tipo' => 1, 'padre' => null],
-            ['empresa_id' => 3, 'codigo' => '2.01.01', 'nombre' => 'Cuentas por pagar', 'tipo' => 0, 'padre' => null],
-            ['empresa_id' => 3, 'codigo' => '3.01.01', 'nombre' => 'Capital social', 'tipo' => 0, 'padre' => null],
-            ['empresa_id' => 3, 'codigo' => '4.01.01', 'nombre' => 'Ventas', 'tipo' => 0, 'padre' => null],
-            ['empresa_id' => 3, 'codigo' => '5.01.01', 'nombre' => 'Costos de ventas', 'tipo' => 1, 'padre' => null],
+                // PATRIMONIO
+                ['empresa_id' => $empresaId, 'codigo' => '3', 'nombre' => 'PATRIMONIO', 'tipo' => 0, 'padre' => null],
+                ['empresa_id' => $empresaId, 'codigo' => '3.1', 'nombre' => 'CAPITAL CONTABLE', 'tipo' => 0, 'padre' => '3'],
+                ['empresa_id' => $empresaId, 'codigo' => '3.1.1', 'nombre' => 'CAPITAL SOCIAL', 'tipo' => 0, 'padre' => '3.1'],
+                ['empresa_id' => $empresaId, 'codigo' => '3.1.1.01', 'nombre' => 'Capital social', 'tipo' => 0, 'padre' => '3.1.1'],
 
-            // Empresa 4 - Villavar
-            ['empresa_id' => 4, 'codigo' => '1.01.01', 'nombre' => 'Caja', 'tipo' => 1, 'padre' => null],
-            ['empresa_id' => 4, 'codigo' => '1.01.02', 'nombre' => 'Bancos', 'tipo' => 1, 'padre' => null],
-            ['empresa_id' => 4, 'codigo' => '1.02.01', 'nombre' => 'Cuentas por cobrar', 'tipo' => 1, 'padre' => null],
-            ['empresa_id' => 4, 'codigo' => '2.01.01', 'nombre' => 'Cuentas por pagar', 'tipo' => 0, 'padre' => null],
-            ['empresa_id' => 4, 'codigo' => '3.01.01', 'nombre' => 'Capital social', 'tipo' => 0, 'padre' => null],
-            ['empresa_id' => 4, 'codigo' => '4.01.01', 'nombre' => 'Ventas', 'tipo' => 0, 'padre' => null],
-            ['empresa_id' => 4, 'codigo' => '5.01.01', 'nombre' => 'Costos de ventas', 'tipo' => 1, 'padre' => null],
+                // INGRESOS
+                ['empresa_id' => $empresaId, 'codigo' => '4', 'nombre' => 'INGRESOS', 'tipo' => 0, 'padre' => null],
+                ['empresa_id' => $empresaId, 'codigo' => '4.1', 'nombre' => 'INGRESOS OPERACIONALES', 'tipo' => 0, 'padre' => '4'],
+                ['empresa_id' => $empresaId, 'codigo' => '4.1.1', 'nombre' => 'VENTAS', 'tipo' => 0, 'padre' => '4.1'],
+                ['empresa_id' => $empresaId, 'codigo' => '4.1.1.01', 'nombre' => 'Ventas', 'tipo' => 0, 'padre' => '4.1.1'],
 
-            // Empresa 5 - El surco
-            ['empresa_id' => 5, 'codigo' => '1.01.01', 'nombre' => 'Caja', 'tipo' => 1, 'padre' => null],
-            ['empresa_id' => 5, 'codigo' => '1.01.02', 'nombre' => 'Bancos', 'tipo' => 1, 'padre' => null],
-            ['empresa_id' => 5, 'codigo' => '1.02.01', 'nombre' => 'Cuentas por cobrar', 'tipo' => 1, 'padre' => null],
-            ['empresa_id' => 5, 'codigo' => '1.03.01', 'nombre' => 'Inventario', 'tipo' => 1, 'padre' => null],
-            ['empresa_id' => 5, 'codigo' => '2.01.01', 'nombre' => 'Cuentas por pagar', 'tipo' => 0, 'padre' => null],
-            ['empresa_id' => 5, 'codigo' => '3.01.01', 'nombre' => 'Capital social', 'tipo' => 0, 'padre' => null],
-            ['empresa_id' => 5, 'codigo' => '4.01.01', 'nombre' => 'Ventas', 'tipo' => 0, 'padre' => null],
-            ['empresa_id' => 5, 'codigo' => '5.01.01', 'nombre' => 'Costos de ventas', 'tipo' => 1, 'padre' => null],
-        ];
+                // GASTOS
+                ['empresa_id' => $empresaId, 'codigo' => '5', 'nombre' => 'GASTOS', 'tipo' => 1, 'padre' => null],
+                ['empresa_id' => $empresaId, 'codigo' => '5.1', 'nombre' => 'GASTOS OPERACIONALES', 'tipo' => 1, 'padre' => '5'],
+                ['empresa_id' => $empresaId, 'codigo' => '5.1.1', 'nombre' => 'COSTO DE VENTAS', 'tipo' => 1, 'padre' => '5.1'],
+                ['empresa_id' => $empresaId, 'codigo' => '5.1.1.01', 'nombre' => 'Costos de ventas', 'tipo' => 1, 'padre' => '5.1.1'],
+            ];
+        };
+
+        $cuentas = [];
+        for ($empresaId = 1; $empresaId <= 5; $empresaId++) {
+            $cuentas = array_merge($cuentas, $crearCatalogoEmpresa($empresaId));
+        }
 
         foreach ($cuentas as $cuenta) {
             DB::table('cuentas')->insert($cuenta);

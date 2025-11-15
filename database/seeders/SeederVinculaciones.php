@@ -14,55 +14,58 @@ class SeederVinculaciones extends Seeder
      */
     public function run()
     {
-        $vinculaciones = [
-            // Empresa 1 - Temporal
-            ['cuenta_id' => 1, 'cuenta_sistema_id' => 1, 'empresa_id' => 1], // Caja -> Activo circulante
-            ['cuenta_id' => 2, 'cuenta_sistema_id' => 1, 'empresa_id' => 1], // Bancos -> Activo circulante
-            ['cuenta_id' => 3, 'cuenta_sistema_id' => 7, 'empresa_id' => 1], // Cuentas por cobrar -> Cuentas por cobrar corto plazo
-            ['cuenta_id' => 4, 'cuenta_sistema_id' => 9, 'empresa_id' => 1], // Cuentas por pagar -> Cuentas por pagar corto plazo
-            ['cuenta_id' => 5, 'cuenta_sistema_id' => 5, 'empresa_id' => 1], // Capital social -> Capital social
-            ['cuenta_id' => 6, 'cuenta_sistema_id' => 4, 'empresa_id' => 1], // Ventas -> Ventas (ajustado)
-            ['cuenta_id' => 7, 'cuenta_sistema_id' => 6, 'empresa_id' => 1], // Costos de ventas -> Costo de ventas
+        // Crear vinculaciones dinámicamente basadas en las cuentas existentes
+        $vinculaciones = [];
 
-            // Empresa 2 - CENTA
-            ['cuenta_id' => 8, 'cuenta_sistema_id' => 1, 'empresa_id' => 2], // Caja -> Activo circulante
-            ['cuenta_id' => 9, 'cuenta_sistema_id' => 1, 'empresa_id' => 2], // Bancos -> Activo circulante
-            ['cuenta_id' => 10, 'cuenta_sistema_id' => 7, 'empresa_id' => 2], // Cuentas por cobrar -> Cuentas por cobrar corto plazo
-            ['cuenta_id' => 11, 'cuenta_sistema_id' => 1, 'empresa_id' => 2], // Inventario -> Activo circulante
-            ['cuenta_id' => 12, 'cuenta_sistema_id' => 9, 'empresa_id' => 2], // Cuentas por pagar -> Cuentas por pagar corto plazo
-            ['cuenta_id' => 13, 'cuenta_sistema_id' => 5, 'empresa_id' => 2], // Capital social -> Capital social
-            ['cuenta_id' => 14, 'cuenta_sistema_id' => 4, 'empresa_id' => 2], // Ventas -> Ventas (ajustado)
-            ['cuenta_id' => 15, 'cuenta_sistema_id' => 6, 'empresa_id' => 2], // Costos de ventas -> Costo de ventas
+        for ($empresaId = 1; $empresaId <= 5; $empresaId++) {
+            // Caja -> Activo circulante
+            $caja = DB::table('cuentas')->where('empresa_id', $empresaId)->where('codigo', '1.1.1.01')->first();
+            if ($caja) {
+                $vinculaciones[] = ['cuenta_id' => $caja->id, 'cuenta_sistema_id' => 1, 'empresa_id' => $empresaId];
+            }
 
-            // Empresa 3 - Agrinter
-            ['cuenta_id' => 16, 'cuenta_sistema_id' => 1, 'empresa_id' => 3], // Caja -> Activo circulante
-            ['cuenta_id' => 17, 'cuenta_sistema_id' => 1, 'empresa_id' => 3], // Bancos -> Activo circulante
-            ['cuenta_id' => 18, 'cuenta_sistema_id' => 7, 'empresa_id' => 3], // Cuentas por cobrar -> Cuentas por cobrar corto plazo
-            ['cuenta_id' => 19, 'cuenta_sistema_id' => 1, 'empresa_id' => 3], // Inventario -> Activo circulante
-            ['cuenta_id' => 20, 'cuenta_sistema_id' => 9, 'empresa_id' => 3], // Cuentas por pagar -> Cuentas por pagar corto plazo
-            ['cuenta_id' => 21, 'cuenta_sistema_id' => 5, 'empresa_id' => 3], // Capital social -> Capital social
-            ['cuenta_id' => 22, 'cuenta_sistema_id' => 4, 'empresa_id' => 3], // Ventas -> Ventas (ajustado)
-            ['cuenta_id' => 23, 'cuenta_sistema_id' => 6, 'empresa_id' => 3], // Costos de ventas -> Costo de ventas
+            // Bancos -> Activo circulante
+            $bancos = DB::table('cuentas')->where('empresa_id', $empresaId)->where('codigo', '1.1.1.02')->first();
+            if ($bancos) {
+                $vinculaciones[] = ['cuenta_id' => $bancos->id, 'cuenta_sistema_id' => 1, 'empresa_id' => $empresaId];
+            }
 
-            // Empresa 4 - Villavar
-            ['cuenta_id' => 24, 'cuenta_sistema_id' => 1, 'empresa_id' => 4], // Caja -> Activo circulante
-            ['cuenta_id' => 25, 'cuenta_sistema_id' => 1, 'empresa_id' => 4], // Bancos -> Activo circulante
-            ['cuenta_id' => 26, 'cuenta_sistema_id' => 7, 'empresa_id' => 4], // Cuentas por cobrar -> Cuentas por cobrar corto plazo
-            ['cuenta_id' => 27, 'cuenta_sistema_id' => 9, 'empresa_id' => 4], // Cuentas por pagar -> Cuentas por pagar corto plazo
-            ['cuenta_id' => 28, 'cuenta_sistema_id' => 5, 'empresa_id' => 4], // Capital social -> Capital social
-            ['cuenta_id' => 29, 'cuenta_sistema_id' => 4, 'empresa_id' => 4], // Ventas -> Ventas (ajustado)
-            ['cuenta_id' => 30, 'cuenta_sistema_id' => 6, 'empresa_id' => 4], // Costos de ventas -> Costo de ventas
+            // Cuentas por cobrar -> Cuentas por cobrar corto plazo
+            $cuentasCobrar = DB::table('cuentas')->where('empresa_id', $empresaId)->where('codigo', '1.1.2.01')->first();
+            if ($cuentasCobrar) {
+                $vinculaciones[] = ['cuenta_id' => $cuentasCobrar->id, 'cuenta_sistema_id' => 7, 'empresa_id' => $empresaId];
+            }
 
-            // Empresa 5 - El surco
-            ['cuenta_id' => 31, 'cuenta_sistema_id' => 1, 'empresa_id' => 5], // Caja -> Activo circulante
-            ['cuenta_id' => 32, 'cuenta_sistema_id' => 1, 'empresa_id' => 5], // Bancos -> Activo circulante
-            ['cuenta_id' => 33, 'cuenta_sistema_id' => 7, 'empresa_id' => 5], // Cuentas por cobrar -> Cuentas por cobrar corto plazo
-            ['cuenta_id' => 34, 'cuenta_sistema_id' => 1, 'empresa_id' => 5], // Inventario -> Activo circulante
-            ['cuenta_id' => 35, 'cuenta_sistema_id' => 9, 'empresa_id' => 5], // Cuentas por pagar -> Cuentas por pagar corto plazo
-            ['cuenta_id' => 36, 'cuenta_sistema_id' => 5, 'empresa_id' => 5], // Capital social -> Capital social
-            ['cuenta_id' => 37, 'cuenta_sistema_id' => 4, 'empresa_id' => 5], // Ventas -> Ventas (ajustado)
-            ['cuenta_id' => 38, 'cuenta_sistema_id' => 6, 'empresa_id' => 5], // Costos de ventas -> Costo de ventas
-        ];
+            // Inventario -> Activo circulante
+            $inventario = DB::table('cuentas')->where('empresa_id', $empresaId)->where('codigo', '1.1.3.01')->first();
+            if ($inventario) {
+                $vinculaciones[] = ['cuenta_id' => $inventario->id, 'cuenta_sistema_id' => 1, 'empresa_id' => $empresaId];
+            }
+
+            // Cuentas por pagar -> Cuentas por pagar corto plazo
+            $cuentasPagar = DB::table('cuentas')->where('empresa_id', $empresaId)->where('codigo', '2.1.1.01')->first();
+            if ($cuentasPagar) {
+                $vinculaciones[] = ['cuenta_id' => $cuentasPagar->id, 'cuenta_sistema_id' => 9, 'empresa_id' => $empresaId];
+            }
+
+            // Capital social -> Capital social
+            $capitalSocial = DB::table('cuentas')->where('empresa_id', $empresaId)->where('codigo', '3.1.1.01')->first();
+            if ($capitalSocial) {
+                $vinculaciones[] = ['cuenta_id' => $capitalSocial->id, 'cuenta_sistema_id' => 5, 'empresa_id' => $empresaId];
+            }
+
+            // Ventas -> Ventas
+            $ventas = DB::table('cuentas')->where('empresa_id', $empresaId)->where('codigo', '4.1.1.01')->first();
+            if ($ventas) {
+                $vinculaciones[] = ['cuenta_id' => $ventas->id, 'cuenta_sistema_id' => 25, 'empresa_id' => $empresaId];
+            }
+
+            // Costos de ventas -> Costo de ventas
+            $costosVentas = DB::table('cuentas')->where('empresa_id', $empresaId)->where('codigo', '5.1.1.01')->first();
+            if ($costosVentas) {
+                $vinculaciones[] = ['cuenta_id' => $costosVentas->id, 'cuenta_sistema_id' => 6, 'empresa_id' => $empresaId];
+            }
+        }
 
         foreach ($vinculaciones as $vinculacion) {
             DB::table('vinculacions')->insert($vinculacion);
