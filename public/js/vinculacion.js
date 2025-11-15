@@ -1,64 +1,61 @@
 var cuentas = document.querySelectorAll('.econoscope_cuenta');
 
 function guardar(){
-    let promises = [];
-    let successCount = 0;
-    let errorCount = 0;
+    console.log('Iniciando guardado...');
 
-    // Mostrar indicador de carga
-    iziToast.info({
-        title: 'Guardando...',
-        message: 'Procesando vinculaciones, por favor espere.',
-        timeout: false,
-        close: false
-    });
+    var vinculaciones = [];
+    var cuentasInputs = document.querySelectorAll('.econoscope_cuenta');
 
-    cuentas.forEach((cuenta) => {
-        if(cuenta.value != ''){
-            let promise = fetch(`/vinculacion/guardar?cuenta=${encodeURIComponent(cuenta.value)}&cuenta_sistema_id=${cuenta.getAttribute('sistema')}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        successCount++;
-                        console.log('Vinculación guardada:', data.message);
-                    } else {
-                        errorCount++;
-                        console.error('Error:', data.error);
-                    }
-                })
-                .catch(error => {
-                    errorCount++;
-                    console.error('Error de red:', error);
-                });
+    cuentasInputs.forEach(function(input) {
+        var cuenta = input.value.trim();
+        var row = input.closest('tr');
+        var cuentaSistemaId = row.querySelector('input[name="cuenta_sistema_id"]').value;
 
-            promises.push(promise);
+        if (cuenta !== '' || cuentaSistemaId) {
+            vinculaciones.push({
+                cuenta_sistema_id: cuentaSistemaId,
+                cuenta: cuenta
+            });
         }
     });
 
-    Promise.all(promises).then(() => {
-        // Ocultar indicador de carga
-        iziToast.hide({}, document.querySelector('.iziToast'));
+    if (vinculaciones.length === 0) {
+        alert('No hay vinculaciones para guardar.');
+        return;
+    }
 
-        // Mostrar resultado
-        if (errorCount === 0) {
-            iziToast.success({
-                title: '¡Éxito!',
-                message: `Se guardaron ${successCount} vinculaciones correctamente.`,
-                position: 'topRight',
-                timeout: 3000
-            });
-        } else {
-            iziToast.warning({
-                title: 'Advertencia',
-                message: `Se guardaron ${successCount} vinculaciones, pero hubo ${errorCount} errores. Revisa la consola para más detalles.`,
-                position: 'topRight',
-                timeout: 5000
-            });
+    console.log('Vinculaciones a guardar:', vinculaciones);
+
+    // Obtener CSRF token
+    var csrfToken = document.querySelector('meta[name="csrf-token"]');
+    if (!csrfToken) {
+        alert('Error: CSRF token no encontrado.');
+        return;
+    }
+
+    // Enviar petición AJAX usando jQuery
+    $.ajax({
+        url: guardarVinculacionesUrl,
+        type: 'POST',
+        data: JSON.stringify({
+            vinculaciones: vinculaciones
+        }),
+        contentType: 'application/json',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken.getAttribute('content')
+        },
+        success: function(data) {
+            console.log('Respuesta del servidor:', data);
+            if (data.success) {
+                alert('Vinculaciones guardadas correctamente.');
+                location.reload();
+            } else {
+                alert('Error al guardar: ' + (data.error || data.message));
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Error AJAX:', xhr.responseText);
+            alert('Error al guardar vinculaciones: ' + error);
         }
-
-        // Recargar página después de mostrar el mensaje
-        setTimeout(() => {
-            location.reload();
-        }, 2000);
     });
 }

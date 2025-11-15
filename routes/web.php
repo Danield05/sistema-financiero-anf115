@@ -53,7 +53,7 @@ Route::get('/periodo_guardar', [PeriodoController::class, 'guardar'])->name('per
 
 
 // * Vinculacion
-Route::get('vinculacion/guardar', [VinculacionController::class, 'guardar'])->name('vinculacion.guardar');
+// Route::post('vinculacion/guardar', [VinculacionController::class, 'guardar'])->name('vinculacion.guardar');
 
 Route::get('balance/guardar', [CuentaPeriodoController::class, 'guardar'])->name('balance.guardar');
 
@@ -98,6 +98,7 @@ Route::group(['middleware'=>['auth']], function(){
     Route::resource('catalogo', CuentaController::class);
     Route::resource('cuenta_sistema', CuentaSistemaController::class);
     Route::resource('vinculacion', VinculacionController::class);
+    Route::post('vinculacion/guardar', [VinculacionController::class, 'guardar'])->name('vinculacion.guardar');
     Route::resource('periodo',PeriodoController::class);
     Route::resource('sector', SectorController::class);
     Route::resource('cuenta_periodo', CuentaPeriodoController::class);

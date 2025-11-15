@@ -7,6 +7,7 @@ Vinculacion de cuentas
 @section('js')
 <script src=" {{asset('js/buscador.js')}} " defer></script>
 <script>
+    const guardarVinculacionesUrl = '{{ route("vinculacion.guardar") }}';
     function actualizarCodigo(cuentas,inputCuenta,labelCodigo){
         nombreCuenta=document.getElementById(inputCuenta).value.toString();
         var objetoCuenta = cuentas.filter(function(objetoCuenta) {

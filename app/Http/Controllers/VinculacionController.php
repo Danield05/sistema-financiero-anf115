@@ -84,35 +84,74 @@ class VinculacionController extends Controller
 
     public function guardar(Request $request){
         try {
-            // * Validacion de cuenta a cuenta id
+            \Log::info('Guardar vinculaciones iniciado', ['request' => $request->all()]);
             $empresa_id = \Illuminate\Support\Facades\Auth::user()->empresa->id;
-            $cuenta = cuenta::all()->where('empresa_id','=', $empresa_id)->where('nombre','=', request('cuenta'))->first();
+            $vinculaciones_data = $request->json()->get('vinculaciones', []);
 
-            if (!$cuenta) {
-                return response()->json(['error' => 'Cuenta no encontrada'], 404);
+            \Log::info('Datos de vinculaciones', ['data' => $vinculaciones_data]);
+
+            if (empty($vinculaciones_data)) {
+                return response()->json(['error' => 'No hay vinculaciones para guardar'], 400);
             }
 
-            $cuenta_id = $cuenta->id;
+            $saved = 0;
+            $errors = [];
 
-            $vinculaciones = vinculacion::all();
+            foreach ($vinculaciones_data as $data) {
+                $cuenta_sistema_id = $data['cuenta_sistema_id'];
+                $cuenta_nombre = $data['cuenta'];
 
-            // * Ingresamos los datos
-            $input['cuenta_sistema_id'] = request('cuenta_sistema_id');
-            $input['cuenta_id'] = $cuenta_id;
-            $input['empresa_id'] = $empresa_id;
-
-            foreach($vinculaciones as $vinculacion){
-                if($vinculacion->empresa_id == $empresa_id && $vinculacion->cuenta_sistema_id == request('cuenta_sistema_id') ){
-                    $vinculacion->update($input);
-                    return response()->json(['success' => true, 'message' => 'Vinculación actualizada']);
+                if (empty($cuenta_nombre)) {
+                    // Si no hay cuenta, saltar o eliminar vinculación existente
+                    $existing = vinculacion::where('empresa_id', $empresa_id)
+                        ->where('cuenta_sistema_id', $cuenta_sistema_id)
+                        ->first();
+                    if ($existing) {
+                        $existing->delete();
+                        $saved++;
+                    }
+                    continue;
                 }
+
+                $cuenta = cuenta::where('empresa_id', $empresa_id)
+                    ->where('nombre', $cuenta_nombre)
+                    ->first();
+
+                if (!$cuenta) {
+                    $errors[] = "Cuenta '{$cuenta_nombre}' no encontrada";
+                    continue;
+                }
+
+                $cuenta_id = $cuenta->id;
+
+                $existing = vinculacion::where('empresa_id', $empresa_id)
+                    ->where('cuenta_sistema_id', $cuenta_sistema_id)
+                    ->first();
+
+                if ($existing) {
+                    $existing->update(['cuenta_id' => $cuenta_id]);
+                } else {
+                    vinculacion::create([
+                        'cuenta_sistema_id' => $cuenta_sistema_id,
+                        'cuenta_id' => $cuenta_id,
+                        'empresa_id' => $empresa_id
+                    ]);
+                }
+                $saved++;
             }
 
-            vinculacion::create($input);
-            return response()->json(['success' => true, 'message' => 'Vinculación creada']);
+            if (!empty($errors)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Guardado parcial. Errores: ' . implode(', ', $errors),
+                    'saved' => $saved
+                ], 200);
+            }
+
+            return response()->json(['success' => true, 'message' => 'Vinculaciones guardadas correctamente', 'saved' => $saved]);
 
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Error al guardar vinculación: ' . $e->getMessage()], 500);
+            return response()->json(['error' => 'Error al guardar vinculaciones: ' . $e->getMessage()], 500);
         }
     }
 
