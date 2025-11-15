@@ -65,15 +65,25 @@ Vinculacion de cuentas
                                         $vinculacions = $cuenta_sistema->vinculacion;
                                         $v_cuenta_id = null;
                                         $cuenta_nombre = '';
+                                        $cuenta_codigo = '';
                                         $v_cuenta_empresa = '';
-                                        $cuenta_s = '';
+
+                                        // Preferir 'ACTIVO CORRIENTE' si existe
                                         foreach ($vinculacions as $key => $value) {
-                                            $v_cuenta_id = $value['cuenta_id'];
+                                            $cuenta = cuenta::find($value['cuenta_id']);
+                                            if ($cuenta && $cuenta->nombre == 'ACTIVO CORRIENTE') {
+                                                $v_cuenta_id = $value['cuenta_id'];
+                                                $cuenta_nombre = $cuenta->nombre;
+                                                $cuenta_codigo = $cuenta->codigo;
+                                                $v_cuenta_empresa = $cuenta->empresa_id;
+                                                break;
+                                            }
                                         }
 
-                                        // echo var_dump($v_cuenta_id);     
-                                        
-                                        if($v_cuenta_id != null){
+                                        // Si no encontró 'ACTIVO CORRIENTE', tomar el último
+                                        if (!$v_cuenta_id && $vinculacions->count() > 0) {
+                                            $value = $vinculacions->last();
+                                            $v_cuenta_id = $value['cuenta_id'];
                                             $cuenta_s = cuenta::find($v_cuenta_id);
                                             $v_cuenta_empresa = $cuenta_s->empresa_id;
                                             $cuenta_nombre = $cuenta_s->nombre;

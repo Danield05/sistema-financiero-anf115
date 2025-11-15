@@ -74,7 +74,10 @@ class SeederVinculaciones extends Seeder
         }
 
         foreach ($vinculaciones as $vinculacion) {
-            DB::table('vinculacions')->insert($vinculacion);
+            DB::table('vinculacions')->updateOrInsert(
+                ['cuenta_sistema_id' => $vinculacion['cuenta_sistema_id'], 'empresa_id' => $vinculacion['empresa_id']],
+                $vinculacion
+            );
         }
     }
 }
