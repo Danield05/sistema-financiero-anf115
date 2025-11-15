@@ -54,7 +54,7 @@ Periodo
                                                         <a class="btn btn-sm btn-outline-info" href="{{ route('balance.crear', $periodo->id) }}" title="Crear balance general">
                                                             <i class="fas fa-balance-scale"></i> Balance
                                                         </a>
-                                                        <a class="btn btn-sm btn-outline-success" href="/estado_de_resultado/{{$periodo->id}}" title="Ver estado de resultado">
+                                                        <a class="btn btn-sm btn-outline-success" href="{{ route('estado.crear', $periodo->id) }}" title="Ver estado de resultado">
                                                             <i class="fas fa-chart-line"></i> Estado
                                                         </a>
                                                         <form action="{{ url('periodo', $periodo->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('¿Está seguro de que desea eliminar este período?')">
@@ -113,7 +113,7 @@ Periodo
             // Create and submit form
             var form = document.createElement('form');
             form.method = 'POST';
-            form.action = '/periodo/' + id;
+            form.action = '{{ url("periodo") }}/' + id;
 
             var methodField = document.createElement('input');
             methodField.type = 'hidden';
