@@ -27,6 +27,8 @@ class SeederCuentas extends Seeder
                 ['empresa_id' => $empresaId, 'codigo' => '1.1.2.01', 'nombre' => 'Cuentas por cobrar', 'tipo' => 1, 'padre' => '1.1.2'],
                 ['empresa_id' => $empresaId, 'codigo' => '1.1.3', 'nombre' => 'INVENTARIOS', 'tipo' => 1, 'padre' => '1.1'],
                 ['empresa_id' => $empresaId, 'codigo' => '1.1.3.01', 'nombre' => 'Inventario', 'tipo' => 1, 'padre' => '1.1.3'],
+                ['empresa_id' => $empresaId, 'codigo' => '1.2', 'nombre' => 'ACTIVO NO CORRIENTE', 'tipo' => 1, 'padre' => '1'],
+                ['empresa_id' => $empresaId, 'codigo' => '1.2.1', 'nombre' => 'ACTIVO FIJO', 'tipo' => 1, 'padre' => '1.2'],
 
                 // PASIVO
                 ['empresa_id' => $empresaId, 'codigo' => '2', 'nombre' => 'PASIVO', 'tipo' => 0, 'padre' => null],
@@ -60,7 +62,10 @@ class SeederCuentas extends Seeder
         }
 
         foreach ($cuentas as $cuenta) {
-            DB::table('cuentas')->insert($cuenta);
+            DB::table('cuentas')->updateOrInsert(
+                ['empresa_id' => $cuenta['empresa_id'], 'codigo' => $cuenta['codigo']],
+                $cuenta
+            );
         }
     }
 }

@@ -6,6 +6,7 @@ use App\Models\cuenta;
 use App\Models\cuenta_sistema;
 use App\Models\vinculacion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class VinculacionController extends Controller
 {
@@ -84,11 +85,11 @@ class VinculacionController extends Controller
 
     public function guardar(Request $request){
         try {
-            \Log::info('Guardar vinculaciones iniciado', ['request' => $request->all()]);
+            Log::info('Guardar vinculaciones iniciado', ['request' => $request->all()]);
             $empresa_id = \Illuminate\Support\Facades\Auth::user()->empresa->id;
             $vinculaciones_data = $request->json()->get('vinculaciones', []);
 
-            \Log::info('Datos de vinculaciones', ['data' => $vinculaciones_data]);
+            Log::info('Datos de vinculaciones', ['data' => $vinculaciones_data]);
 
             if (empty($vinculaciones_data)) {
                 return response()->json(['error' => 'No hay vinculaciones para guardar'], 400);
