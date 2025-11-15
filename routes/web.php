@@ -77,9 +77,6 @@ Route::post('carga/excel',[CuentaController::class,'cargarExcel'])->name('upload
 Route::post('catalogo/confirmar',[CuentaController::class,'confirmarCatalogo'])->name('catalogo.confirmar');
 
 
-// * Balance general crear
-Route::get('/balance_general/crear/{periodo_id}', [BalanceGeneralController::class, 'crear'])->middleware('auth');
-
 // * Ratios
 Route::get('/ratios', [GeneralRController::class, 'ratios_empresa'])->name('ratios.index');
 Route::get('/ratios/comparacion', [GeneralRController::class, 'comparacion'])->name('ratios.comparacion');
