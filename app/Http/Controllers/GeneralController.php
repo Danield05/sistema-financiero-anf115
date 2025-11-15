@@ -157,7 +157,7 @@ class GeneralController extends Controller
             $unidor = [];
 
             $unidor['cuenta'] = $cuenta->nombre;
-            $unidor['tipo'] = $cuenta1->cuenta->tipo;
+            $unidor['tipo'] = $cuenta1 ? $cuenta1->cuenta->tipo : $cuenta->tipo;
 
             if($cuenta1 != null){
                 if($cuenta1->count() > 0){
