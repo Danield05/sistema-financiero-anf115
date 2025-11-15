@@ -18,6 +18,12 @@ class SeederVinculaciones extends Seeder
         $vinculaciones = [];
 
         for ($empresaId = 1; $empresaId <= 5; $empresaId++) {
+            // ACTIVO CORRIENTE -> Activo circulante
+            $activoCorriente = DB::table('cuentas')->where('empresa_id', $empresaId)->where('codigo', '1.1')->first();
+            if ($activoCorriente) {
+                $vinculaciones[] = ['cuenta_id' => $activoCorriente->id, 'cuenta_sistema_id' => 1, 'empresa_id' => $empresaId];
+            }
+
             // Caja -> Activo circulante
             $caja = DB::table('cuentas')->where('empresa_id', $empresaId)->where('codigo', '1.1.1.01')->first();
             if ($caja) {
