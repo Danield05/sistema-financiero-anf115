@@ -51,7 +51,7 @@ Periodo
                                                 <td><strong style="color: black;">{{$periodo->anio}}</strong></td>
                                                 <td>
                                                     <div class="btn-group" role="group">
-                                                        <a class="btn btn-sm btn-outline-info" href="/balance_general/crear/{{$periodo->id}}" title="Crear balance general">
+                                                        <a class="btn btn-sm btn-outline-info" href="/balance/crear/{{$periodo->id}}" title="Crear balance general">
                                                             <i class="fas fa-balance-scale"></i> Balance
                                                         </a>
                                                         <a class="btn btn-sm btn-outline-success" href="/estado_de_resultado/{{$periodo->id}}" title="Ver estado de resultado">

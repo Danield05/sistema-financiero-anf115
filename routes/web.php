@@ -57,7 +57,7 @@ Route::get('/periodo_guardar', [PeriodoController::class, 'guardar'])->name('per
 
 Route::get('balance/guardar', [CuentaPeriodoController::class, 'guardar'])->name('balance.guardar');
 
-Route::get('/balance_general/crear/{periodo_id}', [BalanceGeneralController::class, 'crear'])->name('balance_general.crear');
+Route::get('/balance/crear/{periodo_id}', [BalanceGeneralController::class, 'crear'])->name('balance.crear');
 
 // * Analisis horizontal
 Route::get('/analisis_h_i', [GeneralController::class, 'analisis_horizontal_index'])->name('horizontal.index');
