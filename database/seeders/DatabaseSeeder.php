@@ -23,6 +23,5 @@ class DatabaseSeeder extends Seeder
         $this->call([CuentaSistemaSeeder::class]);
         $this->call([SeederEmpleados::class]);
         $this->call([SeederPlanillas::class]);
-        $this->call([SeederInventario::class]);
     }
 }

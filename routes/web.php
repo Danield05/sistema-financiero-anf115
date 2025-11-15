@@ -9,7 +9,6 @@ use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\EstadoResultadoController;
 use App\Http\Controllers\GeneralController;
 use App\Http\Controllers\GeneralRController;
-use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\PlanillaSueldoController;
 use App\Http\Controllers\PresupuestoController;
 use App\Http\Controllers\ProyeccionController;
@@ -105,10 +104,6 @@ Route::group(['middleware'=>['auth']], function(){
     Route::resource('estado', EstadoResultadoController::class);
     Route::get('/estado_de_resultado/{periodo_id}', [EstadoResultadoController::class, 'crear'])->name('estado.crear');
     Route::resource('empleados', EmpleadoController::class);
-    Route::resource('inventario', InventarioController::class);
-    Route::get('inventario-peps', [InventarioController::class, 'peps'])->name('inventario.peps');
-    Route::get('inventario-ueps', [InventarioController::class, 'ueps'])->name('inventario.ueps');
-    Route::get('inventario-costo-promedio', [InventarioController::class, 'costoPromedio'])->name('inventario.costo_promedio');
     Route::resource('presupuestos', PresupuestoController::class);
     Route::resource('planillas', PlanillaSueldoController::class);
     Route::resource('balance_general', BalanceGeneralController::class);

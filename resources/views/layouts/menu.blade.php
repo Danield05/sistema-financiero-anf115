@@ -73,13 +73,6 @@
             </div>
         </a>
 
-        <a  href="{{ route('inventario.index') }}" class="ag-courses-item_link nav-link" style="border-radius:20px" title="Gestionar inventario">
-            <div class="esfera"></div>
-            <div class="ag-courses-item_title" style="font-size:15px">
-                <i class="fas fa-boxes"  ></i>
-                <span>Inventario</span>
-            </div>
-        </a>
 
         <a  href="{{ route('presupuestos.index') }}" class="ag-courses-item_link nav-link" style="border-radius:20px" title="Gestionar presupuestos">
             <div class="esfera"></div>
