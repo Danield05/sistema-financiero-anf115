@@ -126,8 +126,8 @@ class CuentaController extends Controller
     public function descargarExcel(Request $request){
         // $idUsuarioLogeado=auth()->user()->id;
         $nombre_descarga= "Plantilla con Valores Catalogo de Cuentas.xlsx";
-        $ruta='plantillasExcel/Plantilla.xlsx';
-        return Storage::download($ruta,$nombre_descarga);
+        $ruta = base_path('Plantilla con Valores Catalogo de Cuentas.xlsx');
+        return response()->download($ruta, $nombre_descarga);
     }
 
     public function cargarExcel(Request $request){
