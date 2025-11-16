@@ -45,6 +45,9 @@ Catalogo de cuentas
                                     <button class="btn btn-info ml-2" data-toggle="modal" data-target="#nuevaCuentaExcelModal">
                                         <i class="fas fa-file-excel"></i> Importar Excel
                                     </button>
+                                    <a href="{{ route('catalogo.export') }}" class="btn btn-warning ml-2">
+                                        <i class="fas fa-download"></i> Exportar Excel
+                                    </a>
                                 </div>
                                 <div class="input-group" style="width: 300px;">
                                     <input type="text" class="form-control" id="search-input" placeholder="Buscar cuentas...">

@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 use App\Imports\CuentasImport;
+use App\Exports\CuentasExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class CuentaController extends Controller
@@ -145,6 +146,12 @@ class CuentaController extends Controller
         $empresa->save();
         return redirect()->route('catalogo.index');
 
+    }
+
+    public function exportCatalogo()
+    {
+        $empresa_id = \Illuminate\Support\Facades\Auth::user()->empresa->id;
+        return Excel::download(new CuentasExport($empresa_id), 'catalogo_cuentas.xlsx');
     }
 
     public function graficos()

@@ -76,6 +76,9 @@ Route::post('carga/excel',[CuentaController::class,'cargarExcel'])->name('upload
 // * Confirmar catalogo
 Route::post('catalogo/confirmar',[CuentaController::class,'confirmarCatalogo'])->name('catalogo.confirmar');
 
+// * Exportar catalogo
+Route::get('catalogo/export',[CuentaController::class,'exportCatalogo'])->name('catalogo.export');
+
 
 // * Ratios
 Route::get('/ratios', [GeneralRController::class, 'ratios_empresa'])->name('ratios.index');
