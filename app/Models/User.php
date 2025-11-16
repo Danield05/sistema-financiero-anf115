@@ -12,7 +12,14 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
- * @method bool hasRole(string $role)
+ * @method bool hasRole(string|\Spatie\Permission\Models\Role $role)
+ * @method bool hasAnyRole(array|\Spatie\Permission\Models\Role $roles)
+ * @method bool hasAllRoles(array|\Spatie\Permission\Models\Role $roles)
+ * @method $this assignRole(string|\Spatie\Permission\Models\Role $role)
+ * @method $this removeRole(string|\Spatie\Permission\Models\Role $role)
+ * @method $this syncRoles(array|\Spatie\Permission\Models\Role $roles)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Role[] $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Spatie\Permission\Models\Permission[] $permissions
  */
 class User extends Authenticatable
 {
