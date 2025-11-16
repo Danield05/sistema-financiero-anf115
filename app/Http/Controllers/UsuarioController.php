@@ -17,10 +17,14 @@ class UsuarioController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission::ver-usuario|crear-usuario|editar-usuario|borrar-usuario', ['only'=>['index']]);
-        $this->middleware('permission:crear-usuario',['only'=>['create','store']]);
-        $this->middleware('permission:editar-usuario',['only'=>['edit','update']]);
-        $this->middleware('permission:borrar-usuario',['only'=>['destroy']]);
+        $this->middleware(function ($request, $next) {
+            /** @var \App\Models\User $user */
+            $user = auth()->user();
+            if (!$user || !$user->hasRole('Administrador')) {
+                abort(403, 'User does not have the right permissions.');
+            }
+            return $next($request);
+        });
     }
 
     /**
@@ -169,6 +173,7 @@ class UsuarioController extends Controller
             'password' => 'required|min:8|confirmed',
         ]);
 
+        /** @var \App\Models\User $user */
         $user = auth()->user();
 
         if (!Hash::check($request->password_current, $user->password)) {

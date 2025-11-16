@@ -11,9 +11,14 @@ class EmpresaController extends Controller
 
     function __construct()
     {
-        $this->middleware('permission:crear-empresa',['only'=>['create','store']]);
-        $this->middleware('permission:editar-empresa',['only'=>['edit','update']]);
-        $this->middleware('permission:borrar-empresa',['only'=>['destroy']]);
+        $this->middleware(function ($request, $next) {
+            /** @var \App\Models\User $user */
+            $user = auth()->user();
+            if (!$user || !$user->hasRole('Administrador')) {
+                abort(403, 'User does not have the right permissions.');
+            }
+            return $next($request);
+        });
     }
 
     /**
@@ -56,7 +61,7 @@ class EmpresaController extends Controller
         $input = $request->except('_token');
         $input['catalogo_listo'] = false;
         $input['vinculacion_listo'] = false;
-        empresa::insert($input);
+        empresa::create($input);
 
         return redirect()->route('empresa.index');
 

@@ -11,6 +11,9 @@ use Laravel\Sanctum\HasApiTokens;
 //Spatie
 use Spatie\Permission\Traits\HasRoles;
 
+/**
+ * @method bool hasRole(string $role)
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;

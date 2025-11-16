@@ -13,7 +13,9 @@ class empresa extends Model
         'nombre',
         'nit',
         'nrc',
-        'sector_id'
+        'sector_id',
+        'catalogo_listo',
+        'vinculacion_listo'
     ];
 
     //Relacion de uno a muchos

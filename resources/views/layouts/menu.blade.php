@@ -90,7 +90,7 @@
             </div>
         </a>
 
-        @can('ver-empleado')
+        @if(auth()->user()->hasRole('Administrador'))
         <a  href="{{ route('empleados.index') }}" class="ag-courses-item_link nav-link" style="border-radius:20px" title="Gestionar empleados">
             <div class="esfera"></div>
             <div class="ag-courses-item_title" style="font-size:15px">
@@ -98,7 +98,7 @@
                 <span>Empleados</span>
             </div>
         </a>
-        @endcan
+        @endif
 
         <a  href="{{ route('proyecciones.index') }}" class="ag-courses-item_link nav-link" style="border-radius:20px" title="Ver proyecciones financieras">
             <div class="esfera"></div>
@@ -118,20 +118,17 @@
         </a>
         --}}
 
-        @can('ver-empresa')
-        {{-- ! Fase de prueba
-            <a  href=" {{route('empresa.index')}} " class="ag-courses-item_link nav-link" style="border-radius:20px">
+        @if(auth()->user()->hasRole('Administrador'))
+        <a  href=" {{route('empresa.index')}} " class="ag-courses-item_link nav-link" style="border-radius:20px" title="Gestionar empresas">
             <div class="esfera"></div>
             <div class="ag-courses-item_title" style="font-size:15px">
                 <i class=" fas fa-building"  ></i>
                 <span>Empresa</span>
             </div>
         </a>
-        --}}
-        @endcan
+        @endif
 
-        @can('ver-usuario')
-        @if(!auth()->user()->hasRole('Contador'))
+        @if(auth()->user()->hasRole('Administrador'))
         <a  href=" {{route('usuarios.index')}}" class="ag-courses-item_link nav-link" style="border-radius:20px" title="Administrar usuarios del sistema">
             <div class="esfera"></div>
             <div class="ag-courses-item_title" style="font-size:15px">
@@ -140,7 +137,6 @@
             </div>
         </a>
         @endif
-        @endcan
         @can('ver-rol')
         @if(!auth()->user()->hasRole('Contador'))
         <a  href=" {{route('roles.index')}} " class="ag-courses-item_link nav-link" style="border-radius:20px" title="Gestionar roles y permisos">

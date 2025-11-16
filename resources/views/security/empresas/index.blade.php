@@ -44,13 +44,11 @@ Empresa
                                                 <td>{{ $empresa->sector->nombre }}</td>
                                                 <td>
                                                     <div class="btn-group" role="group">
-                                                        @can('editar-empresa')
+                                                        @if(auth()->user()->hasRole('Administrador'))
                                                         <a href="{{ route('empresa.edit', $empresa->id) }}" class="btn btn-sm btn-outline-primary" title="Editar">
                                                             <i class="fas fa-edit"></i> Editar
                                                         </a>
-                                                        @endcan
 
-                                                        @can('borrar-empresa')
                                                         <form action="{{ route('empresa.destroy', $empresa->id) }}" method="POST" style="display: inline;" onsubmit="return confirm('¿Está seguro de que desea eliminar esta empresa?')">
                                                             @csrf
                                                             @method('DELETE')
@@ -58,7 +56,7 @@ Empresa
                                                                 <i class="fas fa-trash"></i> Eliminar
                                                             </button>
                                                         </form>
-                                                        @endcan
+                                                        @endif
                                                     </div>
                                                 </td>
                                             </tr>

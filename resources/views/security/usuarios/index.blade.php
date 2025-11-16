@@ -59,16 +59,12 @@ Usuarios
                                                 </td>
                                                 <td>
                                                     <div class="btn-group" role="group">
-                                                        @can('editar-usuario')
                                                         <a class="btn btn-sm btn-outline-info" href="{{route('usuarios.edit', $usuario->id)}}" title="Editar usuario">
                                                             <i class="fas fa-edit"></i> Editar
                                                         </a>
-                                                        @endcan
-                                                        @can('borrar-usuario')
                                                         <button type="button" class="btn btn-sm btn-outline-danger" onclick="confirmDelete({{$usuario->id}})" title="Eliminar usuario">
                                                             <i class="fas fa-trash"></i> Eliminar
                                                         </button>
-                                                        @endcan
                                                     </div>
                                                 </td>
                                             </tr>

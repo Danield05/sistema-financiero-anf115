@@ -9,10 +9,14 @@ class EmpleadoController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:ver-empleado|crear-empleado|editar-empleado|borrar-empleado', ['only' => ['index']]);
-        $this->middleware('permission:crear-empleado', ['only' => ['create', 'store']]);
-        $this->middleware('permission:editar-empleado', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:borrar-empleado', ['only' => ['destroy']]);
+        $this->middleware(function ($request, $next) {
+            /** @var \App\Models\User $user */
+            $user = auth()->user();
+            if (!$user || !$user->hasRole('Administrador')) {
+                abort(403, 'User does not have the right permissions.');
+            }
+            return $next($request);
+        });
     }
     /**
      * Display a listing of the resource.

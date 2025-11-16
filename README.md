@@ -12,6 +12,9 @@ SIFIN es un sistema financiero integral desarrollado con Laravel para la gestió
 - **👥 Gestión de Usuarios**: Sistema de roles y permisos
 - **🏢 Empresas**: Múltiples empresas y sectores
 - **📅 Períodos**: Gestión de períodos contables
+- **👨‍💼 Gestión de Empleados**: Administración de personal y datos laborales
+- **💰 Planillas de Sueldo**: Cálculo automático de salarios y deducciones
+- **📋 Presupuestos**: Planificación y control de presupuestos financieros
 - **🔐 Autenticación**: Login y registro seguro
 
 ### 🎨 Diseño Moderno
@@ -28,7 +31,7 @@ SIFIN sigue el patrón de arquitectura **MVC (Model-View-Controller)** proporcio
 ### 📂 Estructura MVC
 
 - **Models (Modelos)**: Representan las entidades de negocio y la lógica de datos
-  - `User`, `Empresa`, `Cuenta`, `BalanceGeneral`, `EstadoResultado`
+  - `User`, `Empresa`, `Cuenta`, `BalanceGeneral`, `EstadoResultado`, `Presupuesto`, `Empleado`, `PlanillaSueldo`
   - Relaciones Eloquent ORM
   - Validaciones y reglas de negocio
 
@@ -242,6 +245,9 @@ Los seeders crean las siguientes empresas de ejemplo:
 - **📈 Estados**: Estados de resultados
 - **📋 Cuentas**: Catálogo de cuentas contables
 - **👥 Usuarios**: Gestión de usuarios y roles
+- **👨‍💼 Empleados**: Gestión de empleados
+- **💰 Planillas**: Gestión de planillas de sueldo
+- **📊 Presupuestos**: Gestión de presupuestos
 
 ## 📁 Estructura del Proyecto
 
