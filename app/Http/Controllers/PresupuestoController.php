@@ -55,7 +55,26 @@ class PresupuestoController extends Controller
      */
     public function create()
     {
-        $periodos = Periodo::where('empresa_id', auth()->user()->empresa->id)->get();
+        Log::info('Accediendo a presupuestos create');
+
+        if (!auth()->check()) {
+            Log::error('Usuario no autenticado en create');
+            abort(403, 'Usuario no autenticado');
+        }
+
+        $user = auth()->user();
+        Log::info('Usuario: ' . $user->id);
+
+        if (!$user->empresa) {
+            Log::error('Usuario sin empresa asociada en create');
+            abort(403, 'Usuario sin empresa asociada');
+        }
+
+        Log::info('Empresa: ' . $user->empresa->id);
+
+        $periodos = Periodo::where('empresa_id', $user->empresa->id)->get();
+        Log::info('Periodos encontrados en create: ' . $periodos->count());
+
         return view('vistas.presupuestos.create', compact('periodos'));
     }
 
