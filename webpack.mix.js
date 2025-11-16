@@ -12,7 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js');
-mix.styles(['resources/js/app.js'], 'public/css/app.css').version();
+mix.styles(['resources/js/app.js'], 'public/css/app.css');
 
 mix.styles([
     'public/css/social-icons.css',
@@ -21,14 +21,13 @@ mix.styles([
     'public/css/prism.css',
     'public/css/main.css',
     'public/css/custom.css',
-], 'public/css/all.css').version();
+], 'public/css/all.css');
 
 mix.js(
     'public/js/scripts.js', 'public/js/scripts.min.js')
     .js('resources/assets/js/profile.js', 'public/assets/js/profile.js')
     .js('resources/assets/js/custom/custom.js', 'public/assets/js/custom/custom.js')
-    .js('resources/assets/js/custom/custom-datatable.js', 'public/assets/js/custom/custom-datatable.js')
-    .version();
+    .js('resources/assets/js/custom/custom-datatable.js', 'public/assets/js/custom/custom-datatable.js');
 
 
 mix.copy('node_modules/bootstrap/dist/css/bootstrap.min.css',
