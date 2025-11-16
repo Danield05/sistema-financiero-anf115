@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Presupuesto;
 use App\Models\Periodo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PresupuestoController extends Controller
 {
@@ -15,8 +16,35 @@ class PresupuestoController extends Controller
      */
     public function index()
     {
-        $presupuestos = Presupuesto::where('empresa_id', auth()->user()->empresa->id)->get();
-        $periodos = Periodo::where('empresa_id', auth()->user()->empresa->id)->get();
+        Log::info('Accediendo a presupuestos index');
+
+        if (!auth()->check()) {
+            Log::error('Usuario no autenticado');
+            abort(403, 'Usuario no autenticado');
+        }
+
+        $user = auth()->user();
+        Log::info('Usuario: ' . $user->id);
+
+        if (!$user->empresa) {
+            Log::error('Usuario sin empresa asociada');
+            abort(403, 'Usuario sin empresa asociada');
+        }
+
+        Log::info('Empresa: ' . $user->empresa->id);
+
+        $presupuestos = Presupuesto::where('empresa_id', $user->empresa->id)->get();
+        Log::info('Presupuestos encontrados: ' . $presupuestos->count());
+
+        foreach ($presupuestos as $p) {
+            if (!$p->periodo) {
+                Log::error('Presupuesto ' . $p->id . ' tiene periodo_id inválido: ' . $p->periodo_id);
+            }
+        }
+
+        $periodos = Periodo::where('empresa_id', $user->empresa->id)->get();
+        Log::info('Periodos encontrados: ' . $periodos->count());
+
         return view('vistas.presupuestos.index', compact('presupuestos', 'periodos'));
     }
 
