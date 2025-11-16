@@ -143,7 +143,7 @@
             <div class="modal-body">
                 <b><p>Descargar plantilla</p></b>
                 <p>Para subir el catálogo completo de la empresa, puede hacer utilizando el siguiente archivo excel y llenándolo cómo se indica.</P>
-                <a href="{{URL::signedRoute('catalogo.download')}}"><button type="button" class="btn btn-success">Descargar plantilla de excel</button></a>
+                <a href="{{route('catalogo.download')}}"><button type="button" class="btn btn-success">Descargar plantilla de excel</button></a>
                 <br>
                 <br>
                 <b><p>Subir archivo</p></b>

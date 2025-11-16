@@ -8,7 +8,7 @@
                 <button type="button" aria-label="Close" class="close outline-none" data-dismiss="modal">×</button>
             </div>
             <div class="modal-body">
-            <a href="{{URL::signedRoute('catalogo.download')}}" class="btn btn-primary">Presione aqui para descargar plantilla</a>
+            <a href="{{route('catalogo.download')}}" class="btn btn-primary">Presione aqui para descargar plantilla</a>
                                 <p>Formato admitido: xlsx</p>
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12">
