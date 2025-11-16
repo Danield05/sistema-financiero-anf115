@@ -14,6 +14,8 @@ class SeederPlanillas extends Seeder
      */
     public function run()
     {
+        \App\Models\PlanillaSueldo::truncate();
+
         $planillas = [
             [
                 'empleado_id' => 1, // Juan Pérez
