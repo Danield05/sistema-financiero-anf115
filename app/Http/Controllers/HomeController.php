@@ -34,8 +34,8 @@ class HomeController extends Controller
             $empresaCount = \App\Models\empresa::count();
             Log::info('Empresa count: ' . $empresaCount);
 
-            $periodoCount = \App\Models\Periodo::count();
-            Log::info('Periodo count: ' . $periodoCount);
+            $periodoCount = \App\Models\periodo::count();
+            Log::info('periodo count: ' . $periodoCount);
 
             $userCount = \App\Models\User::count();
             Log::info('User count: ' . $userCount);

@@ -52,7 +52,7 @@ Inicio
                     <div class="stat-icon mb-3">
                         <i class="fas fa-calendar-alt text-info fa-2x"></i>
                     </div>
-                    <h3 class="stat-number text-info mb-1">{{ \App\Models\Periodo::count() }}</h3>
+                    <h3 class="stat-number text-info mb-1">{{ \App\Models\periodo::count() }}</h3>
                     <p class="stat-label mb-0 text-muted">Períodos Activos</p>
                 </div>
             </div>
