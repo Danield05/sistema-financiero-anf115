@@ -108,7 +108,7 @@ Inicio
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        @if(!auth()->user()->hasRole('Contador'))
+                        @if(auth()->user()->hasRole('Administrador') || !auth()->user()->hasRole('Contador'))
                         <div class="col-lg-3 col-md-6 mb-3">
                             <a href="{{ route('empresa.index') }}" class="btn btn-outline-primary btn-block p-3 h-100 d-flex flex-column align-items-center">
                                 <i class="fas fa-building fa-2x mb-2"></i>
