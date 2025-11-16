@@ -59,9 +59,9 @@ Gestión de Empleados
                                             <td>${{ number_format($empleado->salario_base, 2) }}</td>
                                             <td>
                                                 <div class="btn-group" role="group">
-                                                    <a href="{{ route('empleados.show', $empleado->id) }}" class="btn btn-sm btn-outline-info" title="Ver">
+                                                    <button type="button" class="btn btn-sm btn-outline-info" title="Ver" onclick="showEmpleado({{ $empleado->id }})">
                                                         <i class="fas fa-eye"></i> Ver
-                                                    </a>
+                                                    </button>
                                                     <a href="{{ route('empleados.edit', $empleado->id) }}" class="btn btn-sm btn-outline-primary" title="Editar">
                                                         <i class="fas fa-edit"></i> Editar
                                                     </a>
@@ -130,5 +130,100 @@ Gestión de Empleados
             form.submit();
         }
     }
+
+    // Datos de empleados para el modal
+    var empleadosData = @json($empleados);
+
+    function showEmpleado(id) {
+        var empleado = empleadosData.find(e => e.id == id);
+        if (empleado) {
+            $('#modalNombre').text(empleado.nombre);
+            $('#modalApellido').text(empleado.apellido);
+            $('#modalDui').text(empleado.dui);
+            $('#modalNit').text(empleado.nit || 'N/A');
+            $('#modalFechaNacimiento').text(new Date(empleado.fecha_nacimiento).toLocaleDateString('es-ES'));
+            $('#modalFechaContratacion').text(new Date(empleado.fecha_contratacion).toLocaleDateString('es-ES'));
+            $('#modalSalarioBase').text('$' + parseFloat(empleado.salario_base).toFixed(2));
+            $('#modalEmpresa').text(empleado.empresa.nombre);
+            $('#showEmpleadoModal').modal('show');
+        }
+    }
 </script>
+
+<!-- Modal para Ver Empleado -->
+<div class="modal fade" id="showEmpleadoModal" tabindex="-1" role="dialog" aria-labelledby="showEmpleadoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="showEmpleadoModalLabel">
+                    <i class="fas fa-user text-primary"></i> Detalles del Empleado
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label><strong>Nombre:</strong></label>
+                            <p class="form-control-plaintext" id="modalNombre"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label><strong>Apellido:</strong></label>
+                            <p class="form-control-plaintext" id="modalApellido"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label><strong>DUI:</strong></label>
+                            <p class="form-control-plaintext" id="modalDui"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label><strong>NIT:</strong></label>
+                            <p class="form-control-plaintext" id="modalNit"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label><strong>Fecha de Nacimiento:</strong></label>
+                            <p class="form-control-plaintext" id="modalFechaNacimiento"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label><strong>Fecha de Contratación:</strong></label>
+                            <p class="form-control-plaintext" id="modalFechaContratacion"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label><strong>Salario Base:</strong></label>
+                            <p class="form-control-plaintext" id="modalSalarioBase"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label><strong>Empresa:</strong></label>
+                            <p class="form-control-plaintext" id="modalEmpresa"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
