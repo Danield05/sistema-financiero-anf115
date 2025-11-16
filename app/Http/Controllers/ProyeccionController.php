@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\BalanceGeneral;
 use App\Models\estado_resultado;
-use App\Models\Periodo;
+use App\Models\periodo;
 use Illuminate\Http\Request;
 
 class ProyeccionController extends Controller
 {
     public function index()
     {
-        $periodos = Periodo::where('empresa_id', auth()->user()->empresa->id)->orderBy('anio', 'desc')->get();
+        $periodos = periodo::where('empresa_id', auth()->user()->empresa->id)->orderBy('anio', 'desc')->get();
         $proyecciones = [];
 
         if ($periodos->count() >= 2) {
