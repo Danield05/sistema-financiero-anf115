@@ -108,7 +108,8 @@ class PlanillaSueldoController extends Controller
      */
     public function show($id)
     {
-        //
+        $planilla = PlanillaSueldo::with('empleado')->findOrFail($id);
+        return view('vistas.planillas.show', compact('planilla'));
     }
 
     /**

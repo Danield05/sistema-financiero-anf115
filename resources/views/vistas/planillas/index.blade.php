@@ -69,7 +69,7 @@ Planillas de Sueldos
                                                 <td>${{ number_format($planilla->sueldo_neto, 2) }}</td>
                                                 <td>
                                                     <div class="btn-group" role="group">
-                                                        <a href="{{ route('planillas.show', $planilla->id) }}" class="btn btn-sm btn-outline-info" title="Ver">
+                                                        <a href="{{ route('planillas.show', $planilla->id) }}" class="btn btn-sm btn-outline-info" title="Ver" target="_blank">
                                                             <i class="fas fa-eye"></i> Ver
                                                         </a>
                                                         <button type="button" class="btn btn-sm btn-outline-danger" onclick="confirmDelete({{ $planilla->id }})" title="Eliminar">
