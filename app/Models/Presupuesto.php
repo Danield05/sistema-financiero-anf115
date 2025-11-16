@@ -22,11 +22,11 @@ class Presupuesto extends Model
 
     public function periodo()
     {
-        return $this->belongsTo(Periodo::class);
+        return $this->belongsTo(periodo::class);
     }
 
     public function empresa()
     {
-        return $this->belongsTo(Empresa::class);
+        return $this->belongsTo(empresa::class);
     }
 }
