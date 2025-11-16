@@ -27,6 +27,7 @@ class HomeController extends Controller
         Log::info('Accediendo a home index', ['user_id' => auth()->id()]);
 
         try {
+            /** @var \App\Models\User $user */
             $user = auth()->user();
             Log::info('Usuario: ' . $user->name);
 
