@@ -19,17 +19,11 @@ Planillas de Sueldos
 
                             @include('notificador_validacion')
 
-                            <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="d-flex align-items-center mb-3">
                                 <div>
                                     <a href="{{ route('planillas.create') }}" class="btn btn-success">
                                         <i class="fas fa-plus"></i> Generar Planilla
                                     </a>
-                                </div>
-                                <div class="input-group" style="width: 300px;">
-                                    <input type="text" class="form-control" id="search-input" placeholder="Buscar planillas...">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                    </div>
                                 </div>
                             </div>
 
@@ -118,10 +112,6 @@ Planillas de Sueldos
             "searching": false // Disable DataTable search
         });
 
-        // Custom search functionality
-        $('#search-input').on('keyup', function() {
-            $('#planillas-table').DataTable().search($(this).val()).draw();
-        });
     });
 
     function confirmDelete(id) {
