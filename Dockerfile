@@ -1,5 +1,5 @@
-# Usar imagen base de PHP 8.0 con Apache
-FROM php:8.0-apache
+# Usar imagen base de PHP 8.1 con Apache
+FROM php:8.1-apache
 
 # Instalar dependencias del sistema necesarias para Laravel y Node.js
 RUN apt-get update && apt-get install -y \
