@@ -77,7 +77,7 @@ class PlanillaSueldoController extends Controller
         $vacaciones = PlanillaSueldo::calcularVacaciones($salario_base, ($dias_totales_periodo / 30) * (15/12)); // 15 días de vacaciones al año
 
         $total_deducciones = $afp + $iss + $renta;
-        $sueldo_neto = $salario_base - $total_deducciones + $aguinaldo + $vacaciones;
+        $sueldo_neto = $salario_base - $total_deducciones;
 
         PlanillaSueldo::create([
             'empleado_id' => $request->empleado_id,
