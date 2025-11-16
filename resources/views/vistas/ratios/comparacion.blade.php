@@ -5,6 +5,14 @@ Comparacion de Ratios
 @endsection
 
 @section('content')
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,255,255,0.8); z-index: 9999; display: flex; justify-content: center; align-items: center;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Cargando...</span>
+        </div>
+        <span class="ml-2">Cargando comparación de ratios...</span>
+    </div>
+
     <section class="section" style="margin-top: 20px;">
         <div class="section-body">
             <div class="row">
@@ -174,4 +182,13 @@ Comparacion de Ratios
             </div>
         </div>
     </section>
+@endsection
+
+@section('scripts')
+<script>
+    $(document).ready(function() {
+        // Ocultar el spinner de carga cuando la página esté completamente cargada
+        $('#loading-spinner').fadeOut();
+    });
+</script>
 @endsection
