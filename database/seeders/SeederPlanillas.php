@@ -30,7 +30,7 @@ class SeederPlanillas extends Seeder
                 'aguinaldo' => 66.67, // (800/12) * 1 month
                 'vacaciones' => 133.33, // (800/30) * 5 days vacation
                 'total_deducciones' => 81.60,
-                'sueldo_neto' => 918.40,
+                'sueldo_neto' => 718.40, // 800 - 81.60
             ],
             [
                 'empleado_id' => 2, // María González
@@ -47,7 +47,7 @@ class SeederPlanillas extends Seeder
                 'aguinaldo' => 52.08,
                 'vacaciones' => 104.17,
                 'total_deducciones' => 63.75,
-                'sueldo_neto' => 717.50,
+                'sueldo_neto' => 561.25, // 625 - 63.75
             ],
             [
                 'empleado_id' => 3, // Carlos Rodríguez
@@ -64,7 +64,7 @@ class SeederPlanillas extends Seeder
                 'aguinaldo' => 75.00,
                 'vacaciones' => 150.00,
                 'total_deducciones' => 91.80,
-                'sueldo_neto' => 1033.20,
+                'sueldo_neto' => 808.20, // 900 - 91.80
             ],
             [
                 'empleado_id' => 4, // Ana Martínez
@@ -81,7 +81,7 @@ class SeederPlanillas extends Seeder
                 'aguinaldo' => 58.33,
                 'vacaciones' => 116.67,
                 'total_deducciones' => 71.40,
-                'sueldo_neto' => 803.60,
+                'sueldo_neto' => 628.60, // 700 - 71.40
             ],
             [
                 'empleado_id' => 5, // Luis Hernández
@@ -98,7 +98,7 @@ class SeederPlanillas extends Seeder
                 'aguinaldo' => 56.67,
                 'vacaciones' => 113.33,
                 'total_deducciones' => 69.36,
-                'sueldo_neto' => 780.64,
+                'sueldo_neto' => 610.64, // 680 - 69.36
             ]
         ];
 
