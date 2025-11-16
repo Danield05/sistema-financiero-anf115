@@ -34,7 +34,7 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 COPY package.json package-lock.json ./
 
 # Instalar dependencias de Node.js
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Copiar el resto del código de la aplicación
 COPY . .
