@@ -21,9 +21,9 @@ Gestión de Presupuestos
 
                             <div class="d-flex align-items-center mb-3">
                                 <div>
-                                    <a href="{{ route('presupuestos.create') }}" class="btn btn-success">
+                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createPresupuestoModal">
                                         <i class="fas fa-plus"></i> Crear Presupuesto
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
 
@@ -127,5 +127,103 @@ Gestión de Presupuestos
             form.submit();
         }
     }
+
+    // Función para abrir el modal de creación
+    function openCreateModal() {
+        $('#createPresupuestoModal').modal('show');
+    }
 </script>
+
+<!-- Modal para Crear Presupuesto -->
+<div class="modal fade" id="createPresupuestoModal" tabindex="-1" role="dialog" aria-labelledby="createPresupuestoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createPresupuestoModalLabel">
+                    <i class="fas fa-plus-circle text-primary"></i> Crear Nuevo Presupuesto
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @include('notificador_validacion')
+
+                <form action="{{ route('presupuestos.store') }}" method="POST">
+                    @csrf
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="tipo">Tipo de Presupuesto</label>
+                                <select name="tipo" class="form-control" required>
+                                    <option value="general">General</option>
+                                    <option value="ventas">Ventas</option>
+                                    <option value="produccion">Producción</option>
+                                    <option value="maestro">Maestro</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="periodo_id">Período</label>
+                                <select name="periodo_id" class="form-control" required>
+                                    @foreach($periodos as $periodo)
+                                        <option value="{{ $periodo->id }}">{{ $periodo->anio }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                <label for="descripcion">Descripción</label>
+                                <textarea name="descripcion" class="form-control" rows="3" placeholder="Descripción del presupuesto" required></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="monto_presupuestado">Monto Presupuestado</label>
+                                <input type="number" name="monto_presupuestado" class="form-control" min="0" step="0.01" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="fecha_inicio">Fecha de Inicio</label>
+                                <input type="date" name="fecha_inicio" class="form-control" required>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="fecha_fin">Fecha de Fin</label>
+                                <input type="date" name="fecha_fin" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Crear Presupuesto
+                            </button>
+                            <button type="button" class="btn btn-secondary ml-2" data-dismiss="modal">
+                                <i class="fas fa-times"></i> Cancelar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
