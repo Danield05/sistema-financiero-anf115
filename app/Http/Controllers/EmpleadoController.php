@@ -25,7 +25,7 @@ class EmpleadoController extends Controller
      */
     public function index()
     {
-        $empleados = Empleado::where('empresa_id', auth()->user()->empresa->id)->get();
+        $empleados = Empleado::with('empresa')->where('empresa_id', auth()->user()->empresa->id)->get();
         return view('vistas.empleados.index', compact('empleados'));
     }
 
