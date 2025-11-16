@@ -8,6 +8,7 @@ use App\Models\empresa;
 use App\Models\periodo;
 use App\Models\vinculacion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 
 class GeneralRController extends Controller
@@ -15,8 +16,19 @@ class GeneralRController extends Controller
     // ! Ratios empresa
     public function ratios_empresa(){
         // * Variables
-        $empresa_id = \Illuminate\Support\Facades\Auth::user()->empresa->id;
+        $user = \Illuminate\Support\Facades\Auth::user();
+        Log::info('Accediendo a ratios_empresa', ['user_id' => $user->id]);
+
+        if (!$user->empresa) {
+            Log::error('Usuario sin empresa asociada', ['user_id' => $user->id]);
+            abort(403, 'Usuario sin empresa asociada');
+        }
+
+        $empresa_id = $user->empresa->id;
+        Log::info('Empresa ID: ' . $empresa_id);
+
         $periodos = periodo::all()->where('empresa_id', $empresa_id);
+        Log::info('Periodos encontrados: ' . $periodos->count());
         
         // * Razones financieras
         // $razon_circulantes = [];
@@ -134,8 +146,24 @@ class GeneralRController extends Controller
 
     // ! Comparacion de ratios
     public function comparacion(){
-        $sector = \Illuminate\Support\Facades\Auth::user()->empresa->sector;
+        $user = \Illuminate\Support\Facades\Auth::user();
+        Log::info('Accediendo a comparacion', ['user_id' => $user->id]);
+
+        if (!$user->empresa) {
+            Log::error('Usuario sin empresa asociada', ['user_id' => $user->id]);
+            abort(403, 'Usuario sin empresa asociada');
+        }
+
+        if (!$user->empresa->sector) {
+            Log::error('Empresa sin sector asociado', ['empresa_id' => $user->empresa->id]);
+            abort(403, 'Empresa sin sector asociado');
+        }
+
+        $sector = $user->empresa->sector;
+        Log::info('Sector: ' . $sector->id);
+
         $empresas = empresa::all()->where('sector_id', $sector->id);
+        Log::info('Empresas en sector: ' . $empresas->count());
         $periodos = periodo::all();
         $comparaciones = [];
 
