@@ -148,6 +148,16 @@ class CuentaController extends Controller
 
     }
 
+    public function desconfirmarCatalogo()
+    {
+        $empresa_id = \Illuminate\Support\Facades\Auth::user()->empresa->id;
+        $empresa= empresa::where('id', $empresa_id)->first();
+        $empresa->catalogo_listo=FALSE;
+        $empresa->save();
+        return redirect()->route('catalogo.index');
+
+    }
+
     public function exportCatalogo()
     {
         $empresa_id = \Illuminate\Support\Facades\Auth::user()->empresa->id;

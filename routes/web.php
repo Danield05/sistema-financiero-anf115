@@ -76,6 +76,9 @@ Route::post('carga/excel',[CuentaController::class,'cargarExcel'])->name('upload
 // * Confirmar catalogo
 Route::post('catalogo/confirmar',[CuentaController::class,'confirmarCatalogo'])->name('catalogo.confirmar');
 
+// * Desconfirmar catalogo
+Route::post('catalogo/desconfirmar',[CuentaController::class,'desconfirmarCatalogo'])->name('catalogo.desconfirmar');
+
 // * Exportar catalogo
 Route::get('catalogo/export',[CuentaController::class,'exportCatalogo'])->name('catalogo.export');
 

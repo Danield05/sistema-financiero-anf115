@@ -117,6 +117,11 @@ Catalogo de cuentas
                                         @csrf
                                         <button type="submit" class="btn btn-success" id="confirmar" onclick="myFunction()">Confirmar Catalogo</button>
                                     </form>
+                                @else
+                                    <form action="{{route('catalogo.desconfirmar')}}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-warning" onclick="return confirm('¿Está seguro de que desea desconfirmar el catálogo? Esto permitirá editar las cuentas.')">Desconfirmar Catalogo</button>
+                                    </form>
                                 @endif
                             @endif
                             <div class="d-flex justify-content-center flex-wrap mt-3">
