@@ -45,8 +45,11 @@ RUN npm run production
 # Habilitar mod_rewrite de Apache para Laravel
 RUN a2enmod rewrite
 
+# Configurar DocumentRoot para Laravel (public directory)
+RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
+
 # Copiar configuración de .htaccess si existe
-COPY .htaccess /var/www/html/.htaccess
+COPY public/.htaccess /var/www/html/public/.htaccess
 
 # Cambiar permisos para storage y bootstrap/cache
 RUN chown -R www-data:www-data /var/www/html \
