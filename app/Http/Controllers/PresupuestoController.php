@@ -67,26 +67,54 @@ class PresupuestoController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'tipo' => 'required|in:general,ventas,produccion,maestro',
-            'periodo_id' => 'required|exists:periodos,id',
-            'descripcion' => 'required|string',
-            'monto_presupuestado' => 'required|numeric|min:0',
-            'fecha_inicio' => 'required|date',
-            'fecha_fin' => 'required|date|after:fecha_inicio',
-        ]);
+        Log::info('Iniciando creación de presupuesto');
+        Log::info('Datos del request: ', $request->all());
 
-        Presupuesto::create([
-            'tipo' => $request->tipo,
-            'periodo_id' => $request->periodo_id,
-            'empresa_id' => auth()->user()->empresa->id,
-            'descripcion' => $request->descripcion,
-            'monto_presupuestado' => $request->monto_presupuestado,
-            'fecha_inicio' => $request->fecha_inicio,
-            'fecha_fin' => $request->fecha_fin,
-        ]);
+        if (!auth()->check()) {
+            Log::error('Usuario no autenticado en store');
+            abort(403, 'Usuario no autenticado');
+        }
 
-        return redirect()->route('presupuestos.index')->with('success', 'Presupuesto creado correctamente.');
+        $user = auth()->user();
+        Log::info('Usuario autenticado: ' . $user->id);
+
+        if (!$user->empresa) {
+            Log::error('Usuario sin empresa asociada en store');
+            abort(403, 'Usuario sin empresa asociada');
+        }
+
+        Log::info('Empresa del usuario: ' . $user->empresa->id);
+
+        try {
+            $request->validate([
+                'tipo' => 'required|in:general,ventas,produccion,maestro',
+                'periodo_id' => 'required|exists:periodos,id',
+                'descripcion' => 'required|string',
+                'monto_presupuestado' => 'required|numeric|min:0',
+                'fecha_inicio' => 'required|date',
+                'fecha_fin' => 'required|date|after:fecha_inicio',
+            ]);
+
+            Log::info('Validación pasada');
+
+            $presupuesto = Presupuesto::create([
+                'tipo' => $request->tipo,
+                'periodo_id' => $request->periodo_id,
+                'empresa_id' => $user->empresa->id,
+                'descripcion' => $request->descripcion,
+                'monto_presupuestado' => $request->monto_presupuestado,
+                'fecha_inicio' => $request->fecha_inicio,
+                'fecha_fin' => $request->fecha_fin,
+            ]);
+
+            Log::info('Presupuesto creado exitosamente: ' . $presupuesto->id);
+
+            return redirect()->route('presupuestos.index')->with('success', 'Presupuesto creado correctamente.');
+        } catch (\Exception $e) {
+            Log::error('Error al crear presupuesto: ' . $e->getMessage());
+            Log::error('Stack trace: ' . $e->getTraceAsString());
+            throw $e;
+        }
     }
 
     /**
