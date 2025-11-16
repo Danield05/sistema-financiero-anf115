@@ -61,12 +61,12 @@ Gestión de Presupuestos
                                                         <span class="badge badge-info">Maestro</span>
                                                     @endif
                                                 </td>
-                                                <td>{{ $presupuesto->descripcion }}</td>
-                                                <td>{{ $presupuesto->periodo->anio }}</td>
-                                                <td>${{ number_format($presupuesto->monto_presupuestado, 2) }}</td>
-                                                <td>${{ $presupuesto->monto_real ? number_format($presupuesto->monto_real, 2) : 'N/A' }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($presupuesto->fecha_inicio)->format('d/m/Y') }}</td>
-                                                <td>{{ \Carbon\Carbon::parse($presupuesto->fecha_fin)->format('d/m/Y') }}</td>
+                                                <td><strong style="color: black;">{{ $presupuesto->descripcion }}</strong></td>
+                                                <td><strong style="color: black;">{{ $presupuesto->periodo->anio }}</strong></td>
+                                                <td><strong style="color: black;">${{ number_format($presupuesto->monto_presupuestado, 2) }}</strong></td>
+                                                <td><strong style="color: black;">${{ $presupuesto->monto_real ? number_format($presupuesto->monto_real, 2) : 'N/A' }}</strong></td>
+                                                <td><strong style="color: black;">{{ \Carbon\Carbon::parse($presupuesto->fecha_inicio)->format('d/m/Y') }}</strong></td>
+                                                <td><strong style="color: black;">{{ \Carbon\Carbon::parse($presupuesto->fecha_fin)->format('d/m/Y') }}</strong></td>
                                                 <td>
                                                     <div class="btn-group" role="group">
                                                         <a href="{{ route('presupuestos.edit', $presupuesto->id) }}" class="btn btn-sm btn-outline-primary" title="Editar">

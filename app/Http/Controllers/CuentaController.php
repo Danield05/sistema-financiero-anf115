@@ -150,7 +150,9 @@ class CuentaController extends Controller
     public function graficos()
     {
         $empresa_id = \Illuminate\Support\Facades\Auth::user()->empresa->id;
-        $cuentas = cuenta::all()->where('empresa_id',$empresa_id);
+        $cuentas = cuenta::where('empresa_id', $empresa_id)->whereHas('cuenta_periodo', function($q) {
+            $q->whereNotNull('total')->where('total', '>', 0);
+        })->get();
         return view('vistas.empresa.graficos', compact('cuentas'));
     }
 

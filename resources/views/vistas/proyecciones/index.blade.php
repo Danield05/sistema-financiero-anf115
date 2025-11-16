@@ -32,9 +32,9 @@ Proyecciones Financieras
                                         <tbody>
                                             @foreach ($proyecciones as $proyeccion)
                                                 <tr>
-                                                    <td>{{ $proyeccion['anio'] }}</td>
-                                                    <td>${{ number_format($proyeccion['ventas_proyectadas'], 2) }}</td>
-                                                    <td>${{ number_format($proyeccion['activos_proyectados'], 2) }}</td>
+                                                    <td><strong style="color: black;">{{ $proyeccion['anio'] }}</strong></td>
+                                                    <td><strong style="color: black;">${{ number_format($proyeccion['ventas_proyectadas'], 2) }}</strong></td>
+                                                    <td><strong style="color: black;">${{ number_format($proyeccion['activos_proyectados'], 2) }}</strong></td>
                                                 </tr>
                                             @endforeach
                                         </tbody>
