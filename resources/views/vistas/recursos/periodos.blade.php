@@ -24,17 +24,11 @@ Periodo
                                     </div>
                                 @endif
                             </div>
-                            <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="d-flex align-items-center mb-3">
                                 <div>
                                    <button class="btn btn-success" data-toggle="modal" data-target="#nuevoPeriodoModal">
                                        <i class="fas fa-plus"></i> Nuevo Periodo
                                    </button>
-                                </div>
-                                <div class="input-group" style="width: 300px;">
-                                    <input type="text" class="form-control" id="search-input" placeholder="Buscar períodos...">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                    </div>
                                 </div>
                             </div>
                             <div class="table-responsive">
@@ -102,10 +96,6 @@ Periodo
             "order": [[0, 'desc']]
         });
 
-        // Custom search functionality
-        $('#search-input').on('keyup', function() {
-            $('#periodos-table').DataTable().search($(this).val()).draw();
-        });
     });
 
     function confirmDelete(id) {

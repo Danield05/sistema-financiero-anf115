@@ -19,17 +19,11 @@ Gestión de Presupuestos
 
                             @include('notificador_validacion')
 
-                            <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="d-flex align-items-center mb-3">
                                 <div>
                                     <a href="{{ route('presupuestos.create') }}" class="btn btn-success">
                                         <i class="fas fa-plus"></i> Crear Presupuesto
                                     </a>
-                                </div>
-                                <div class="input-group" style="width: 300px;">
-                                    <input type="text" class="form-control" id="search-input" placeholder="Buscar presupuestos...">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                                    </div>
                                 </div>
                             </div>
 
@@ -112,10 +106,6 @@ Gestión de Presupuestos
             "searching": false // Disable DataTable search
         });
 
-        // Custom search functionality
-        $('#search-input').on('keyup', function() {
-            $('#presupuestos-table').DataTable().search($(this).val()).draw();
-        });
     });
 
     function confirmDelete(id) {
