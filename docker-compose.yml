@@ -5,8 +5,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "8000:80"
     volumes:
       - .:/var/www/html
       - /var/www/html/vendor
@@ -20,6 +18,12 @@ services:
       - DB_DATABASE=sistema_financiero_anf115
       - DB_USERNAME=root
       - DB_PASSWORD=1234
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.app.rule=Host(`sifin-anf-jfanom-a977cd-129-159-33-205.traefik.me`)"
+      - "traefik.http.routers.app.entrypoints=websecure"
+      - "traefik.http.routers.app.tls.certresolver=letsencrypt"
+      - "traefik.http.services.app.loadbalancer.server.port=80"
     networks:
       - laravel
 
