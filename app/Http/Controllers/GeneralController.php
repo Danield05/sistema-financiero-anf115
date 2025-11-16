@@ -69,10 +69,19 @@ class GeneralController extends Controller
                 $unidor['relativa'] = 'N/A';
             }
             else if($cuenta2->count() > 0){
-                $unidor['relativa'] = ( ( $unidor['cuenta2'] / $unidor['cuenta1'] ) - 1 ) * 100;
+                if($unidor['cuenta1'] != 0){
+                    $unidor['relativa'] = ( ( $unidor['cuenta2'] / $unidor['cuenta1'] ) - 1 ) * 100;
+                } else {
+                    $unidor['relativa'] = 'N/A';
+                }
+            } else {
+                $unidor['relativa'] = 'N/A';
             }
 
-            array_push($cuenta_supreme, $unidor);
+            // Solo incluir cuentas que tienen valores en al menos un periodo
+            if($unidor['cuenta1'] > 0 || $unidor['cuenta2'] > 0){
+                array_push($cuenta_supreme, $unidor);
+            }
         }
 
         // return response()->json($cuenta_supreme);
@@ -120,10 +129,10 @@ class GeneralController extends Controller
             if($cuenta1->cuenta->tipo == 1){
                 $activo1 += $cuenta1->total;
             }
-            else if($cuenta1->cuenta->tipo == 0){
+            else if($cuenta1->cuenta->tipo == 0 && !str_starts_with($cuenta1->cuenta->codigo, '3.')){
                 $pasivo1 += $cuenta1->total;
             }
-            else if($cuenta1->cuenta->tipo == 2){
+            else if($cuenta1->cuenta->tipo == 0 && str_starts_with($cuenta1->cuenta->codigo, '3.')){
                 $patrimonio1 += $cuenta1->total;
             }
         }
@@ -132,10 +141,10 @@ class GeneralController extends Controller
             if($cuenta2->cuenta->tipo == 1){
                 $activo2 += $cuenta2->total;
             }
-            else if($cuenta2->cuenta->tipo == 0){
+            else if($cuenta2->cuenta->tipo == 0 && !str_starts_with($cuenta2->cuenta->codigo, '3.')){
                 $pasivo2 += $cuenta2->total;
             }
-            else if($cuenta2->cuenta->tipo == 2){
+            else if($cuenta2->cuenta->tipo == 0 && str_starts_with($cuenta2->cuenta->codigo, '3.')){
                 $patrimonio2 += $cuenta2->total;
             }
         }
@@ -202,7 +211,7 @@ class GeneralController extends Controller
                         $unidor['variacion1'] = 'N/A';
                     }
                 }
-                else if($cuenta1->cuenta->tipo == 2){
+                else if(str_starts_with($cuenta1->cuenta->codigo, '3.')){
                     if($patrimonio1 != 0){
                         $variacion1 = $cuenta1->total / $patrimonio1;
                         $unidor['variacion1'] = $variacion1 * 100;
@@ -235,7 +244,7 @@ class GeneralController extends Controller
                         $unidor['variacion2'] = 'N/A';
                     }
                 }
-                else if($cuenta2->cuenta->tipo == 2){
+                else if(str_starts_with($cuenta2->cuenta->codigo, '3.')){
                     if($patrimonio2 != 0){
                         $variacion2 = $cuenta2->total / $patrimonio2;
                         $unidor['variacion2'] = $variacion2 * 100;
@@ -249,7 +258,10 @@ class GeneralController extends Controller
                 $unidor['variacion2'] = 'N/A';
             }
 
-            array_push($cuenta_supreme, $unidor);
+            // Solo incluir cuentas que tienen valores en al menos un periodo
+            if($unidor['cuenta1'] > 0 || $unidor['cuenta2'] > 0){
+                array_push($cuenta_supreme, $unidor);
+            }
         }
 
         // return response()->json($cuenta_supreme);

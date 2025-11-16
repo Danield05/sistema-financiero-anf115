@@ -62,14 +62,15 @@ Balance General - Período {{$periodo_id}}
                                                         <div class="input-group-prepend">
                                                             <span class="input-group-text" style="min-width: 200px; color: black;">{{$cuenta->nombre}}</span>
                                                         </div>
-                                                        {!! Form::number('total', null, [
+                                                        {!! Form::number('total', $cuenta_p->where('cuenta_id', $cuenta->id)->first()?->total ?? null, [
                                                             'class' => 'form-control balance-input',
                                                             'min' => '0',
                                                             'step'=>'0.01',
                                                             'placeholder' => '0.00',
                                                             'required' => true,
                                                             'data-cuenta-id' => $cuenta->id,
-                                                            'data-periodo-id' => $periodo_id
+                                                            'data-periodo-id' => $periodo_id,
+                                                            'style' => 'min-width: 120px;'
                                                             ]) !!}
                                                         <div class="input-group-append">
                                                             {!! Form::submit('Registrar', [
@@ -82,35 +83,6 @@ Balance General - Período {{$periodo_id}}
                                                 @endforeach
                                             @endif
 
-                                            <!-- Cuentas ya registradas de activos -->
-                                            @foreach ($cuenta_p as $cuentap)
-                                                @if ($cuentap->cuenta->tipo == 1)
-                                                <div class="form-group">
-                                                    {!! Form::open(['route'=>'cuenta_periodo.store','method'=>'POST', 'class'=>'d-inline-block w-100']) !!}
-                                                    <div class="input-group">
-                                                        {!! Form::hidden('cuenta_id', $cuentap->cuenta->id,[]) !!}
-                                                        {!! Form::hidden('periodo_id', $periodo_id, []) !!}
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text bg-warning text-dark" style="min-width: 200px;">{{$cuentap->cuenta->nombre}} (Registrado)</span>
-                                                        </div>
-                                                        {!! Form::number('total', $cuentap->total, [
-                                                            'class' => 'form-control balance-input',
-                                                            'min' => '0',
-                                                            'step'=>'0.01',
-                                                            'placeholder' => '0.00',
-                                                            'data-cuenta-id' => $cuentap->cuenta->id,
-                                                            'data-periodo-id' => $periodo_id
-                                                            ]) !!}
-                                                        <div class="input-group-append">
-                                                            {!! Form::submit('Actualizar', [
-                                                                'class'=>'btn btn-warning'
-                                                                ]) !!}
-                                                        </div>
-                                                    </div>
-                                                    {!! Form::close() !!}
-                                                </div>
-                                                @endif
-                                            @endforeach
 
                                             <hr>
                                             <div class="alert alert-success">
@@ -137,24 +109,24 @@ Balance General - Período {{$periodo_id}}
 
                                             @foreach ($cuentas_d as $cuenta)
                                             <div class="form-group">
-                                                {!! Form::open(['route'=>'cuenta_periodo.store','method'=>'POST', 'class'=>'d-inline-block w-100']) !!}
+                                                {!! Form::open(['url' => url('/cuenta_periodo'), 'method'=>'POST', 'class'=>'d-inline-block w-100']) !!}
                                                 <div class="input-group">
                                                     {!! Form::hidden('cuenta_id', $cuenta->id, []) !!}
                                                     {!! Form::hidden('periodo_id', $periodo_id, []) !!}
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text" style="min-width: 200px; color: black;">{{$cuenta->nombre}}</span>
                                                     </div>
-                                                    {!! Form::number('total', null, [
+                                                    {!! Form::number('total', $cuenta_p->where('cuenta_id', $cuenta->id)->first()?->total ?? null, [
                                                         'class' => 'form-control balance-input',
-                                                        'min' => '0',
                                                         'step'=>'0.01',
                                                         'placeholder' => '0.00',
                                                         'required' => true,
                                                         'data-cuenta-id' => $cuenta->id,
-                                                        'data-periodo-id' => $periodo_id
+                                                        'data-periodo-id' => $periodo_id,
+                                                        'style' => 'min-width: 120px;'
                                                         ]) !!}
                                                     <div class="input-group-append">
-                                                        {!! Form::submit('Registrar', [
+                                                        {!! Form::submit($cuenta_p->where('cuenta_id', $cuenta->id)->first() ? 'Editar' : 'Registrar', [
                                                             'class'=>'btn btn-success'
                                                             ]) !!}
                                                     </div>
@@ -163,34 +135,6 @@ Balance General - Período {{$periodo_id}}
                                             </div>
                                             @endforeach
 
-                                            @foreach ($cuenta_p as $cuentap)
-                                                @if ($cuentap->cuenta->tipo == 0)
-                                                <div class="form-group">
-                                                    {!! Form::open(['route'=>'cuenta_periodo.store','method'=>'POST', 'class'=>'d-inline-block w-100']) !!}
-                                                    <div class="input-group">
-                                                        {!! Form::hidden('cuenta_id', $cuentap->cuenta->id, []) !!}
-                                                        {!! Form::hidden('periodo_id', $periodo_id, []) !!}
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text bg-warning text-dark" style="min-width: 200px;">{{$cuentap->cuenta->nombre}} (Registrado)</span>
-                                                        </div>
-                                                        {!! Form::number('total', $cuentap->total, [
-                                                            'class' => 'form-control balance-input',
-                                                            'min' => '0',
-                                                            'step'=>'0.01',
-                                                            'placeholder' => '0.00',
-                                                            'data-cuenta-id' => $cuentap->cuenta->id,
-                                                            'data-periodo-id' => $periodo_id
-                                                            ]) !!}
-                                                        <div class="input-group-append">
-                                                            {!! Form::submit('Actualizar', [
-                                                                'class'=>'btn btn-warning'
-                                                                ]) !!}
-                                                        </div>
-                                                    </div>
-                                                    {!! Form::close() !!}
-                                                </div>
-                                                @endif
-                                            @endforeach
 
                                             <!-- Patrimonio -->
                                             @if(!empty($cuentas_pa) || collect($cuenta_p)->where('cuenta.tipo', 2)->count() > 0)
@@ -200,24 +144,24 @@ Balance General - Período {{$periodo_id}}
 
                                             @foreach ($cuentas_pa as $cuenta)
                                             <div class="form-group">
-                                                {!! Form::open(['route'=>'cuenta_periodo.store','method'=>'POST', 'class'=>'d-inline-block w-100']) !!}
+                                                {!! Form::open(['url' => url('/cuenta_periodo'), 'method'=>'POST', 'class'=>'d-inline-block w-100']) !!}
                                                 <div class="input-group">
                                                     {!! Form::hidden('cuenta_id', $cuenta->id, []) !!}
                                                     {!! Form::hidden('periodo_id', $periodo_id, []) !!}
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text" style="min-width: 200px; color: black;">{{$cuenta->nombre}}</span>
                                                     </div>
-                                                    {!! Form::number('total', null, [
+                                                    {!! Form::number('total', $cuenta_p->where('cuenta_id', $cuenta->id)->first()?->total ?? null, [
                                                         'class' => 'form-control balance-input',
-                                                        'min' => '0',
                                                         'step'=>'0.01',
                                                         'placeholder' => '0.00',
                                                         'required' => true,
                                                         'data-cuenta-id' => $cuenta->id,
-                                                        'data-periodo-id' => $periodo_id
+                                                        'data-periodo-id' => $periodo_id,
+                                                        'style' => 'min-width: 120px;'
                                                         ]) !!}
                                                     <div class="input-group-append">
-                                                        {!! Form::submit('Registrar', [
+                                                        {!! Form::submit($cuenta_p->where('cuenta_id', $cuenta->id)->first() ? 'Editar' : 'Registrar', [
                                                             'class'=>'btn btn-success'
                                                             ]) !!}
                                                     </div>
@@ -226,34 +170,6 @@ Balance General - Período {{$periodo_id}}
                                             </div>
                                             @endforeach
 
-                                            @foreach ($cuenta_p as $cuentap)
-                                                @if ($cuentap->cuenta->tipo == 2)
-                                                <div class="form-group">
-                                                    {!! Form::open(['route'=>'cuenta_periodo.store','method'=>'POST', 'class'=>'d-inline-block w-100']) !!}
-                                                    <div class="input-group">
-                                                        {!! Form::hidden('cuenta_id', $cuentap->cuenta->id, []) !!}
-                                                        {!! Form::hidden('periodo_id', $periodo_id, []) !!}
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text bg-warning text-dark" style="min-width: 200px;">{{$cuentap->cuenta->nombre}} (Registrado)</span>
-                                                        </div>
-                                                        {!! Form::number('total', $cuentap->total, [
-                                                            'class' => 'form-control balance-input',
-                                                            'min' => '0',
-                                                            'step'=>'0.01',
-                                                            'placeholder' => '0.00',
-                                                            'data-cuenta-id' => $cuentap->cuenta->id,
-                                                            'data-periodo-id' => $periodo_id
-                                                            ]) !!}
-                                                        <div class="input-group-append">
-                                                            {!! Form::submit('Actualizar', [
-                                                                'class'=>'btn btn-warning'
-                                                                ]) !!}
-                                                        </div>
-                                                    </div>
-                                                    {!! Form::close() !!}
-                                                </div>
-                                                @endif
-                                            @endforeach
 
                                             <hr>
                                             <div class="row">
@@ -279,7 +195,7 @@ Balance General - Período {{$periodo_id}}
 
                             <div class="d-flex justify-content-between align-items-center mt-4">
                                 <div>
-                                    {!! Form::open(['route'=>'balance_general.store', 'method'=>'POST']) !!}
+                                    {!! Form::open(['url' => url('/balance_general'), 'method'=>'POST']) !!}
                                     {!! Form::hidden('periodo_id', $periodo_id, []) !!}
                                     {!! Form::hidden('activo', $acredora, []) !!}
                                     {!! Form::hidden('pasivo', $deudora, []) !!}
@@ -308,6 +224,9 @@ Balance General - Período {{$periodo_id}}
 @endsection
 
 @section('scripts')
+<script>
+    var baseUrl = '{{ url("/") }}';
+</script>
 <script src="{{asset('js/balance.js')}}" defer></script>
 @endsection
 

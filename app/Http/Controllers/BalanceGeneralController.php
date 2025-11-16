@@ -38,42 +38,26 @@ class BalanceGeneralController extends Controller
         $cuentas = cuenta::where('empresa_id',$empresa_id)->get();
         $cuenta_p = cuenta_periodo::where('periodo_id',$periodo_id)->get();
 
-        $cuentas_as = cuenta::where('empresa_id',$empresa_id)->where('tipo','1')->get();
-        $cuentas_ds = cuenta::where('empresa_id',$empresa_id)->where('tipo','0')->get();
-        $cuentas_pas = cuenta::where('empresa_id',$empresa_id)->where('tipo','2')->get();
+        $cuentas_as = cuenta::where('empresa_id',$empresa_id)->where('tipo','1')->where('codigo', 'like', '1.%')->get();
+        $cuentas_ds = cuenta::where('empresa_id',$empresa_id)->where('tipo','0')->where('codigo', 'like', '2.%')->get();
+        $cuentas_pas = cuenta::where('empresa_id',$empresa_id)->where('tipo','0')->where('codigo', 'like', '3.%')->get();
 
-        $cuentas_a = [];
-        $cuentas_d = [];
-        $cuentas_pa = [];
-
-        foreach($cuentas_as as $cuenta_ass){
-            if(cuenta_periodo::where('cuenta_id',$cuenta_ass->id)->where('periodo_id',$periodo_id)->count() == 0){
-                array_push($cuentas_a, $cuenta_ass);
-            }
-        }
-        foreach($cuentas_ds as $cuenta_dss){
-            if(cuenta_periodo::where('cuenta_id',$cuenta_dss->id)->where('periodo_id',$periodo_id)->count() == 0){
-                array_push($cuentas_d, $cuenta_dss);
-            }
-        }
-        foreach($cuentas_pas as $cuenta_pass){
-            if(cuenta_periodo::where('cuenta_id',$cuenta_pass->id)->where('periodo_id',$periodo_id)->count() == 0){
-                array_push($cuentas_pa, $cuenta_pass);
-            }
-        }
+        $cuentas_a = $cuentas_as;
+        $cuentas_d = $cuentas_ds;
+        $cuentas_pa = $cuentas_pas;
 
         $deudora = 0;
         $acredora = 0;
         $patrimonio = 0;
 
         foreach($cuenta_p as $cuenta){
-            if($cuenta->cuenta->tipo == 0){
+            if($cuenta->cuenta->tipo == 0 && !str_starts_with($cuenta->cuenta->codigo, '3.')){
                 $deudora += $cuenta->total;
             }
             else if($cuenta->cuenta->tipo == 1){
                 $acredora += $cuenta->total;
             }
-            else if($cuenta->cuenta->tipo == 2){
+            else if($cuenta->cuenta->tipo == 0 && str_starts_with($cuenta->cuenta->codigo, '3.')){
                 $patrimonio += $cuenta->total;
             }
         }

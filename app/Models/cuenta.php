@@ -29,4 +29,8 @@ class cuenta extends Model
     public function cuenta_periodo(){
         return $this->hasMany(cuenta_periodo::class);
     }
+
+    public function hijos(){
+        return $this->hasMany(cuenta::class, 'padre', 'id');
+    }
 }

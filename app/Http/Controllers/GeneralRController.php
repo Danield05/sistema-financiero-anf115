@@ -151,6 +151,7 @@ class GeneralRController extends Controller
             $rentabilidad_sobre_venta = 0;
 
             $periodos = periodo::all()->where('empresa_id', $empresa->id);
+            $num_periodos = $periodos->count();
 
             foreach($periodos as $periodo){
                 $razon_circulante += round(floatval(validador(razon_circulante($empresa->id, $periodo->id))), 2);
@@ -163,6 +164,8 @@ class GeneralRController extends Controller
                 $rentabilidad_del_activo += round(floatval(validador(rentabilidad_del_activo($empresa->id, $periodo->id))), 2);
                 $rentabilidad_sobre_venta += round(floatval(validador(rentabilidad_sobre_venta($empresa->id, $periodo->id))), 2);
             }
+
+            // No dividir, mantener la suma para la columna "Temporal"
 
             $fila = [
                 'empresa' => $empresa->nombre,
@@ -180,9 +183,49 @@ class GeneralRController extends Controller
             array_push($comparaciones, $fila);
         }
 
+        // Calcular promedios del sector
+        $sector_promedios = [
+            'razon_circulante' => 0,
+            'prueba_acida' => 0,
+            'rotacion_inventario' => 0,
+            'rotacion_cuentas_por_cobrar' => 0,
+            'grado_endeudamiento' => 0,
+            'razon_endeudamiento_patrimonial' => 0,
+            'rentabilidad_neta_del_patrimonio' => 0,
+            'rentabilidad_del_activo' => 0,
+            'rentabilidad_sobre_venta' => 0,
+        ];
+
+        $num_empresas = count($comparaciones);
+        $num_periodos_total = 0;
+        foreach($comparaciones as $comparacion){
+            $empresa = \App\Models\empresa::where('nombre', $comparacion['empresa'])->first();
+            if($empresa){
+                $num_periodos_total += periodo::where('empresa_id', $empresa->id)->count();
+            }
+        }
+
+        if($num_empresas > 0 && $num_periodos_total > 0){
+            foreach($comparaciones as $comparacion){
+                $sector_promedios['razon_circulante'] += $comparacion['razon_circulante'];
+                $sector_promedios['prueba_acida'] += $comparacion['prueba_acida'];
+                $sector_promedios['rotacion_inventario'] += $comparacion['rotacion_inventario'];
+                $sector_promedios['rotacion_cuentas_por_cobrar'] += $comparacion['rotacion_cuentas_por_cobrar'];
+                $sector_promedios['grado_endeudamiento'] += $comparacion['grado_endeudamiento'];
+                $sector_promedios['razon_endeudamiento_patrimonial'] += $comparacion['razon_endeudamiento_patrimonial'];
+                $sector_promedios['rentabilidad_neta_del_patrimonio'] += $comparacion['rentabilidad_neta_del_patrimonio'];
+                $sector_promedios['rentabilidad_del_activo'] += $comparacion['rentabilidad_del_activo'];
+                $sector_promedios['rentabilidad_sobre_venta'] += $comparacion['rentabilidad_sobre_venta'];
+            }
+
+            foreach($sector_promedios as $key => $value){
+                $sector_promedios[$key] = round($value / $num_periodos_total, 2);
+            }
+        }
+
         // return response()->json($sector);
 
-        return view('vistas.ratios.comparacion', compact('comparaciones','sector'));
+        return view('vistas.ratios.comparacion', compact('comparaciones','sector', 'sector_promedios'));
     }
     // ! Fin de comparacion de ratios
 }
@@ -296,17 +339,62 @@ function razon_circulante($empresa_id, $periodo_id){
 
 //!Buscador de valores
 function cuenta_s_t($empresa_id, $periodo_id, $cuenta_s){
-    $cuenta = vinculacion::all()->where('empresa_id',$empresa_id)->where('cuenta_sistema_id', $cuenta_s)->first();
-    if($cuenta == null){
+    // Si es utilidad neta (26), obtener de estado_resultado
+    if($cuenta_s == 26){
+        $estado = \App\Models\estado_resultado::where('periodo_id', $periodo_id)->first();
+        if($estado){
+            // Calcular utilidad neta: ventas - devoluciones - costo_ventas - gastos_operacion + otros_ingresos - gastos_no_operativos - impuestos
+            $ventas_netas = $estado->ventas - $estado->devolucion_sobre_ventas;
+            $utilidad_bruta = $ventas_netas - $estado->costo_de_ventas;
+            $utilidad_operativa = $utilidad_bruta - $estado->gastos_de_operacion;
+            $utilidad_antes_impuestos = $utilidad_operativa + $estado->otros_ingresos - $estado->gastos_no_operativos;
+            $utilidad_neta = $utilidad_antes_impuestos - $estado->impuestos_sobre_la_renta;
+            return $utilidad_neta;
+        }
         return 0;
     }
 
-    $valor = cuenta_periodo::all()->where('cuenta_id', $cuenta->cuenta_id)->where('periodo_id', $periodo_id)->first();
-    if($valor == null){
+    // Si es ventas netas (25), obtener de estado_resultado
+    if($cuenta_s == 25){
+        $estado = \App\Models\estado_resultado::where('periodo_id', $periodo_id)->first();
+        if($estado){
+            return $estado->ventas - $estado->devolucion_sobre_ventas;
+        }
         return 0;
     }
 
-    return $valor->total;
+    // Si es costo de ventas (6), obtener de estado_resultado
+    if($cuenta_s == 6){
+        $estado = \App\Models\estado_resultado::where('periodo_id', $periodo_id)->first();
+        if($estado){
+            return $estado->costo_de_ventas;
+        }
+        return 0;
+    }
+
+    // Sumar todas las cuentas vinculadas a este cuenta_sistema_id, y si son padres, sumar sus subcuentas
+    $vinculaciones = vinculacion::all()->where('empresa_id',$empresa_id)->where('cuenta_sistema_id', $cuenta_s);
+    $total = 0;
+    foreach($vinculaciones as $vinculacion){
+        $cuenta = \App\Models\cuenta::find($vinculacion->cuenta_id);
+        if($cuenta){
+            // Sumar el valor de la cuenta y sus subcuentas directas
+            $total += getCuentaValor($cuenta->id, $periodo_id);
+        }
+    }
+    return $total;
+}
+
+function getCuentaValor($cuenta_id, $periodo_id){
+    $valor = cuenta_periodo::all()->where('cuenta_id', $cuenta_id)->where('periodo_id', $periodo_id)->first();
+    $total = $valor ? $valor->total : 0;
+
+    // Sumar subcuentas directas
+    $subcuentas = \App\Models\cuenta::where('padre', \App\Models\cuenta::find($cuenta_id)->codigo)->get();
+    foreach($subcuentas as $sub){
+        $total += getCuentaValor($sub->id, $periodo_id);
+    }
+    return $total;
 }
 
 // ! metedor de valores

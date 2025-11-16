@@ -61,28 +61,31 @@ class CuentaPeriodoController extends Controller
 
     public function guardar(Request $request)
     {
-        $input = [
-            'total' => request('total'),
-            'cuenta_id' => request('cuenta_id'),
-            'periodo_id' => request('periodo_id')
-        ];
+        try {
+            $input = [
+                'total' => request('total'),
+                'cuenta_id' => request('cuenta_id'),
+                'periodo_id' => request('periodo_id')
+            ];
 
-        // * Validacion que no exista otro igual
-        $cuentas = cuenta_periodo::all()->where('cuenta_id',request('cuenta_id'));
-        foreach($cuentas as $cuenta){
-            if($cuenta->periodo_id == request('periodo_id')){
-                $cuenta->update($input);
-                return;
-                // return redirect('/balance_general/crear/'.require('ids'));
+            // Validación básica
+            if (!is_numeric($input['total']) || $input['total'] < 0) {
+                return response()->json(['error' => 'Total inválido'], 400);
             }
+
+            // * Validacion que no exista otro igual
+            $cuentas = cuenta_periodo::where('cuenta_id', request('cuenta_id'))->where('periodo_id', request('periodo_id'))->first();
+            if ($cuentas) {
+                $cuentas->update($input);
+            } else {
+                cuenta_periodo::create($input);
+            }
+
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Error en guardar cuenta_periodo: ' . $e->getMessage());
+            return response()->json(['error' => 'Error interno del servidor'], 500);
         }
-
-        // * Ingresamos los datos
-        cuenta_periodo::create($input);
-        return;
-
-        // * Redirigimos
-        // return redirect('/balance_general/crear/'.require('ids'));
     }
 
     /**

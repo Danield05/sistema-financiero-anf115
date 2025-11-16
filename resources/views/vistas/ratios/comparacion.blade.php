@@ -36,127 +36,127 @@ Comparacion de Ratios
                                     <tr>
                                         <td>Razon circulante</td>
                                         @foreach ($comparaciones as $comparacion)
-                                        @if ($sector->razon_circulante < $comparacion['razon_circulante'])
+                                        @if ($sector_promedios['razon_circulante'] < $comparacion['razon_circulante'])
                                             <td class="table-success">{{$comparacion['razon_circulante']}}</td>
-                                        @elseif ($sector->razon_circulante > $comparacion['razon_circulante'])
+                                        @elseif ($sector_promedios['razon_circulante'] > $comparacion['razon_circulante'])
                                             <td class="table-danger">{{$comparacion['razon_circulante']}}</td>
                                         @else
                                             <td>{{$comparacion['razon_circulante']}}</td>
-                                        @endif    
+                                        @endif
                                         @endforeach
-                                        <td class="table-info">{{$sector->razon_circulante}}</td>
+                                        <td class="table-info">{{$sector_promedios['razon_circulante']}}</td>
                                     </tr>
                                     
                                     <tr>
                                         <td>Prueba acida</td>
                                         @foreach ($comparaciones as $comparacion)
-                                        @if ($sector->prueba_acida < $comparacion['prueba_acida'])
+                                        @if ($sector_promedios['prueba_acida'] < $comparacion['prueba_acida'])
                                             <td class="table-success">{{$comparacion['prueba_acida']}}</td>
-                                        @elseif ($sector->prueba_acida > $comparacion['prueba_acida'])
+                                        @elseif ($sector_promedios['prueba_acida'] > $comparacion['prueba_acida'])
                                             <td class="table-danger">{{$comparacion['prueba_acida']}}</td>
                                         @else
                                             <td>{{$comparacion['prueba_acida']}}</td>
-                                        @endif    
+                                        @endif
                                         @endforeach
-                                        <td class="table-info">{{$sector->prueba_acida}}</td>
+                                        <td class="table-info">{{$sector_promedios['prueba_acida']}}</td>
                                     </tr>
                                     
                                     <tr>
                                         <td>Rotacion de inventario</td>
                                         @foreach ($comparaciones as $comparacion)
-                                        @if ($sector->rotacion_inventario < $comparacion['rotacion_inventario'])
+                                        @if ($sector_promedios['rotacion_inventario'] < $comparacion['rotacion_inventario'])
                                             <td class="table-success">{{$comparacion['rotacion_inventario']}}</td>
-                                        @elseif ($sector->rotacion_inventario > $comparacion['rotacion_inventario'])
+                                        @elseif ($sector_promedios['rotacion_inventario'] > $comparacion['rotacion_inventario'])
                                             <td class="table-danger">{{$comparacion['rotacion_inventario']}}</td>
                                         @else
                                             <td>{{$comparacion['rotacion_inventario']}}</td>
-                                        @endif    
+                                        @endif
                                         @endforeach
-                                        <td class="table-info">{{$sector->rotacion_inventario}}</td>
+                                        <td class="table-info">{{$sector_promedios['rotacion_inventario']}}</td>
                                     </tr>
                                     
                                     <tr>
                                         <td>Rotacion de cuentas por cobrar</td>
                                         @foreach ($comparaciones as $comparacion)
-                                        @if ($sector->rotacion_cuentas_por_cobrar > $comparacion['rotacion_cuentas_por_cobrar'])
+                                        @if ($sector_promedios['rotacion_cuentas_por_cobrar'] > $comparacion['rotacion_cuentas_por_cobrar'])
                                             <td class="table-success">{{$comparacion['rotacion_cuentas_por_cobrar']}}</td>
-                                        @elseif ($sector->rotacion_cuentas_por_cobrar < $comparacion['rotacion_cuentas_por_cobrar'])
+                                        @elseif ($sector_promedios['rotacion_cuentas_por_cobrar'] < $comparacion['rotacion_cuentas_por_cobrar'])
                                             <td class="table-danger">{{$comparacion['rotacion_cuentas_por_cobrar']}}</td>
                                         @else
                                             <td>{{$comparacion['rotacion_cuentas_por_cobrar']}}</td>
-                                        @endif    
+                                        @endif
                                         @endforeach
-                                        <td class="table-info">{{$sector->rotacion_cuentas_por_cobrar}}</td>
+                                        <td class="table-info">{{$sector_promedios['rotacion_cuentas_por_cobrar']}}</td>
                                     </tr>
                                     
                                     <tr>
                                         <td>Grado de endeudamiento</td>
                                         @foreach ($comparaciones as $comparacion)
-                                        @if ($sector->grado_endeudamiento > $comparacion['grado_endeudamiento'])
+                                        @if ($sector_promedios['grado_endeudamiento'] > $comparacion['grado_endeudamiento'])
                                             <td class="table-success">{{$comparacion['grado_endeudamiento']}}</td>
-                                        @elseif ($sector->grado_endeudamiento < $comparacion['grado_endeudamiento'])
+                                        @elseif ($sector_promedios['grado_endeudamiento'] < $comparacion['grado_endeudamiento'])
                                             <td class="table-danger">{{$comparacion['grado_endeudamiento']}}</td>
                                         @else
                                             <td>{{$comparacion['grado_endeudamiento']}}</td>
-                                        @endif    
+                                        @endif
                                         @endforeach
-                                        <td class="table-info">{{$sector->grado_endeudamiento}}</td>
+                                        <td class="table-info">{{$sector_promedios['grado_endeudamiento']}}</td>
                                     </tr>
                                     
                                     <tr>
                                         <td>Razon endeudamiento patrimonial</td>
                                         @foreach ($comparaciones as $comparacion)
-                                        @if ($sector->razon_endeudamiento_patrimonial > $comparacion['razon_endeudamiento_patrimonial'])
+                                        @if ($sector_promedios['razon_endeudamiento_patrimonial'] > $comparacion['razon_endeudamiento_patrimonial'])
                                             <td class="table-success">{{$comparacion['razon_endeudamiento_patrimonial']}}</td>
-                                        @elseif ($sector->razon_endeudamiento_patrimonial < $comparacion['razon_endeudamiento_patrimonial'])
+                                        @elseif ($sector_promedios['razon_endeudamiento_patrimonial'] < $comparacion['razon_endeudamiento_patrimonial'])
                                             <td class="table-danger">{{$comparacion['razon_endeudamiento_patrimonial']}}</td>
                                         @else
                                             <td>{{$comparacion['razon_endeudamiento_patrimonial']}}</td>
-                                        @endif    
+                                        @endif
                                         @endforeach
-                                        <td class="table-info">{{$sector->razon_endeudamiento_patrimonial}}</td>
+                                        <td class="table-info">{{$sector_promedios['razon_endeudamiento_patrimonial']}}</td>
                                     </tr>
 
                                     <tr>
                                         <td>Rentabilidad neta del patrimonio</td>
                                         @foreach ($comparaciones as $comparacion)
-                                        @if ($sector->rentabilidad_neta_del_patrimonio < $comparacion['rentabilidad_neta_del_patrimonio'])
+                                        @if ($sector_promedios['rentabilidad_neta_del_patrimonio'] < $comparacion['rentabilidad_neta_del_patrimonio'])
                                             <td class="table-success">{{$comparacion['rentabilidad_neta_del_patrimonio']}}</td>
-                                        @elseif ($sector->rentabilidad_neta_del_patrimonio > $comparacion['rentabilidad_neta_del_patrimonio'])
+                                        @elseif ($sector_promedios['rentabilidad_neta_del_patrimonio'] > $comparacion['rentabilidad_neta_del_patrimonio'])
                                             <td class="table-danger">{{$comparacion['rentabilidad_neta_del_patrimonio']}}</td>
                                         @else
                                             <td>{{$comparacion['rentabilidad_neta_del_patrimonio']}}</td>
-                                        @endif    
+                                        @endif
                                         @endforeach
-                                        <td class="table-info">{{$sector->rentabilidad_neta_del_patrimonio}}</td>
+                                        <td class="table-info">{{$sector_promedios['rentabilidad_neta_del_patrimonio']}}</td>
                                     </tr>
                                     
                                     <tr>
                                         <td>Rentabilidad del activo</td>
                                         @foreach ($comparaciones as $comparacion)
-                                        @if ($sector->rentabilidad_del_activo < $comparacion['rentabilidad_del_activo'])
+                                        @if ($sector_promedios['rentabilidad_del_activo'] < $comparacion['rentabilidad_del_activo'])
                                             <td class="table-success">{{$comparacion['rentabilidad_del_activo']}}</td>
-                                        @elseif ($sector->rentabilidad_del_activo > $comparacion['rentabilidad_del_activo'])
+                                        @elseif ($sector_promedios['rentabilidad_del_activo'] > $comparacion['rentabilidad_del_activo'])
                                             <td class="table-danger">{{$comparacion['rentabilidad_del_activo']}}</td>
                                         @else
                                             <td>{{$comparacion['rentabilidad_del_activo']}}</td>
-                                        @endif    
+                                        @endif
                                         @endforeach
-                                        <td class="table-info">{{$sector->rentabilidad_del_activo}}</td>
+                                        <td class="table-info">{{$sector_promedios['rentabilidad_del_activo']}}</td>
                                     </tr>
                                     
                                     <tr>
                                         <td>Rentabilidad sobre venta</td>
                                         @foreach ($comparaciones as $comparacion)
-                                        @if ($sector->rentabilidad_sobre_venta < $comparacion['rentabilidad_sobre_venta'])
+                                        @if ($sector_promedios['rentabilidad_sobre_venta'] < $comparacion['rentabilidad_sobre_venta'])
                                             <td class="table-success">{{$comparacion['rentabilidad_sobre_venta']}}</td>
-                                        @elseif ($sector->rentabilidad_sobre_venta > $comparacion['rentabilidad_sobre_venta'])
+                                        @elseif ($sector_promedios['rentabilidad_sobre_venta'] > $comparacion['rentabilidad_sobre_venta'])
                                             <td class="table-danger">{{$comparacion['rentabilidad_sobre_venta']}}</td>
                                         @else
                                             <td>{{$comparacion['rentabilidad_sobre_venta']}}</td>
-                                        @endif    
+                                        @endif
                                         @endforeach
-                                        <td class="table-info">{{$sector->rentabilidad_sobre_venta}}</td>
+                                        <td class="table-info">{{$sector_promedios['rentabilidad_sobre_venta']}}</td>
                                     </tr>
 
                                 </tbody>
